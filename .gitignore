@@ -1,0 +1,8 @@
+# latex generated files
+
+*.aux
+*.log
+*.out
+*.pdf
+*.vrb
+*.dvi

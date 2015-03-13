@@ -1,0 +1,114 @@
+\input{slides_template}	% nothing to do here
+\input{c_introduction_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Development environment
+}
+
+\definecolor{orange}{RGB}{255,127,0}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Setup}
+\subsection{Overview}
+\begin{frame}{OS's you may use}
+	\begin{columns}[T]
+		\column{.3\textwidth}
+		Linux\\
+		\uncover<2->{\textcolor{green}{recommended}}
+		\column{.3\textwidth}
+		Windows\\
+		\uncover<3->{\textcolor{orange}{supported}}
+		\column{.3\textwidth}
+		Mac OS \textcolor<4->{red}{X}
+	\end{columns}
+\end{frame}
+\begin{frame}{Supported OS's}
+	\begin{columns}[T]
+		\column{.5\textwidth}
+		Linux\\
+		\column{.5\textwidth}
+		Windows\\
+	\end{columns}
+\end{frame}
+\subsection{Linux}
+\begin{frame}[fragile]{Installing gcc}
+	Ubuntu / Debian: 
+	\begin{lstlisting}
+		apt-get install gcc
+	\end{lstlisting}
+	Arch:
+	\begin{lstlisting}
+	pacman -S gcc
+	\end{lstlisting}
+	... and you're done ;-)
+\end{frame}
+\subsection{Windows}
+\begin{frame}{MinGW}
+	
+\end{frame}
+\begin{frame}{cygwin}
+	
+\end{frame}
+\begin{frame}{Add compiler to system PATH}
+	
+\end{frame}
+
+\section{Hello World!}
+\subsection{editing}
+\begin{frame}[fragile]{The first program}
+	\begin{itemize}
+		\item Create a new file named \textbf{main.c}.
+		\item Open it in your text editor of trust.
+		\item Fill it as follows:
+	\end{itemize}
+	\begin{lstlisting}
+		#include <stdio.h>
+		
+		int main() {
+		    printf("Hello World!\n");
+		    /* Print "Hello World!" on the command line */
+		}
+	\end{lstlisting}
+\end{frame}
+\subsection{compiling / building}
+\begin{frame}[fragile]{From source to bits}
+	\centering
+	Source code\\\ \\
+	$\Downarrow$\\\ \\
+	\begin{lstlisting}
+	gcc main.c
+	\end{lstlisting}
+	$\Downarrow$\\\ \\
+	executable program (\textbf{a.out})\\
+\end{frame}
+\subsection{executing}
+\begin{frame}[fragile]{It works!}
+	\begin{columns}[T]
+		\column{.5\textwidth}
+		\textbf{Linux}\\
+		\begin{lstlisting}
+			./a.out
+		\end{lstlisting}
+		\column{.5\textwidth}
+		\textbf{Windows}\\
+		\begin{lstlisting}
+			a.exe
+		\end{lstlisting}
+	\end{columns}
+\end{frame}
+% nothing to do from here on
+\end{document}
