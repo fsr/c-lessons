@@ -1,0 +1,251 @@
+\input{slides_template}	% nothing to do here
+\input{c_introduction_info} % TODO modify this if you have not already done so
+
+% meta-information
+\usepackage{ulem}
+
+\newcommand{\topic}{
+    Basic program structure
+}
+
+\definecolor{orange}{RGB}{255,127,0}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Setup}
+\subsection{}
+\begin{frame}{OS's you may use}
+	\begin{columns}[T]
+		\column{.3\textwidth}
+		Linux\\
+		\uncover<2->{\textcolor{green}{recommended}}
+		\column{.3\textwidth}
+		Windows\\
+		\uncover<3->{\textcolor{orange}{supported}}
+		\column{.3\textwidth}
+		Mac OS \textcolor<4->{red}{X}
+	\end{columns}
+\end{frame}
+\begin{frame}[fragile]{Installing gcc on Linux}
+	Ubuntu / Debian: 
+	\begin{lstlisting}[numbers=none]
+$ sudo apt-get install gcc
+\end{lstlisting} \ \\ \ \\
+	Arch:
+	\begin{lstlisting}[numbers=none]
+$ sudo pacman -S gcc
+\end{lstlisting} \ \\ \ \\
+	... and you're done ;-)
+\end{frame}
+\begin{frame}{cygwin}
+	\begin{itemize}
+		\item Download installer from \textit{https://cygwin.com/install.html}
+		\item Run it
+		\begin{itemize}
+			\item "Install from Internet"
+			\item Choose your installation path
+			\item Choose path for installation files
+			\item "Direct Connection"
+			\item Choose a mirror
+			\item Important software already is selected
+			\item Optional: powerful editor "vim" in \textit{Editors}
+			\item Watching loading bars...
+			\item ???
+			\item Profit!
+		\end{itemize}
+		\item Use cygwin-console like a linux terminal
+	\end{itemize}
+\end{frame}
+\section{Hello World!}
+\subsection{}
+\begin{frame}[fragile]{The first program}
+	\begin{itemize}
+		\item Create a new file named \textbf{main.c}.
+		\item Open it in your text editor of trust.
+		\item Fill it as follows:
+	\end{itemize}
+	\begin{lstlisting}
+#include <stdio.h>
+
+int main(int argc, char* argv[]) {
+	printf("Hello World!\n");
+	/* Print "Hello World!" on the
+	   command line */
+	return 0;
+}
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{From source to bits}
+	\centering
+	Source code\\\ \\
+	$\Downarrow$\\\ \\
+	\begin{lstlisting}[numbers=none]
+$ gcc main.c
+\end{lstlisting}
+(Preprocessing, compiling, assembling, linking)
+	\ \\\ \\
+	$\Downarrow$\\\ \\
+	Executable program (\textbf{a.out})\\\ \\
+			\begin{lstlisting}[numbers=none]
+$ ./a.out
+\end{lstlisting}
+\end{frame}
+\section{Program structure}
+\subsection{}
+\begin{frame}[fragile]{A basic program}
+	\begin{columns}[T]
+		\column{.6\textwidth}
+		\begin{lstlisting}
+#include <stdio.h>
+
+int main(int argc, char* argv[]) {
+
+	printf("Hello World!\n");
+	/* Print "Hello World!" on the
+	   command line */
+
+	return 0;
+}
+\end{lstlisting}
+		\column{.4\textwidth}
+		
+		\ \\$\left. \begin{array}{c}\\\end{array}\right\rbrace $ Preprocessor statements
+		\ \\\ \\$\left. \begin{array}{c}\\\\\\\\\\\\\end{array}\right\rbrace $ Main function
+	\end{columns}
+\end{frame}
+\begin{frame}[fragile]{Preprocessor statements}	
+	\begin{itemize}
+		\item processed before compilation
+		\item have their own language, start with a \textit{\#}
+	\end{itemize}
+	\begin{lstlisting}
+#include <stdio.h>
+\end{lstlisting}
+	\begin{itemize}
+		\item includes the \textbf{standard input/output library} (needed for printf, which is defined there)
+		\item can also be used to define constants and much more, e.g.
+	\end{itemize}
+\begin{lstlisting}[numbers=none]
+#define THE_ANSWER 42
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{The main function}
+	\begin{itemize}
+		\item basic function
+		\item exists \textbf{exactly once} per program
+		\item called on program start
+	\end{itemize}
+	\StartLineAt{3}
+	\begin{lstlisting}
+int main(int argc, char* argv[]) {
+\end{lstlisting}
+	\begin{itemize}
+		\item as a function, \textit{main()} takes parameters
+		\item get used to \textit{argc} and \textit{argv}, they will be explained later
+		\item '$\lbrace$' marks the start of the main function scope
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{The main function scope}
+	\begin{itemize}
+		\item contains all program statements
+		\item they are processed from top to bottom
+	\end{itemize}
+	\StartLineAt{9}
+	\begin{lstlisting}
+	return 0;
+}
+\end{lstlisting}
+	\begin{itemize}
+		\item last statement, ends main function (and thus the whole program)
+		\item \textit{0} tells the OS that everything went right
+		\item '$\rbrace$' marks the end of the main function scope
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Statements}
+	\begin{itemize}
+		\item instructions for the computer
+		\item end with a \textit{;} (semicolon)
+	\end{itemize}
+	\StartLineAt{5}
+	\begin{lstlisting}
+	printf("Hello World!\n");
+\end{lstlisting} \ \\ \ \\
+	\begin{itemize}
+		\item there is the empty statement:
+	\end{itemize}
+	\begin{lstlisting}[numbers=none]
+	;
+\end{lstlisting}
+	\begin{itemize}
+		\item all statements are located in function blocks
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Comments}
+	\begin{itemize}
+		\item information for the programmer, cut out before compilation
+	\end{itemize}
+	Single line comments:
+	\StartLineAt{6}
+	\begin{lstlisting}
+	// Print "Hello World!" on the command line
+\end{lstlisting}
+	Block comments (mutli-line):
+	\StartLineAt{6}
+	\begin{lstlisting}
+	/* Print "Hello World!"
+	   on the command line */
+\end{lstlisting}
+	Better use of block comments:
+	\StartLineAt{6}
+	\begin{lstlisting}
+	/*
+	 * Print "Hello World!"
+	 * on the command line
+	 */
+\end{lstlisting}
+\end{frame}
+\section{Style}
+\subsection{}
+\begin{frame}[fragile]{A few words on style}
+	\begin{itemize}
+		\item {there can be multiple statements on one line}
+		\item {intendation is not nessessary at all}
+		\item<2-> BUT...
+	\end{itemize}
+	\ \\
+	\begin{uncoverenv}<2->
+	\begin{lstlisting}[numbers=none]
+#include <stdio.h>
+int
+main	(int argc, char* argv[]){printf("Hello World!\n");
+		// Prints
+/*"Hello World!"			*/
+		return 0;}
+\end{lstlisting}
+	\end{uncoverenv}
+\end{frame}
+\begin{frame}{Much more enjoyable}
+	\begin{itemize}
+		\item put each statement on a single line
+		\item intend every statement in the main function by one tab / 4 \textit{spaces}
+		\item use \textit{/* ... */} rather than \textit{// ...}
+		\item write the main function arguments directly behind \textit{main}
+		\item leave a \textit{space} between the closing ')' and the opening '\{'
+	\end{itemize}
+\end{frame}
+
+
+% nothing to do from here on
+\end{document}

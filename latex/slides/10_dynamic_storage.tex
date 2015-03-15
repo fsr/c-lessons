@@ -1,0 +1,370 @@
+\input{slides_template}	% nothing to do here
+\input{c_introduction_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Dynamic memory management
+}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.pathmorphing}
+\tikzset{arrow/.style={-latex, shorten >=.5ex, shorten <=.5ex}}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{\today}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Motivation}
+\subsection{}
+\begin{frame}{Runtime conditions}
+	Static C arrays are great if you already know at \textit{compile time} how many elements you will need later at \textit{runtime}. \\ \ \\
+	Seriously, how often is this the case? \\ \ \\
+	\begin{uncoverenv}<2->
+		\textit{Never}. Unless your program does not take \textit{any} user input, you cannot determine how much data you will have to store. \\ \ \\
+		This is where dynamic memory management comes into play.
+	\end{uncoverenv}
+\end{frame}
+\begin{frame}{Explicit allocation}
+	All the variables and arrays you have used so far were placed in memory automatically. 
+	In dynamic memory management, you have to \textit{allocate} parts memory to identifiers on your own. \\ \ \\
+	There are four functions in the standard library that do almost all the work for you:
+	\begin{itemize}
+		\item \textit{malloc()}: allocate a block of memory
+		\item \textit{calloc()}: allocate a block of memory and initialize it
+		\item \textit{realloc()}: alter the size of a block of memory
+		\item \textit{free()}: release a block of memory
+	\end{itemize}
+	They are declared in \textit{stdlib.h}.
+\end{frame}
+\section{Memory allocation}
+\subsection{}
+\begin{frame}[fragile]{A closer look at memory}
+	\begin{tikzpicture}[y=2cm, font=\footnotesize]
+		\node[above, font=\small] at (1.5,0) {Stack};
+		
+		\draw (0,0) -- (0,-2);
+		\draw (0,0) -- (3,0);
+		\draw (3,0) -- (3,-2);
+		\draw[line join=round, decoration={zigzag,segment length=4, amplitude=1}, decorate] (0,-2) -- (3,-2);
+		
+		\draw[->] (-.25,0) -- (-.25,-1.9);
+		
+		\draw[dashed] (0,-.25) -- (3,-.25);
+		\draw[dashed] (0,-.5) -- (3,-.5);
+		\draw[dashed] (0,-.75) -- (3,-.75);
+		\draw[dashed] (0,-1) -- (3,-1);
+		\draw[dashed] (0,-1.25) -- (3,-1.25);
+		\draw[dashed] (0,-1.5) -- (3,-1.5);
+		\draw[dashed] (0,-1.75) -- (3,-1.75);
+		
+		\node[below, font=\small] at (6.5,-2) {Heap};		
+		
+		\draw (5,0) -- (5,-2);
+		\draw[line join=round, decoration={zigzag,segment length=4, amplitude=1}, decorate] (5,0) -- (8,0);
+		\draw (8,0) -- (8,-2);
+		\draw (5,-2) -- (8,-2);
+		
+		\draw[<-] (8.25,-.1) -- (8.25,-2);
+		
+		\draw[dashed] (5,-.25) -- (8,-.25);
+		\draw[dashed] (5,-.5) -- (8,-.5);
+		\draw[dashed] (5,-.75) -- (8,-.75);
+		\draw[dashed] (5,-1) -- (8,-1);
+		\draw[dashed] (5,-1.25) -- (8,-1.25);
+		\draw[dashed] (5,-1.5) -- (8,-1.5);
+		\draw[dashed] (5,-1.75) -- (8,-1.75);
+		
+		\draw[thick, dashed, orange] (0,0) -- (3,0);
+		\draw[thick, dashed, orange] (0,0) -- (0,-.25);
+		\draw[thick, dashed, orange] (0,-.25) -- (3,-.25);
+		\draw[thick, dashed, orange] (3,0) -- (3,-.25);
+		\node[orange,below=.15em] at (1.5,0){int};
+
+		\draw[thick, dashed, orange] (0,-.25) -- (3,-.25);
+		\draw[thick, dashed, orange] (0,-.25) -- (0,-.5);
+		\draw[thick, dashed, orange] (0,-.5) -- (3,-.5);
+		\draw[thick, dashed, orange] (3,-.25) -- (3,-.5);
+		\node[orange,below=.15em] at (1.5,-.25){int};
+		
+		\begin{uncoverenv}<3->
+			\draw[thick, dashed, orange] (5,-1.75) -- (8,-1.75);
+			\draw[thick, dashed, orange] (5,-1.75) -- (5,-2);
+			\draw[thick, dashed, orange] (5,-2) -- (8,-2);
+			\draw[thick, dashed, orange] (8,-1.75) -- (8,-2);
+			\node[orange,below=.15em] at (6.5,-1.75){int};
+		\end{uncoverenv}
+		
+		\begin{uncoverenv}<4->
+			\draw[thick, dashed, teal] (0,-.5) -- (3,-.5);
+			\draw[thick, dashed, teal] (0,-.5) -- (0,-1);
+			\draw[thick, dashed, teal] (0,-1) -- (3,-1);
+			\draw[thick, dashed, teal] (3,-.5) -- (3,-1);
+			\node[teal,below=.15em] at (1.5,-.5){int*};
+			
+			\draw (3,-.75) edge[out=0,in=180,->,shorten >=.5ex, shorten <=.5ex] (5,-1.875);
+		\end{uncoverenv}
+		
+		\begin{uncoverenv}<5->
+			\draw[thick, dashed, purple] (5,-1.25) -- (8,-1.25);
+			\draw[thick, dashed, purple] (5,-1.25) -- (5,-1.75);
+			\draw[thick, dashed, purple] (5,-1.75) -- (8,-1.75);
+			\draw[thick, dashed, purple] (8,-1.25) -- (8,-1.75);
+			\node[purple, below=.15em] at (6.5,-1.25){long};
+			
+			\draw[thick, dashed, teal] (0,-1) -- (3,-1);
+			\draw[thick, dashed, teal] (0,-1) -- (0,-1.5);
+			\draw[thick, dashed, teal] (0,-1.5) -- (3,-1.5);
+			\draw[thick, dashed, teal] (3,-1) -- (3,-1.5);
+			\node[teal,below=.15em] at (1.5,-1){long*};
+			
+			\draw (3,-1.25) edge[out=0,in=180,->,shorten >=.5ex, shorten <=.5ex] (5,-1.5);
+		\end{uncoverenv}
+		
+		% Leave this here for historic reasons:
+		%\begin{uncoverenv}<6->
+		%	\draw[thick, dashed, purple] (5,-.75) -- (8,-.75);
+		%	\draw[thick, dashed, purple] (5,-.75) -- (5,-1.25);
+		%	\draw[thick, dashed, purple] (5,-1.25) -- (8,-1.25);
+		%	\draw[thick, dashed, purple] (8,-.75) -- (8,-1.25);
+		%	\node[purple, below=.15em] at (6.5,-.75){long};
+		%	
+		%	\draw[thick, dashed, teal] (0,-1.5) -- (3,-1.5);
+		%	\draw[thick, dashed, teal] (0,-1.5) -- (0,-2);
+		%	\draw[thick, dashed, teal] (0,-2) -- (3,-2);
+		%	\draw[thick, dashed, teal] (3,-1.5) -- (3,-2);
+		%	\node[teal,below=.15em] at (1.5,-1.5){long*};
+		%	
+		%	\draw (3,-1.75) edge[out=0,in=180,->,shorten >=.5ex, shorten <=.5ex] (5,-1);
+		%\end{uncoverenv}
+	\end{tikzpicture} \\
+	\only<1>{All local variables of functions are placed at the \textit{stack}. \\
+		It grows and shrinks as variables are declared and functions return.}
+	\only<2>{Dynamical memory is allocated on the \textit{heap}. \\
+		The example shows a function with two local \textit{int} variables.}
+	\begin{onlyenv}<3>
+		\begin{lstlisting}[numbers=none]
+malloc(sizeof(int));
+\end{lstlisting}
+	Reserves exactly the amount of memory an \textit{int} variable takes.
+	\end{onlyenv}
+	\begin{onlyenv}<4>
+		\begin{lstlisting}[numbers=none]
+int *new_block = malloc(sizeof(int));
+\end{lstlisting}
+	The adress of that memory block is stored in an \textit{int} pointer.
+	\end{onlyenv}
+	\only<5>{\textit{malloc()} just needs to know the size of the block it reserves. \\
+		Let's allocate a \textit{long} variable as well.}
+\end{frame}
+\begin{frame}[fragile]{\textit{malloc()} in detail}
+	The function declaration might be a little bit confusing:
+	\begin{lstlisting}[numbers=none]
+void *malloc(size_t size);
+\end{lstlisting}
+	\begin{itemize}
+		\item \textit{size\_t} is an \textbf{unsigned integer} type. \\
+		Any positive integer number (e.g. an \textit{int} $>0$) will do the job.
+		\item \textit{size} is the size of the reserved block in \textbf{bytes}. \\
+		If you want to use that block \textit{seriously}, pass the size of an actual type (e.g. \textit{sizeof(int)}).
+		\item A \textit{void} pointer is returned since \textit{malloc()} does not know how you want to use the reserved block. By assigning it to a regular pointer variable it is automatically converted to that type.
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Cast or don't cast?}
+	Some people claim you had to explicitly \textit{cast} the return value of \textit{malloc()}.\\
+	\ \\
+	\only<2->{\textbf{They are lying.}} \ \\
+	\ \\
+	\begin{onlyenv}<3->
+		\begin{lstlisting}[numbers=none]
+int *block = malloc((sizeof(int));
+\end{lstlisting}
+	has the same result as
+	\begin{lstlisting}[numbers=none]
+int *block = (int*) malloc((sizeof(int));
+\end{lstlisting}
+	while the second one contains a reduntant \textit{cast} and if you want to change the type of \textit{block} later, you will have to hit more keys. Consider:
+	\begin{lstlisting}[numbers=none]
+int *block = malloc(sizeof *block); /* for lazy people */
+\end{lstlisting}
+	\end{onlyenv}
+\end{frame}
+\begin{frame}{Cast or don't cast?}
+	\huge
+	\centering
+	Confused? \\
+	\ \\
+	\only<2->{Forget about type casts.}
+\end{frame}
+\begin{frame}[fragile]{Tidying up}
+	Unlike normally declared variables, dynamically allocated storage is not automatically released when the function returns.
+	\begin{lstlisting}
+void foo() {
+	int *bar = malloc(sizeof(int));
+}
+\end{lstlisting}
+	With the pointer \textit{bar} being removed from the stack, we havo no reference on its allocated memory and those four bytes are blocked forever! \\
+	\ \\
+	\begin{lstlisting}[numbers=none]
+free(void *ptr);
+\end{lstlisting}
+	Pass any pointer to previously allocated memory to \textit{free()} and it gets realeased. If you pass pointers on other things, undefined behaviour occurs (most likely program crashes).
+\end{frame}
+
+\section{Dynamic arrays}
+\subsection{}
+\begin{frame}[fragile]{Reserving large junks}
+	To get a dynamic array of a certain \textit{type} and \textit{length}, you have to
+	\begin{itemize}
+		\item Pass the block size $length * sizeof(type)$ to \textit{malloc()}
+		\item Assign the return value to a pointer to \textit{type}
+	\end{itemize}\ \\
+	\ \\
+	\textit{int} array with 42 elements:
+	\begin{lstlisting}[numbers=none]
+int *field = malloc(42 * sizeof(int));
+\end{lstlisting}\ \\
+	\ \\
+	Since the size of your dynamically allocated array is unknown at compile time, you cannot use \textit{sizeof} to get its length. Save it in its own variable!\\
+	\ \\
+	With the help of pointer arithmetic, you can use the dynamic array like a "normal" one.
+	
+\end{frame}
+\begin{frame}[fragile]{The fancy alternative}
+		\begin{lstlisting}[numbers=none]
+void *calloc(size_t nmemb, size_t size);
+\end{lstlisting}
+	\begin{itemize}
+		\item Allocates a block of $nmemb * size$ bytes, where \textit{nmemb} is supposed to be the array's length and \textit{size} the size its type.
+		\item The whole block is filled with \textit{0}s
+	\end{itemize}
+	\ \\
+	\begin{lstlisting}[numbers=none]
+int field_length = 42;
+int *field = malloc(field_length * sizeof(int));
+for (int i = 0; i < field_length; i++)
+	field[i] = 0;
+\end{lstlisting}
+	\center	$\downarrow$ Feel the difference $\downarrow$
+	\begin{lstlisting}[numbers=none]
+int field_length = 42;
+int *field = calloc(field_length, sizeof(int));
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{Resizing arrays}
+	Now we come to the point that motivated us to use dynamic arrays:\\
+	\ \\
+	\begin{lstlisting}[numbers=none]
+void *realloc(void *ptr, size_t size);
+\end{lstlisting}
+	\begin{itemize}
+		\item \textit{ptr} is a pointer to a dynamically allocated memory block
+		\item \textit{size} is the wanted new size of the memory block
+		\item The return value is a pointer to the resized block
+	\end{itemize} \ \\
+	\ \\
+	Note that the new \textit{size} can be greater or smaller than the old one!
+	\begin{itemize}
+		\item If it's smaller, you may lose some data at the end of the block
+		\item If it's greater, the block may be at a different location in the memory $\rightarrow$ \textit{ptr} is freed then, also the additional bytes are not initialized
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Clean up your code}
+	Passing arrays between functions can be complicated if you store the pointer and the length seperataly.\\
+	\ \\
+	Do you remember a way to keep different things together?\\
+	\ \\
+	\begin{uncoverenv}<2->
+		\begin{lstlisting}[numbers=none]
+struct int_array {
+	int *field;
+	int length;
+}
+\end{lstlisting}\ \\
+		\ \\
+		This allows you to use the \textit{struct int\_array} as a single argument or return value. Even better: pass a pointer on that structure.
+	\end{uncoverenv}
+\end{frame}
+\begin{frame}[fragile]{Strings from pointers to \textit{char}}
+	By handling strings as dynamic \textit{char} arrays you can alter their size which is needed for many operations on them.
+	\begin{itemize}
+		\item \textit{strlen()} returns the actual length of a string (up to '\textbackslash 0' character)
+		\item \textit{strncpy()} copies a string into a dynamically allocated block
+	\end{itemize}\ \\
+	\ \\
+	\begin{lstlisting}[numbers=none]
+char conststr[] = "Hello";			   /* not of much use */
+int bufsize = strlen(conststr) + 1;	   /* add '\0' char */
+char *str = calloc(bufsize, sizeof(char));
+str = strncpy(str, conststr, bufsize); /* ready to go */
+\end{lstlisting}\ \\
+	\ \\
+	These functions and others are declared in \textit{string.h}.
+	\begin{lstlisting}[numbers=none]
+$ man string.h
+\end{lstlisting}
+\end{frame}
+\section{Exercise}
+\subsection{}
+\begin{frame}[fragile]{String concatenation}
+	\textit{strncat()} concatenates two strings. Have a closer look at it:
+	\begin{lstlisting}[numbers=none]
+$ man 3 strncat
+\end{lstlisting}
+	\begin{itemize}
+		\item Write a program that reads a series of strings from the user input and concatenates them.
+		\item Each string is put at the front so that the result is in reversed order.
+		\begin{itemize}
+			\item<2-> Hint: end the input phase when a '\textbackslash n' is read (empty line).
+			\item<3-> Hint: always check if your buffer is large enough and resize it, if needed,
+		\end{itemize}
+		\item \textbf{Experts}: at the end, let the user enter one last string. Check, if that one occures in the string you have put together.
+		\begin{itemize}
+			\item<2-> \textit{strstr()} may be an option.
+		\end{itemize}
+	\end{itemize}		
+\end{frame}
+\begin{frame}{Vector operations}
+	\begin{itemize}
+		\item Write a program that takes two vectors as input and prints their sum.
+		\item The number of elements in each vector is up to the user.
+		\begin{itemize}
+			\item<2-> Hint: you need some conventions to allow the user to tell you when the input of a vector is finished.
+			\item<3-> Hint: think of possible input errors, e.g. one vector having more elements.
+		\end{itemize}
+		\item \textbf{Experts}: do the same with two matrices
+		\begin{itemize}
+			\item<2-> Hint: a 2D dynamic array is a dynamic array of pointers. Each of those pointers has its own dynamic array allocated to it.
+			\item<3-> Hint: you need a lot more conventions!
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Hangman}
+	Write a simple hangman game! Everytime the player is wrong,
+	add a new part to the gallows / the hanging man and print it to the terminal:
+	\begin{lstlisting}[numbers=none]
+       -----    
+       |/  o 
+       |  ^W^
+       |  / \		word: game o_e_
+       |     		wrong: hvfnwitc
+     -----   
+    /     \
+   /       \
+===============
+\end{lstlisting}
+	\textbf{Experts}: Have a list of possible words in the source code and let the program randomly choose one at the start.\\
+	\ \\
+	Hint: \textit{strncmp()} compares two strings.
+\end{frame}
+% nothing to do from here on
+\end{document}

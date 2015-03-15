@@ -1,0 +1,239 @@
+\input{slides_template}	% nothing to do here
+\input{c_introduction_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Complex data types
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{\today}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Introduction}
+\subsection{}
+\begin{frame}[fragile]{Motivation}
+	Think of a data type that can store all data belonging to a person:
+	\begin{lstlisting}[numbers=none]
+char name[];	/* size does not matter (in this example) */
+int age, id;
+\end{lstlisting}
+	However, there seems to be no way to put those different types together. \\ \ \\
+	Think of a datatype that can store the state (current color) of traffic lights:
+	\begin{lstlisting}[numbers=none]
+int color;
+/* 0 = red, 1 = yellow, 2 = green */
+\end{lstlisting}
+	How to avoid someone assigning a different value to \textit{color}?
+\end{frame}
+\begin{frame}{Limits of primitive data types}
+	Primitive data types are fine as long as you want to
+	\begin{itemize}
+		\item Store a single value that does not depend on other variables
+		\item Store a sequence of values of the same type with a constant length \\
+		$\rightarrow$ \textit{arrays}
+	\end{itemize} \ \\ \ \\
+	However, it is not possible to
+	\begin{itemize}
+		\item Compose variables of different data types to a compound structure \\
+		$\rightarrow$ \textit{composite data types}
+		\item Have a variable that can only attain certain values \\
+		$\rightarrow$ \textit{enumerations}
+		\item Have a sequence with an adjustable length \\
+		$\rightarrow$ soon...
+	\end{itemize}
+\end{frame}
+
+\section{Composite data types}
+\subsection{}
+\begin{frame}[fragile]{Data records}
+	Composite data types are derived from primitive data types. You can store any number of primitive variables in one composite variable.
+	\begin{itemize}
+		\item The composite variable is called \textit{structure} and has the type \textit{struct}
+		\item The primitive variables are called \textit{members} of that structure
+	\end{itemize} \ \\ \ \\
+	Declaration:
+	\begin{lstlisting}[numbers=none]
+struct person {		/* struct <identifier> */
+	int id;
+	int age;		/* block for member declaration */
+	char name[];
+};					/* end declaration with ';' */
+\end{lstlisting}
+	This defines the new type "struct person".
+\end{frame}
+\begin{frame}[fragile]{\textit{struct} variables}
+	Our new type \textit{struct person} can be used to declare variables any where in its scope:
+	\begin{lstlisting}[numbers=none]
+struct person pers_alice, pers_bob;
+\end{lstlisting} \ \\ \ \\
+	You can declare a \textit{struct} variable directly in the type definition:
+	\begin{lstlisting}[numbers=none]
+struct person {
+	/* member declaration */
+} pers_alice, pers_bob;
+\end{lstlisting}
+	If we do not need the struct type \textit{person} for further variable declarations, its identifier can be left out.
+\end{frame}
+\begin{frame}[fragile]{Definition and member access}
+	To initialize the \textit{struct} members upon declaration, enclose the values in braces as we did it for arrays:
+	\begin{lstlisting}[numbers=none]
+struct person pers_alice = { 1, 20, "Alice" };
+\end{lstlisting} \ \\ \ \\
+	To access the struct members, use the struct identifier followed by a '\textbf{.}' and the member identifier:
+	\begin{lstlisting}[numbers=none]
+printf("%d\n", pers_alice.id);
+pers_alice.age++;
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{\textit{struct}s as \textit{struct} members}
+	An adress is rather complicated:
+	\begin{lstlisting}[numbers=none]
+struct adress {
+	int postcode;
+	/* ... imagine much more members */
+};
+\end{lstlisting}
+	Now, let the \textit{person} have one:
+	\begin{lstlisting}[numbers=none]
+struct person {
+	struct adress contact;
+	/* ... and all the other members */
+} pers_alice;
+\end{lstlisting}
+	Access:
+\begin{lstlisting}[numbers=none]
+pers_alice.contact.postcode = 15430;
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{\textit{union}s}
+	\begin{itemize}
+		\item Similar to \textit{struct}s, handle them in the same way
+		\item However: only one member can be "active"
+		\item If you assign a value to a member, all other members become invalid
+	\end{itemize} \ \\ \ \\
+	Example:
+	\begin{lstlisting}[numbers=none]
+union compound {
+	int list[3];
+	struct {
+		int x1, x2, x3;
+	} vector;
+};
+\end{lstlisting}
+	$\rightarrow$ could be used as an interface between an \textit{array}-based (\textit{list}) and a \textit{struct}-based (\textit{vector}) implementation.
+\end{frame}
+\section{Enumerations}
+\subsection{}
+\begin{frame}[fragile]{Smart aliases}
+	An enumeration consists of identifiers that behave like \textit{constant values}. \\
+	It is declared using the keyword \textit{enum}:
+	\begin{lstlisting}[numbers=none]
+enum light {
+	RED,
+	YELLOW,
+	GREEN
+};
+\end{lstlisting}
+	Now you can assign the values \textit{red}, \textit{yellow} and \textit{green} to variables of the type \textit{enum light}. Internally they are represented as numbers ($red = 0$, $yellow = 1$ etc.), but
+	\begin{itemize}
+		\item Using the aliases is clear and fancy
+		\item No invalid values (like \textit{-1}) can be assigned
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Profit}
+	You can determine the values of the constants on your own:
+	\begin{lstlisting}[numbers=none]
+enum workday {
+	MONDAY,			/* 0 */
+	TUESDAY,		/* 1 */
+	THURSDAY = 3,	/* 3 */
+	FRIDAY			/* 4 - implicit (predecessor + 1) */
+};
+\end{lstlisting}
+	However, this can confuse people $\rightarrow$ only use it if there is a good reason. \\ \ \\
+	Enumerations provide a nice way to define "global" constants:
+	\begin{lstlisting}[numbers=none]
+enum { WIDTH = 10, HEIGHT = 20 };
+...
+char tetris_board[WIDTH][HEIGHT];
+\end{lstlisting}
+\end{frame}
+
+\section{Style}
+\subsection{}
+\begin{frame}{Consistency}
+	\begin{itemize}
+		\item Since complex type definitions heavily rely on blocks, you should use the same coding conventions on them
+		\item Let your custom type identifiers start with small letters
+	\end{itemize} \ \\ \ \\
+	If you define a complex data type, you are very likely going to use it in many different parts of your program. \\
+	$\rightarrow$ Have a global type definition, declare the variables in the local context \\ \ \\
+	Name \textit{enum} constants in CAPITAL letters to visually seperate them from variables.
+\end{frame}
+\begin{frame}[fragile]{\textbf{typedef}}
+	Sometimes you see people writing code like that:
+	\begin{lstlisting}[numbers=none]
+typedef struct foo {
+	/* member declarations */
+} bar;
+\end{lstlisting}
+	This creates the new type \textit{bar} which is nothing more than a \textit{struct foo}. \\ \ \\
+	However, this simple fact is hidden for other programmers working on the same project $\rightarrow$ \textbf{possible confusion}.
+	\begin{itemize}
+		\item Unclear, if \textit{bar} is a composite type at all
+		\item If so, is it a \textit{struct} / \textit{union} / \textit{enum} or something really crazy?
+	\end{itemize}
+\end{frame}
+\begin{frame}{Never use \textit{typedef}.}
+	\LARGE
+	\centering
+	Please, avoid using \textit{typedef}.\footnotemark \ \\ \ \\
+	\normalsize
+	\flushleft
+	\begin{uncoverenv}<2->
+		Of course, there are situations in which the use of \textit{typedef} makes sense. BUT:
+		\begin{itemize}
+			\item Not in the C introduction course
+			\item Not for simple \textit{struct}s
+		\end{itemize}
+	\end{uncoverenv}
+	\footnotetext[1]{Seriously, never use \textit{typedef}.}
+\end{frame}
+
+\section{Exercise}
+\subsection{}
+\begin{frame}{Complex numbers}
+	A \textit{complex number} $a + b\mathrm{i}$ can be handled as a composite of two real numbers (real part $a$ and imaginary part $b$).
+	\begin{itemize}
+		\item Write a program that is able to read and print \textit{complex number}s and stores them in an appropriate data structure
+		\item The output should be in the form $a + b\mathrm{i}$, but you can ask to input $a$ and $b$ seperately
+		\item \textbf{Experts:} write a function that takes a \textit{complex number} as an argument and returns its absolute value
+		\begin{itemize}
+			\item<2-> Hint: you have to pass a \textit{complex number}, but the return value is a real number
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Circles}
+	A \textit{point} in 2D consists of two coordinates: x and y (both \textit{integer}). \\
+	A \textit{circle} consists of a centre (\textit{point}), a radius (\textit{integer}), a circumference and an area (both \textit{float}).
+	\begin{itemize}
+		\item Write a program that reads two coordinates and a radius from the command line and stores them in the \textit{struct circle} described above
+		\item Then the circumference and area are calculated and stored as well
+		\item Afterwards the updated \textit{struct circle} is printed
+		\item \textbf{Experts:} write a function that takes two \textit{circle}s as arguments and returns the \textit{circle} whose radius is larger
+	\end{itemize}
+\end{frame}
+
+% nothing to do from here on
+\end{document}

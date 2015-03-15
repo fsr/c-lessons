@@ -1,0 +1,182 @@
+\input{slides_template}	% nothing to do here
+\input{c_introduction_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	The C standard library
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{\today}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Introduction}
+\subsection{}
+\begin{frame}{Don't reinvent the wheel}
+	If you split your problem into sub-problems and solve each of them in a seperate function, you're on a good way. \\ \ \\
+	However, many of the very basic sub-problems have already been solved ages ago. \\ \ \\
+	These solution are provided in \textit{libraries} such as the \textit{glibc} used by the \textit{gcc}. \\ \ \\
+	Library implemetations are safer and more efficient than yours will ever be, \textit{plus} you save a lot of time using them.
+\end{frame}
+\begin{frame}[fragile]{The Hitchhiker's Guide to the standard library}
+	The functions are \textit{declared} in a \textit{header file}. \\
+	Each header file has a certain name and the file extension \textit{.h}. \\ \ \\
+	The \textit{include} preprocessor statement puts them into your program, e.g.
+\begin{lstlisting}[numbers=none]
+#include <stdio.h>	/* We have done that so many times */
+\end{lstlisting} \ \\ \ \\foo
+	The actual function implementation is linked dynamically to your program during runtime. Let's not care about that. \\ \ \\
+	With less than 30 header files, the C library is rather small. \\
+	We will go through the ones that might be the most useful to you.
+\end{frame}
+\section{Useful headers}
+\subsection{}
+\begin{frame}[fragile]{assert.h}
+	 \begin{itemize}
+	 	\item Contains the \textit{assert()} macro, witch evaluates the truth value of an expression
+	 	\item If it's true, nothing happens
+	 	\item Else the program aborts and an error message is printed
+	 \end{itemize} \ \\ \ \\
+	 $\rightarrow$ useful to avoid undefined behaviour / worse errors at runtime \\ \ \\
+	 We can also use it if we just want to test things:
+	 \begin{lstlisting}[numbers=none]
+unisgned int input;
+printf("Enter a one-digit decimal number:\n");
+scanf("%d", &input);
+assert(input < 10);
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{math.h}
+	\begin{itemize}
+		\item Declares a lot of mathematic functions
+		\item Finally you're able to calculate square roots, logarithms, etc.
+		\item Most of those functions have \textit{double} arguments and return values
+	\end{itemize} \ \\ \ \\
+	If you use functions from \textit{math.h}, add the \textit{-lm} as the \textbf{last} option to \textit{gcc} to avoid compiler errors:
+	\begin{lstlisting}[numbers=none]
+gcc main.c -lm
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{stdio.h}
+	\begin{itemize}
+		\item Declares the basic functions to read and write data
+		\item You know \textit{printf()} and \textit{scanf()}, but this can do more:
+		\item Characters, unprocessed and formatted strings
+		\item Command line I/O and file access
+		\item Many functions for high-level file management
+	\end{itemize} \ \\ \ \\
+	As an example, \textit{puts()} can be used instead of \textit{printf()} if you have a basic string without placeholders - '\textit{\textbackslash n}' is added automatically:
+	\begin{lstlisting}[numbers=none]
+puts("Hello World!");
+/* Equivalent to printf("Hello World!\n") */
+\end{lstlisting}
+\end{frame}
+\begin{frame}{stdlib.h}
+	This probably is the most powerful header providing various different functionalities. Here is just an excerpt:
+	\begin{itemize}
+		\item \textit{EXIT\_SUCCESS} and \textit{EXIT\_FAILURE} constants as an alternative to returning \textit{0} or \textit{1} at the end of \textit{main()}
+		\item Alternative ways to exit the program
+		\item Generation of pseudo-random numbers
+		\item Search and sorting function
+		\item Dynamic memory management
+	\end{itemize}
+		\dots and more things you haven't even heard of
+\end{frame}
+\begin{frame}{string.h}
+	\begin{uncoverenv}<2->
+		Wait! Strings? \\ \ \\
+	\end{uncoverenv}
+	\begin{uncoverenv}<3->
+		Yes, there are strings in C. \\
+		They are just handled differently from what you would expect. \\ \ \\
+		\textit{string.h} is crucial if you want to work with C strings seriously. \\
+		We will use some of the functions declared there in later lessons.
+	\end{uncoverenv}
+\end{frame}
+\begin{frame}{time.h}
+	\begin{itemize}
+		\item Data types to store different time formats
+		\item Functions to get the calendar and cpu time
+		\item Functions to format time values
+		\item Functions to measure and calculate time differences
+	\end{itemize} \ \\ \ \\
+	There's nothing more about \textit{time.h}, but since dealing with time is pretty complicated it's nice that other people already took care of it.
+\end{frame}
+
+\section{Man page}
+\subsection{}
+\begin{frame}[fragile]{Documentation}
+	Instead of explaining every single function in detail, it's better to tell you where too look them up quickly. \\
+	\textit{Man page} is a Unix tool containing documentation of programs, system calls and libraries - such as the C standard library. \\ \ \\
+	To access a certain man page, just type:
+	\begin{lstlisting}[numbers=none, basicstyle=\itshape\small]
+$ man page
+\end{lstlisting} \ \\ \ \\
+Example for \textit{printf()}:
+	\begin{lstlisting}[numbers=none]
+$ man printf
+\end{lstlisting}
+However, this describes the shell command \textit{printf}.
+\end{frame}
+\begin{frame}[fragile]{Effective use of \textit{man}}
+	Man has many sections, library functions are in \#3. \\
+	Write the section number between \textit{man} and the page:
+	\begin{lstlisting}[numbers=none]
+$ man 3 printf
+\end{lstlisting} \ \\ \ \\
+	To get all pages \textit{printf} occurs in, use the \textit{-k} option:
+	\begin{lstlisting}[numbers=none]
+$ man -k printf
+\end{lstlisting} \ \\ \ \\
+	If you need more information on \textit{man} - it has its own man page:
+	\begin{lstlisting}[numbers=none]
+$ man man
+\end{lstlisting}
+\end{frame}
+\section{Exercise}
+\subsection{}
+\begin{frame}{Pretty output}
+	To solve the following tasks, you need to use some functions that may be new to you. \\
+	No explanation is given on them, use \textit{man} to find out how they work. \\ \ \\
+	\begin{itemize}
+		\item Write a program that outputs a function table like the following:
+		\item In the first row, print all values $x$ from 1 to 10. In the second row, print $1/x$ from 1 to 10.
+		\item Play around with the format string of \textit{printf()} to create a nice table-like output.
+		\item \textbf{Experts}: Print a multiplication table instead (from $1*1$ to $10*10$)
+	\end{itemize}
+\end{frame}
+\begin{frame}{Aleia iacta est}
+	\begin{itemize}
+		\item Write a program that simulates a dice using the \textit{rand()} function.
+		\begin{itemize}
+			\item<2-> Hint: have a look at \textit{srand()} as well.
+		\end{itemize}
+		\item \textbf{Experts}: Simulate "real" randomness that cannot be recreated.
+		\begin{itemize}
+			\item<3-> Hint: choose the \textit{seed} for \textit{srand()} dynamically.
+			\item<4-> Hint: what value is different every\textit{time} you start the program?
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Math exam}
+	\begin{itemize}
+		\item Write a program that asks the user to solve some simple mathematic tasks.
+		\item If the user answers wrong, the program should abort with an error.
+		\begin{itemize}
+			\item<2-> Remember the \textit{assert()} macro?
+		\end{itemize}
+		\item \textbf{Experts}: At the end, print the time it took the user to answer all the questions.
+	\end{itemize}
+\end{frame}
+% nothing to do from here on
+\end{document}
