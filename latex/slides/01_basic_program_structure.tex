@@ -79,7 +79,7 @@ $ sudo pacman -S gcc
 	\begin{lstlisting}
 #include <stdio.h>
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 	printf("Hello World!\n");
 	/* Print "Hello World!" on the
 	   command line */
@@ -110,7 +110,7 @@ $ ./a.out
 		\begin{lstlisting}
 #include <stdio.h>
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 
 	printf("Hello World!\n");
 	/* Print "Hello World!" on the
@@ -127,15 +127,15 @@ int main(int argc, char* argv[]) {
 \end{frame}
 \begin{frame}[fragile]{Preprocessor statements}	
 	\begin{itemize}
-		\item processed before compilation
-		\item have their own language, start with a \textit{\#}
+		\item Processed before compilation
+		\item Have their own language, start with a \textit{\#}
 	\end{itemize}
 	\begin{lstlisting}
 #include <stdio.h>
 \end{lstlisting}
 	\begin{itemize}
-		\item includes the \textbf{standard input/output library} (needed for printf, which is defined there)
-		\item can also be used to define constants and much more, e.g.
+		\item Includes the \textbf{standard input/output library} (needed for printf, which is defined there) \\ \ \\
+		\item Can also be used to define constants and much more, e.g.
 	\end{itemize}
 \begin{lstlisting}[numbers=none]
 #define THE_ANSWER 42
@@ -143,58 +143,59 @@ int main(int argc, char* argv[]) {
 \end{frame}
 \begin{frame}[fragile]{The main function}
 	\begin{itemize}
-		\item basic function
-		\item exists \textbf{exactly once} per program
-		\item called on program start
+		\item Basic function
+		\item Exists \textbf{exactly once} per program
+		\item Called on program start
 	\end{itemize}
 	\StartLineAt{3}
 	\begin{lstlisting}
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 \end{lstlisting}
 	\begin{itemize}
-		\item as a function, \textit{main()} takes parameters
-		\item get used to \textit{argc} and \textit{argv}, they will be explained later
+		\item As a function, \textit{main()} takes parameters
+		\item Get used to \textit{argc} and \textit{argv}, they will be explained later
 		\item '$\lbrace$' marks the start of the main function scope
 	\end{itemize}
 \end{frame}
 \begin{frame}[fragile]{The main function scope}
 	\begin{itemize}
-		\item contains all program statements
-		\item they are processed from top to bottom
-	\end{itemize}
+		\item Contains all program statements
+		\item They are processed from top to bottom
+	\end{itemize} \ \\
+	\ \\
 	\StartLineAt{9}
 	\begin{lstlisting}
 	return 0;
 }
 \end{lstlisting}
 	\begin{itemize}
-		\item last statement, ends main function (and thus the whole program)
+		\item Last statement, ends main function (and thus the whole program)
 		\item \textit{0} tells the OS that everything went right
 		\item '$\rbrace$' marks the end of the main function scope
 	\end{itemize}
 \end{frame}
 \begin{frame}[fragile]{Statements}
 	\begin{itemize}
-		\item instructions for the computer
-		\item end with a \textit{;} (semicolon)
+		\item Instructions for the computer
+		\item End with a \textit{;} (semicolon)
 	\end{itemize}
 	\StartLineAt{5}
 	\begin{lstlisting}
 	printf("Hello World!\n");
 \end{lstlisting} \ \\ \ \\
 	\begin{itemize}
-		\item there is the empty statement:
+		\item There is the empty statement:
 	\end{itemize}
 	\begin{lstlisting}[numbers=none]
 	;
 \end{lstlisting}
 	\begin{itemize}
-		\item all statements are located in function blocks
+		\item All statements are located in function blocks
 	\end{itemize}
 \end{frame}
 \begin{frame}[fragile]{Comments}
 	\begin{itemize}
-		\item information for the programmer, cut out before compilation
+		\item Information for the programmer, cut out before compilation
 	\end{itemize}
 	Single line comments:
 	\StartLineAt{6}
@@ -220,8 +221,8 @@ int main(int argc, char* argv[]) {
 \subsection{}
 \begin{frame}[fragile]{A few words on style}
 	\begin{itemize}
-		\item {there can be multiple statements on one line}
-		\item {intendation is not nessessary at all}
+		\item {There can be multiple statements on one line}
+		\item {Intendation is not nessessary at all}
 		\item<2-> BUT...
 	\end{itemize}
 	\ \\
@@ -229,7 +230,7 @@ int main(int argc, char* argv[]) {
 	\begin{lstlisting}[numbers=none]
 #include <stdio.h>
 int
-main	(int argc, char* argv[]){printf("Hello World!\n");
+main	(int argc, char*argv[]){printf("Hello World!\n");
 		// Prints
 /*"Hello World!"			*/
 		return 0;}
@@ -238,11 +239,11 @@ main	(int argc, char* argv[]){printf("Hello World!\n");
 \end{frame}
 \begin{frame}{Much more enjoyable}
 	\begin{itemize}
-		\item put each statement on a single line
-		\item intend every statement in the main function by one tab / 4 \textit{spaces}
-		\item use \textit{/* ... */} rather than \textit{// ...}
-		\item write the main function arguments directly behind \textit{main}
-		\item leave a \textit{space} between the closing ')' and the opening '\{'
+		\item Put each statement on a single line
+		\item Intend every statement in the main function by one tab / 4 \textit{spaces}
+		\item Use \textit{/* ... */} rather than \textit{// ...}
+		\item Write the main function arguments directly behind \textit{main}
+		\item Leave a \textit{space} between the closing ')' and the opening '\{'
 	\end{itemize}
 \end{frame}
 
