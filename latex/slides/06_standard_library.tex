@@ -34,7 +34,7 @@
 	The \textit{include} preprocessor statement puts them into your program, e.g.
 \begin{lstlisting}[numbers=none]
 #include <stdio.h>	/* We have done that so many times */
-\end{lstlisting} \ \\ \ \\foo
+\end{lstlisting} \ \\ \ \\
 	The actual function implementation is linked dynamically to your program during runtime. Let's not care about that. \\ \ \\
 	With less than 30 header files, the C library is rather small. \\
 	We will go through the ones that might be the most useful to you.
@@ -70,7 +70,7 @@ gcc main.c -lm
 \begin{frame}[fragile]{stdio.h}
 	\begin{itemize}
 		\item Declares the basic functions to read and write data
-		\item You know \textit{printf()} and \textit{scanf()}, but this can do more:
+		\item You know \textit{printf()} and \textit{scanf()}, but there is more:
 		\item Characters, unprocessed and formatted strings
 		\item Command line I/O and file access
 		\item Many functions for high-level file management
@@ -110,13 +110,15 @@ puts("Hello World!");
 		\item Functions to format time values
 		\item Functions to measure and calculate time differences
 	\end{itemize} \ \\ \ \\
-	There's nothing more about \textit{time.h}, but since dealing with time is pretty complicated it's nice that other people already took care of it.
+	Handling time usually is quite complicated, but with the help of \textit{time.h} it gets a lot easier.\\
+	\ \\
+	Measure the execution time of your programs to see how efficient they are!
 \end{frame}
 
 \section{Man page}
 \subsection{}
 \begin{frame}[fragile]{Documentation}
-	Instead of explaining every single function in detail, it's better to tell you where too look them up quickly. \\
+	Learning all the library functions is way less effective than knowing where to look them up quickly. \\
 	\textit{Man page} is a Unix tool containing documentation of programs, system calls and libraries - such as the C standard library. \\ \ \\
 	To access a certain man page, just type:
 	\begin{lstlisting}[numbers=none, basicstyle=\itshape\small]

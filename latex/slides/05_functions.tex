@@ -195,7 +195,7 @@ int main(int argc, char* argv[]) {
 		Feels a lot cleaner, doesn't it?
 	\end{uncoverenv}
 \end{frame}
-\section{Scopes}
+\section{More on scopes}
 \subsection{}
 \begin{frame}[fragile]{Global variables}
 	\begin{itemize}
@@ -230,10 +230,10 @@ void g(int i) {
 	f(42);
 }
 \end{lstlisting}
-	In that case, \textit{g()} is called outside its scope. The other way does not work either.
+	In that case, \textit{g()} is called outside its scope. Changing the order does not work either.
 \end{frame}
 \begin{frame}[fragile]{Prototypes}
-	Like variables can also be \textit{declared}:
+	Like variables, functions can also be \textit{declared}:
 	\begin{lstlisting}[numbers=none,basicstyle=\itshape\footnotesize]
 return_type identifier(argument list);
 \end{lstlisting}
@@ -315,7 +315,7 @@ int power(int base, int exponent) {
 		Now delete the \textit{substract} and the \textit{divide} function (and find a way the calculator works anyway).
 		\begin{itemize}
 			\item<2-> Hint: How can you substract through addition?
-			\item<3-> Hint: You can pass a statement as a parameter.
+			\item<3-> Hint: You can pass any expression as a parameter.
 		\end{itemize}
 		\item \textbf{Experts:} add the functionality to exponentiate.\\
 		Implement the \textit{exponentiate} function by calling the \textit{multiply} function.
@@ -329,7 +329,7 @@ int power(int base, int exponent) {
 			\item<3-> Hint: check for such \textit{n} at the start of the function!
 			\item<4-> Hint: for all other \textit{n}, you need a recursive call
 		\end{itemize}
-		\item \textbf{Experts:} The function shall calculate \textit{fib(n)} instead of \textit{n!}
+		\item \textbf{Experts:} The function shall calculate \textit{fib(n)} instead of \textit{n!}.
 		\begin{itemize}
 			\item<5-> Hint: in one statement, you can call a function multiple times
 		\end{itemize}
