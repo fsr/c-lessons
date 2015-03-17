@@ -25,11 +25,11 @@
 \begin{frame}[fragile]{Motivation}
 	Think of a data type that can store all data belonging to a person:
 	\begin{lstlisting}[numbers=none]
-char name[];	/* size does not matter (in this example) */
+char name[32];
 int age, id;
 \end{lstlisting}
-	However, there seems to be no way to put those different types together. \\ \ \\
-	Think of a datatype that can store the state (current color) of traffic lights:
+	However, there seems to be no way to put those different types together.\\ \ \\
+	Think of a data type that can store the state (current color) of traffic lights:
 	\begin{lstlisting}[numbers=none]
 int color;
 /* 0 = red, 1 = yellow, 2 = green */
@@ -62,15 +62,15 @@ int color;
 		\item The composite variable is called \textit{structure} and has the type \textit{struct}
 		\item The primitive variables are called \textit{members} of that structure
 	\end{itemize} \ \\ \ \\
-	Declaration:
+	Defining a new composite type "\textit{struct} person":
 	\begin{lstlisting}[numbers=none]
 struct person {		/* struct <identifier> */
 	int id;
 	int age;		/* block for member declaration */
-	char name[];
+	char name[32];
 };					/* end declaration with ';' */
 \end{lstlisting}
-	This defines the new type "struct person".
+	A \textit{struct} variable is at least as large as all of its members.
 \end{frame}
 \begin{frame}[fragile]{\textit{struct} variables}
 	Our new type \textit{struct person} can be used to declare variables any where in its scope:
@@ -122,7 +122,7 @@ pers_alice.contact.postcode = 15430;
 		\item However: only one member can be "active"
 		\item If you assign a value to a member, all other members become invalid
 	\end{itemize} \ \\ \ \\
-	Example:
+	Interface between a \textit{list} and a \textit{vector} implementation:
 	\begin{lstlisting}[numbers=none]
 union compound {
 	int list[3];
@@ -131,7 +131,8 @@ union compound {
 	} vector;
 };
 \end{lstlisting}
-	$\rightarrow$ could be used as an interface between an \textit{array}-based (\textit{list}) and a \textit{struct}-based (\textit{vector}) implementation.
+	The size of a union variable is equal to the size of its largest member.\\
+	$\rightarrow$ saving memory
 \end{frame}
 \section{Enumerations}
 \subsection{}
@@ -216,22 +217,22 @@ typedef struct foo {
 \begin{frame}{Complex numbers}
 	A \textit{complex number} $a + b\mathrm{i}$ can be handled as a composite of two real numbers (real part $a$ and imaginary part $b$).
 	\begin{itemize}
-		\item Write a program that is able to read and print \textit{complex number}s and stores them in an appropriate data structure
-		\item The output should be in the form $a + b\mathrm{i}$, but you can ask to input $a$ and $b$ seperately
-		\item \textbf{Experts:} write a function that takes a \textit{complex number} as an argument and returns its absolute value
+		\item Write a program that is able to read and print \textit{complex number}s and stores them in an appropriate data structure.
+		\\ The output should be in the form $a + b\mathrm{i}$, but you can ask to input $a$ and $b$ seperately.
+		\item \textbf{Experts:} write a function that takes a \textit{complex number} as an argument and returns its absolute value.
 		\begin{itemize}
-			\item<2-> Hint: you have to pass a \textit{complex number}, but the return value is a real number
+			\item<2-> Hint: You have to pass a \textit{complex number}, but the return value is a real number.
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 \begin{frame}{Circles}
-	A \textit{point} in 2D consists of two coordinates: x and y (both \textit{integer}). \\
-	A \textit{circle} consists of a centre (\textit{point}), a radius (\textit{integer}), a circumference and an area (both \textit{float}).
+	A \textit{point} in 2D consists of two coordinates: x and y (both \textit{float}). \\
+	A \textit{circle} consists of a centre (\textit{point}), a radius, a circumference and an area (all \textit{float}).
 	\begin{itemize}
-		\item Write a program that reads two coordinates and a radius from the command line and stores them in the \textit{struct circle} described above
-		\item Then the circumference and area are calculated and stored as well
-		\item Afterwards the updated \textit{struct circle} is printed
-		\item \textbf{Experts:} write a function that takes two \textit{circle}s as arguments and returns the \textit{circle} whose radius is larger
+		\item Write a program that reads two coordinates and a radius from the command line and stores them in the \textit{struct circle} described above.
+		\\Then the circumference and area are calculated and stored as well.
+		\\ Afterwards the updated \textit{struct circle} is printed.
+		\item \textbf{Experts:} Write a function that takes two \textit{circle}s as arguments and returns a \textit{circle} that is goes through their \textit{centre}s.
 	\end{itemize}
 \end{frame}
 

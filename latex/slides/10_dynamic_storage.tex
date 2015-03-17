@@ -39,10 +39,10 @@
 	In dynamic memory management, you have to \textit{allocate} parts memory to identifiers on your own. \\ \ \\
 	There are four functions in the standard library that do almost all the work for you:
 	\begin{itemize}
-		\item \textit{malloc()}: allocate a block of memory
-		\item \textit{calloc()}: allocate a block of memory and initialize it
-		\item \textit{realloc()}: alter the size of a block of memory
-		\item \textit{free()}: release a block of memory
+		\item \textit{malloc()}: Allocate a block of memory
+		\item \textit{calloc()}: Allocate a block of memory and initialize it
+		\item \textit{realloc()}: Alter the size of a block of memory
+		\item \textit{free()}: Release a block of memory
 	\end{itemize}
 	They are declared in \textit{stdlib.h}.
 \end{frame}
@@ -324,12 +324,12 @@ $ man 3 strncat
 		\item Write a program that reads a series of strings from the user input and concatenates them.
 		\item Each string is put at the front so that the result is in reversed order.
 		\begin{itemize}
-			\item<2-> Hint: end the input phase when a '\textbackslash n' is read (empty line).
-			\item<3-> Hint: always check if your buffer is large enough and resize it, if needed,
+			\item<2-> Hint: End the input phase when a '\textbackslash n' is read (empty line).
+			\item<3-> Hint: Always check if your buffer is large enough and resize it, if needed.
 		\end{itemize}
-		\item \textbf{Experts}: at the end, let the user enter one last string. Check, if that one occures in the string you have put together.
+		\item \textbf{Experts}: At the end, let the user enter one last string. Check, if that one occures in the string you have put together.
 		\begin{itemize}
-			\item<2-> \textit{strstr()} may be an option.
+			\item<4-> Hint: \textit{strstr()} may be an option.
 		\end{itemize}
 	\end{itemize}		
 \end{frame}
@@ -338,13 +338,13 @@ $ man 3 strncat
 		\item Write a program that takes two vectors as input and prints their sum.
 		\item The number of elements in each vector is up to the user.
 		\begin{itemize}
-			\item<2-> Hint: you need some conventions to allow the user to tell you when the input of a vector is finished.
-			\item<3-> Hint: think of possible input errors, e.g. one vector having more elements.
+			\item<2-> Hint: You need some conventions to allow the user to tell you when the input of a vector is finished.
+			\item<3-> Hint: Think of possible input errors, e.g. one vector having more elements.
 		\end{itemize}
 		\item \textbf{Experts}: do the same with two matrices
 		\begin{itemize}
-			\item<2-> Hint: a 2D dynamic array is a dynamic array of pointers. Each of those pointers has its own dynamic array allocated to it.
-			\item<3-> Hint: you need a lot more conventions!
+			\item<4-> Hint: A 2D dynamic array is a dynamic array of pointers. Each of those pointers has its own dynamic array allocated to it.
+			\item<5-> Hint: You need a lot more conventions!
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -356,7 +356,7 @@ $ man 3 strncat
        |/  o 
        |  ^W^
        |  / \		word: game o_e_
-       |     		wrong: hvfnwitc
+       |     		wrong: hfnwitc
      -----   
     /     \
    /       \

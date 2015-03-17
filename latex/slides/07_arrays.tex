@@ -229,13 +229,13 @@ for(int i = 0; i < §4§; i++)
 \begin{frame}[fragile]{Remember, Remember}
 	Old and busted	:
 	\begin{itemize}
-		\item the size of variables may differ on different architectures
-		\item the size of a char is \textbf{always} 1 byte
+		\item The size of variables may differ on different architectures
+		\item The size of a char is \textbf{always} 1 byte
 	\end{itemize}
 	New hotness:
 	\begin{itemize}
-		\item you can get the size of a variable with the operator \textit{sizeof}
-		\item you can also get the size of a type with sizeof
+		\item You can get the size of a variable with the operator \textit{sizeof}
+		\item You can also get the size of a type with sizeof
 	\end{itemize}\ \\\ \\
 	\begin{lstlisting}[numbers=none]
 char a = 'a';
@@ -366,15 +366,15 @@ printf("%s\n", hello);
 	\end{itemize}
 \end{frame}
 \begin{frame}[fragile]{String input}
-	You \textbf{Could} use \textit{scanf} for string input, but it's kind of a mess. You better use \textit{fgets}:
+	You \textbf{Could} use \textit{scanf()} for string input, but it's kind of a mess. You better use \textit{fgets}:
 	\begin{lstlisting}[numbers=none]
 char input[42];
 fgets(input, sizeof input, stdin);
 \end{lstlisting}
 	\begin{itemize}
-		\item fgets reads up to size-1 characters (here: 42-1), and writes the '\textbackslash0' at the and of the array input.
-		\item it stops reading after a newline.
-		\item stdin is the standard input
+		\item \textit{fgets()} reads up to size-1 characters (here: 42-1), and writes the '\textbackslash0' at the and of the array input.
+		\item It stops reading after a newline.
+		\item \textit{stdin} is the standard input
 	\end{itemize}
 \end{frame}
 \begin{frame}[fragile]{Array of arrays}
@@ -385,7 +385,7 @@ fgets(input, sizeof input, stdin);
 char arr[3][4];
   /* an array containing 3 arrays containing 4 chars */
 \end{lstlisting}
-		\item Access:
+		\item Assignment:
 		\begin{lstlisting}[numbers=none]
 arr[0][0] = 'f'; /* first char of first array is 'f' */
 arr[1] = "bar";
@@ -431,7 +431,7 @@ int foo(char arr[]) {
 		\item \textbf{Experts:} Write a Program, that checks two multidimensional arrays for equality.
 	\end{itemize}
 \end{frame}
-\begin{frame}{Reverse}
+\begin{frame}{Desrever}
 	\begin{itemize}
 		\item Write a program that takes a string input and outputs this string reversed.
 		\begin{itemize}

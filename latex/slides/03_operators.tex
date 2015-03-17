@@ -30,7 +30,7 @@ int a = 5; 		/* value 5 */
 int b = a + 3;	/* value 8 */
 \end{lstlisting}
 Got the idea?\\
-\ \\Short: Operators are for calculations, comparisons and more.
+\ \\Operators are for calculations, comparisons and more.
 \end{frame}
 \section{Arithmetic operators}
 \subsection{}
@@ -44,11 +44,12 @@ Got the idea?\\
 	\ \\\ \\Something to try out and think about:
 	\begin{lstlisting}[numbers=none]
 char a = 120;	/* 120 */
-2 * a;			/* not 240 */
+char b = 2 * a;			/* not 240 */
 \end{lstlisting}
 \end{frame}
 \begin{frame}[fragile]{You see, it's not that easy}
 	\begin{itemize}
+		\item Variables may overflow
 		\item You shall not devide integers by zero
 		\item Integer division differs from floating point division
 		\item You can use operators between different data types
@@ -57,7 +58,7 @@ char a = 120;	/* 120 */
 			\item[--] mixing integer and floating point variables
 		\end{itemize}
 	\end{itemize}
-	\ \\\ \\Try it yourself.
+	\ \\\ \\
 	\begin{lstlisting}[numbers=none]
 int i1 = 42, i2 = 23;
 short s = 13;
@@ -66,6 +67,22 @@ float f = 3.14;
 i1 / i2;	/* results in 1, not a real division */
 i1 + s;		/* int and short, result is int */
 i1 / f;		/* result is float, actual division */
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{Syntatic sugar}
+	As you have seen, you can use any expression on the right side of the assignment operator.\\
+	This expression often contains the variable it is assigned to.\\\ \\
+	To avoid redundancy, C offers the following short forms:\\
+	\begin{lstlisting}[numbers=none]
+a += 4;		/* a = a + 4; */
+a -= 4;		/* a = a - 4; */
+a *= b;		/* a = a * b; */
+b /= 42;	/* b = b / 42; */
+b %= 2;		/* b = b % 2; */
+c++;		/* c = c + 1; */
+++c;		/* c = c + 1; */
+c--;		/* c = c - 1; */
+--c;		/* c = c - 1; */
 \end{lstlisting}
 \end{frame}
 \section{Relational operators}
@@ -92,6 +109,23 @@ i1 / f;		/* result is float, actual division */
 	\item<2-> (5 $<$ 7) is \textbf{true} $\rightarrow$ \textbf{1}
 	\item<3-> 1 == 1 is \textbf{true} $\rightarrow$ \textbf{1}
 \end{itemize}
+\end{frame}
+\begin{frame}[fragile]{A sign meant...}
+	Assignments are expressions that get evaluated and have a truth value, too.
+	Consider:
+		\begin{lstlisting}[numbers=none]
+c = 0;				/* false */
+c = 2 * 5;			/* 2 * 5 = 10, c = 10, true */
+c = (0 < 1);		/* 0 < 1 = true, c = 1, true */
+
+a = (b =@\,@= (c = d));	/* Wat? */
+\end{lstlisting}\ \\
+	\ \\\textit{c++} expressions are evaluated before the increment while \textit{++c} increments first (the same applies on C$--$):
+	\begin{lstlisting}[numbers=none]
+int c = 42;
+int a = c++;	/* a is 42 */
+int b = ++c;	/* b is 44 */
+\end{lstlisting}
 \end{frame}
 \section{Logical operators}
 \subsection{}
@@ -120,71 +154,18 @@ a != b;		/* XOR */
 \end{lstlisting}
 	\end{uncoverenv}
 \end{frame}
-\section{More on assignments}
-\subsection{}
-\begin{frame}[fragile]{A sign meant...}
-	We already know the assignment operator.\\
-	Assignments are expressions, too, and expressions can be assigned to variables.\\\ \\
-	The general syntax is:
-	\begin{lstlisting}[numbers=none,basicstyle=\itshape\footnotesize]
-identifier = expression
-\end{lstlisting}\ \\\ \\
-	
-	\begin{uncoverenv}<2->
-		Consider:
-		\begin{lstlisting}[numbers=none]
-c = 0;				/* false */
-c = 2 * 5;			/* (2 * 5) evaluates to 10, c is 10 */
-c = (0 < 1);		/* (0 < 1) evaluates to true, c is 1 */
-
-a = (b =@\,@= (c = d));	/* Wat? */
-\end{lstlisting}
-	\end{uncoverenv}
-\end{frame}
-\begin{frame}[fragile]{Syntatic sugar}
-	It is common that the expression on the right side of an assignment contains the variable it is assigned to.\\
-	To avoid redundancy, C offers the following short forms:\\\ \\
-	\begin{lstlisting}[numbers=none]
-a = a + 4;	/* old and busted */
-a += 4;		/* new hotness, a = a + 4; */
-a -= 4;		/* a = a - 4; */
-a *= b;		/* a = a * b; */
-c /= 42;	/* c = c / 42; */
-d %= 2;		/* d = d % 2; */
-\end{lstlisting}
-\end{frame}
-\begin{frame}[fragile]{C++}
-	To increment (+1) and decrement (-1) a variable, there is an even shorter shortform:
-	\begin{lstlisting}[numbers=none]
-int C = 42;
-C++;	/* C += 1; */
-++C;	/* C += 1; */
-C--;	/* C -= 1; */
-\end{lstlisting}
-\ \\\ \\C++ expressions are evaluated before the increment while ++C increments first (the same applies on C$--$):
-	\begin{lstlisting}[numbers=none]
-int C = 42;
-int a = C++;	/* a is 42 */
-int b = ++C;	/* b is 44 */
-\end{lstlisting}
-\end{frame}
 \section{Exercise}
 \subsection{}
-\begin{frame}{Calculator light}
+\begin{frame}{Calculator Light}
 	\begin{itemize}
-		\item Write a Program that asks the user for two decimal numbers and prints their sum, difference, product, integer quotient and remainder.
-		\item \textbf{Experts:} Let the program additionally print the actual quotient.
+		\item Write a program that asks the user for two decimal numbers and prints their sum, difference, product, integer quotient and remainder.
+		\item \textbf{Experts}: Implement a "real" division instead.
 	\end{itemize}
 \end{frame}
-\begin{frame}{Desrever}
+\begin{frame}{Geometry}
 	\begin{itemize}
-		\item Write a Program that asks the user for 5 characters and prints them in reversed order.
-	\end{itemize}
-\end{frame}
-\begin{frame}{You spin me round}
-	\begin{itemize}
-		\item Write a Program that calculates the area of a circle.\\(Let's assume $\pi$ == 3.14)
-		\item \textbf{Experts:} Let the program additionally calculate the circumference.
+		\item Write a program that asks for a radius and calculates the area of the corresponding circle. (Let's assume $\pi$ == 3.14)
+		\item \textbf{Experts}: ask for an additional number. Print 1, if the area is below that number, else print zero.
 	\end{itemize}
 \end{frame}
 % nothing to do from here on
