@@ -16,6 +16,25 @@
 	showspaces = false,
 	showtabs = false,
 	showstringspaces = false,
-	tabsize = 4,
-	escapechar = @
+	escapechar = @,
+	belowskip=-1.5em
 }
+
+\def\ContinueLineNumber{\lstset{firstnumber=last}}
+\def\StartLineAt#1{\lstset{firstnumber=#1}}
+\let\numberLineAt\StartLineAt
+
+\makeatletter
+\def\beamer@verbatimreadframe{%
+	\begingroup%
+	\let\do\beamer@makeinnocent\dospecials%
+	\count@=127%
+	\@whilenum\count@<255 \do{%
+		\advance\count@ by 1%
+		\catcode\count@=11%
+	}%
+	\beamer@makeinnocent\^^L% and whatever other special cases
+	\beamer@makeinnocent\^^I% <-- PATCH: allows tabs to be written to temp file
+	\endlinechar`\^^M \catcode`\^^M=12%
+	\@ifnextchar\bgroup{\afterassignment\beamer@specialprocessframefirstline\let\beamer@temp=}{\beamer@processframefirstline}}%
+\makeatother
