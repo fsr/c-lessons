@@ -32,7 +32,7 @@
 		\item Computer interpretes them as different data types
 	\end{itemize}
 \end{frame}
-\begin{frame}[fragile]{Use}
+\begin{frame}[fragile]{Usage}
 	Declaration:
 	\begin{lstlisting}[numbers=none,basicstyle=\itshape\footnotesize]
 type identifier;
@@ -82,10 +82,15 @@ int a, b = 23;
 \subsection{}
 \begin{frame}[fragile]{Integer numbers}
 	\begin{itemize}
-		\item Keywords: \textit{int}, \textit{short}, \textit{long}
+		\item Keywords: \textit{int} (type) and \textit{short/long, (un)signed} (type
+		 modifiers)
 		\item Stored as a binary number with fixed length
-		\item Can be \textit{signed}(default) or \textit{unsigned}
-		\item Actual size of \textit{int}, \textit{short}, \textit{long} depends on architechture
+		\item The default data type, implicitly used if no data type is specified
+		\item \textit{signed/unsigned} specifies the range (including or excluding
+		 negative numbers), \textit{signed} is the default and can be left out
+		\item \textit{short/long} specifies the size of the integer
+		\item Actual size of a normal, \textit{short} or \textit{long int} depends on
+		 architecture
 	\end{itemize}\ \\
 	\ \\
 	Example (64 Bit):
@@ -100,25 +105,26 @@ unsigned short b;					/* Range: 0 to 65.535 */
 		\item Stored as specified in \textit{IEEE 754 Standard} TL;DR
 		\item Special values for $\infty$, $-\infty$, NaN
 		\item Useful for fractions and very large numbers
-		\item Type a decimal point instead of a comma!
+		\item Type a decimal point instead of a comma! (C was originally developed
+		 in the USA)
 	\end{itemize}\ \\
 	\ \\
 	Example:
 	\begin{lstlisting}[numbers=none]
 float x = 0.125;			/* Precision: 7 to 8 digits */
-doubla y= 111111.111111;	/* Precision: 15 to 16 digits */
+double y = 111111.111111;	/* Precision: 15 to 16 digits */
 \end{lstlisting}
 \end{frame}
 \begin{frame}[fragile]{Characters}
 	\begin{itemize}
-		\item Keyword: \textit{char}
-		\item Can be \textit{signed}(default) or \textit{unsigned}	
+		\item Keywords: \textit{char} (type) and \textit{(un)signed} (type modifier)
+		\item \textit{signed/unsigned} same as with \textit{int}
 		\item Size: 1 Byte (8 Bit) on almost every architechture
 		\item Intended to represent a single character
-		\item Stores its \textit{ASCII} code number (e.g. 'A' $\Rightarrow$ 65)
+		\item Stores its \textit{ASCII} value (e.g. 'A' $\Rightarrow$ 65)
 	\end{itemize}\ \\
 	\ \\
-	You can define a char either by its ASCII number or by its symbol:
+	You can define a \textit{char} either with a ASCII value or with a symbol:
 	\begin{lstlisting}[numbers=none]
 char a = 65;
 char b = 'A';	/* use single quotation marks */
@@ -128,7 +134,8 @@ char b = 'A';	/* use single quotation marks */
 \subsection{}
 \begin{frame}{Valid identifiers}
 	\begin{itemize}
-		\item Consist of English letters (no \textit{ß}, \textit{ä}, \textit{ö}, \textit{ü}), numbers and underscore (\_)
+		\item Consist of English letters (not \textit{ß, ä, ö, ü}), numbers and
+		 underscore (\_)
 		\item Start with a letter or underscore
 		\item Are case sensitive (\textit{number} differs from \textit{Number})
 		\item Are unique - must not be redeclared
@@ -163,7 +170,8 @@ volume = (1 / 3) * length * length * height;
 \begin{frame}[fragile]{Scopes}
 	\begin{itemize}
 		\item Program area in which an identifier may be used
-		\item Referring it anywhere else causes compilation errors
+		\item Referring an identifier anywhere else (outside of his scope) causes
+		 compilation errors
 		\item Starts at the line of declaration
 		\item Ends at the end of the block, in which the variable was declared
 	\end{itemize}
@@ -185,19 +193,20 @@ int main(int argc, char *argv[]) {
 	When redeclaring identifiers inside a block, they refer to a new variable:
 	\begin{lstlisting}
 int main(char argc, char *argv[]) {
-	int i = 3;		/* Defining i, it's 4 */
+	int i = 3;		/* Defining i with value 3 */
 	{
-		i = 2;		/* "Outside" i now is 2 */
+		i = 2;		/* "Outside" i is now 2 */
 		int i = 4;	/* New "inside" i */
 		i = 7;		/* Changes "inside" i only */
 	}
-					/* "Outside" i still is 2 */
+					/* "Outside" i is still 2 */
 }
 \end{lstlisting}\ \\
 	\textbf{Style}:\\
 	\begin{itemize}
 		\item Stay in one language (English recommended)
-		\item Decide wheter to use \textit{camelCaseIdentifiers} or \textit{underscore\_identifiers}.\\
+		\item Decide wheter to use \textit{camelCaseIdentifiers} or
+		 \textit{underscore\_identifiers}.\\
 		\item When nesting blocks, intend every inner block by one additional tab!
 	\end{itemize}
 \end{frame}
@@ -216,7 +225,8 @@ a: 3
 b: 5
 c: 7.4
 \end{lstlisting}
-You can insert any amount of placeholders. For each placeholder, you have to pass a value of the corresponding type.
+You can insert any amount of placeholders. For each placeholder, you have to pass a value
+ of the corresponding type.
 \end{frame}
 \begin{frame}{Example placeholders}
 	The placeholder determines how the value is interpreted.
@@ -244,22 +254,25 @@ You can insert any amount of placeholders. For each placeholder, you have to pas
 int i;
 scanf("%d", &i);	
 \end{lstlisting}
-	After calling \textit{scanf()}, the program waits for the user to input a value in the command line.
+	After calling \textit{scanf()}, the program waits for the user to input a value in the
+	 command line.
 	After pressing the \textit{return} key, that value is stored in \textit{i}.
 \end{frame}
 \begin{frame}{Note:}
 	\begin{itemize}
 		\item \textit{scanf()} uses the same placeholders as \textit{printf()}
 		\item You must type an \textit{\&} before each variable identifier \\
-			(will be explained later)
+			(more about this later)
 		\item If you read a number (using \%d, \%u etc.), interpretation
 		\begin{itemize}
-			\item Starts at first digit
-			\item Ends before last non digit character
+			\item starts at first digit
+			\item ends before last non digit character
 		\end{itemize}
-		\item If you use \%c, the first character of the user input is interpreted (this may be a ' ' as well!)
+		\item If you use \%c, the first character of the user input is interpreted (this
+		 may be a ' ' as well!)
 	\end{itemize}
-	Never trust the user: they may enter a blank line while you expect a number, which means your input variable is still undefined!
+	Never trust the user: they may enter a blank line while you expect a number, which
+	 means your input variable is still undefined!
 		
 \end{frame}
 \section{Exercise}
@@ -267,17 +280,21 @@ scanf("%d", &i);
 
 \begin{frame}[fragile]{Hello again!}
 	\begin{itemize}
-		\item Write a program that prints the String "Hello World!" on the command line, using only placeholders in the format string.
-		\item \textbf{Experts:} In leetspeek you say "H3110 W0$|$21d!". Use actual numbers.
+		\item Write a program that prints the String "Hello World!" on the command line,
+		 using only placeholders in the format string.
+		\item \textbf{Experts:} In leetspeek you say "H3110 W0$|$21d!". Use actual
+		 numbers.
 	\end{itemize}
 \end{frame}
 \begin{frame}[fragile]{ASCII code explorer}
 	\begin{itemize}
-		\item Write a program that asks to input a character and prints its ASCII code number
+		\item Write a program that asks to input a character and prints its ASCII code
+		 number
 		\begin{itemize}
 			\item<2-> Hint: it is a matter of interpretation
 		\end{itemize}
-		\item \textbf{Experts}: write a Program that asks the user for 5 characters and prints them in reversed order.
+		\item \textbf{Experts}: write a Program that asks the user for 5 characters and
+		 prints them in reversed order.
 
 	\end{itemize}	
 \end{frame}
