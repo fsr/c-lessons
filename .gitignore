@@ -6,3 +6,7 @@
 *.pdf
 *.vrb
 *.dvi
+*.toc
+*.nav
+*.synctex.gz
+*.snm
