@@ -3,6 +3,7 @@
 
 % meta-information
 \usepackage{tikz}
+\usepackage{hyperref}
 
 \newcommand{\topic}{
     Basic program structure
@@ -69,7 +70,7 @@ $ sudo pacman -S gcc
 \end{frame}
 \begin{frame}{cygwin}
 	\begin{itemize}
-		\item Download installer from \textit{https://cygwin.com/install.html}
+		\item Download installer from \url{https://cygwin.com/install.html}
 		\item Run it
 		\begin{itemize}
 			\item "Install from Internet"
@@ -92,13 +93,13 @@ $ sudo pacman -S gcc
 \begin{frame}[fragile]{The first program}
 	\begin{itemize}
 		\item Create a new file named \textbf{main.c}.
-		\item Open it in your text editor of trust.
+		\item Open it in your text editor of choice.
 		\item Fill it as follows:
 	\end{itemize}
 	\begin{lstlisting}
 #include <stdio.h>
 
-int main(int argc, char *argv[]) {
+int main(void) {
 	printf("Hello World!\n");
 	/* Print "Hello World!" on the
 	   command line */
@@ -138,7 +139,7 @@ $ ./a.exe
 		\begin{lstlisting}
 #include <stdio.h>
 
-int main(int argc, char *argv[]) {
+int main(void) {
 
 	printf("Hello World!\n");
 	/* Print "Hello World!" on the
@@ -162,7 +163,7 @@ int main(int argc, char *argv[]) {
 #include <stdio.h>
 \end{lstlisting}
 	\begin{itemize}
-		\item Includes the \textbf{standard input/output library} (needed for printf, which is defined there) \\ \ \\
+		\item Includes input/output functions (and other usefull utilities) - and therefore  \textit{printf} - from the \textbf{C standard library}\ \\\ \\
 		\item Can also be used to define constants and much more, e.g.
 	\end{itemize}
 \begin{lstlisting}[numbers=none]
@@ -177,11 +178,11 @@ int main(int argc, char *argv[]) {
 	\end{itemize}
 	\StartLineAt{3}
 	\begin{lstlisting}
-int main(int argc, char *argv[]) {
+int main(void) {
 \end{lstlisting}
 	\begin{itemize}
 		\item As a function, \textit{main()} takes parameters
-		\item Get used to \textit{argc} and \textit{argv}, they will be explained later
+		\item Get used to the \textit{void}. It will be explained later
 		\item '$\lbrace$' marks the start of the main function scope
 	\end{itemize}
 \end{frame}
@@ -250,7 +251,7 @@ int main(int argc, char *argv[]) {
 \begin{frame}[fragile]{A few words on style}
 	\begin{itemize}
 		\item There can be multiple statements on one line
-		\item Intendation is not nessessary at all
+		\item Indentation is not nessessary at all
 		\item<2-> \textbf{But}...
 	\end{itemize}
 	\ \\
@@ -258,7 +259,7 @@ int main(int argc, char *argv[]) {
 	\begin{lstlisting}[numbers=none]
 #include <stdio.h>
 int
-main	(int argc, char *argv[]){printf("Hello World!\n");
+main	(        void ){printf("Hello World!\n");
 		// Prints
 /*"Hello World!"			*/
 		return 0;}
@@ -268,7 +269,7 @@ main	(int argc, char *argv[]){printf("Hello World!\n");
 \begin{frame}{Much more enjoyable}
 	\begin{itemize}
 		\item Put each statement on a single line
-		\item Intend every statement in the main function by one tab / 4 \textit{spaces}
+		\item Indent every statement in the main function by one tab / 4 \textit{spaces}
 		\item Use \textit{/* ... */} rather than \textit{// ...}
 		\item Write the main function arguments directly behind \textit{main}
 		\item Leave a \textit{space} between the closing ')' and the opening '\{'
