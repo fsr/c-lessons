@@ -1,0 +1,26 @@
+{
+    "builds": {
+        "pdf": {
+            "source_dir": "latex/slides",
+            "target_dir": "build/pdf",
+            "command": "pdflatex",
+            "files": [
+                "c_advanced_info.tex",
+                "c_info.tex",
+                "c_introduction_info.tex",
+                "development environment.tex"
+            ]
+        },
+        "html": {
+            "source_dir": "latex/slides",
+            "target_dir": "build/html",
+            "command": "htlatex",
+            "files": [
+                "c_advanced_info.tex",
+                "c_info.tex",
+                "c_introduction_info.tex",
+                "development environment.tex"
+            ]
+        }
+    }
+}
