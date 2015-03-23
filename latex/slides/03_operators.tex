@@ -120,11 +120,11 @@ c = (0 < 1);		/* 0 < 1 = true, c = 1, true */
 
 a = (b =@\,@= (c = d));	/* Wat? */
 \end{lstlisting}\ \\
-	\ \\\textit{c++} expressions are evaluated before the increment while \textit{++c} increments first (the same applies on C$--$):
+	\ \\\textit{c++} expressions are evaluated before the increment while \textit{++c} increments first (the same applies on \textit{c$--$} and \textit{$--$c}):
 	\begin{lstlisting}[numbers=none]
 int c = 42;
-int a = c++;	/* a is 42 */
-int b = ++c;	/* b is 44 */
+int a = c++;	/* evaluates to c	   a is 42  c is 43 */
+int b = ++c;	/* evaluates to c + 1  b is 44  c is 44 */
 \end{lstlisting}
 \end{frame}
 \section{Logical operators}
