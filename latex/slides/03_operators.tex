@@ -50,7 +50,7 @@ char b = 2 * a;			/* not 240 */
 \begin{frame}[fragile]{You see, it's not that easy}
 	\begin{itemize}
 		\item Variables may overflow
-		\item You shall not devide integers by zero
+		\item You shall not divide by zero
 		\item Integer division differs from floating point division
 		\item You can use operators between different data types
 		\begin{itemize}
@@ -69,7 +69,7 @@ i1 + s;		/* int and short, result is int */
 i1 / f;		/* result is float, actual division */
 \end{lstlisting}
 \end{frame}
-\begin{frame}[fragile]{Syntatic sugar}
+\begin{frame}[fragile]{Syntactic sugar}
 	As you have seen, you can use any expression on the right side of the assignment operator.\\
 	This expression often contains the variable it is assigned to.\\\ \\
 	To avoid redundancy, C offers the following short forms:\\
@@ -85,6 +85,7 @@ c--;		/* c = c - 1; */
 --c;		/* c = c - 1; */
 \end{lstlisting}
 \end{frame}
+
 \section{Relational operators}
 \subsection{}
 \begin{frame}{The truth about expressions}
@@ -140,7 +141,7 @@ int b = ++c;	/* evaluates to c + 1  b is 44  c is 44 */
 	\centering
 	! \ $>$ \ \&\& \ $>$ \ $||$ 
 \end{frame}
-\begin{frame}[fragile]{Seems logic}
+\begin{frame}[fragile]{Seems logical}
 	\begin{itemize}
 		\item How do you get NAND, NOR and XOR?
 	\end{itemize}
