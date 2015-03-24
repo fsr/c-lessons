@@ -1,0 +1,172 @@
+\input{slides_template}	% nothing to do here
+\input{c_introduction_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Operators
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Overview}
+\subsection{}
+\begin{frame}[fragile]{Let's calc}
+	Each time you type in a value or a variable, it gets evaluated as an expression. You can use operators to make new expressions out of existing ones.
+	\begin{lstlisting}[numbers=none]
+3;				/* value 3 */
+int a = 5; 		/* value 5 */
+int b = a + 3;	/* value 8 */
+\end{lstlisting}
+Got the idea?\\
+\ \\Operators are for calculations, comparisons and more.
+\end{frame}
+\section{Arithmetic operators}
+\subsection{}
+\begin{frame}[fragile]{Back to School}
+	\begin{itemize}
+		\item +, -, *, / as all of you should know
+		\item \% is the modulo (remainder) operator
+		\item *, /, \% get evaluated before +, -
+		\item Operations in (  ) are of higher precedence
+	\end{itemize}
+	\ \\\ \\Something to try out and think about:
+	\begin{lstlisting}[numbers=none]
+char a = 120;	/* 120 */
+char b = 2 * a;			/* not 240 */
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{You see, it's not that easy}
+	\begin{itemize}
+		\item Variables may overflow
+		\item You shall not devide integers by zero
+		\item Integer division differs from floating point division
+		\item You can use operators between different data types
+		\begin{itemize}
+			\item[--] mixing different sizes
+			\item[--] mixing integer and floating point variables
+		\end{itemize}
+	\end{itemize}
+	\ \\\ \\
+	\begin{lstlisting}[numbers=none]
+int i1 = 42, i2 = 23;
+short s = 13;
+float f = 3.14;
+
+i1 / i2;	/* results in 1, not a real division */
+i1 + s;		/* int and short, result is int */
+i1 / f;		/* result is float, actual division */
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{Syntatic sugar}
+	As you have seen, you can use any expression on the right side of the assignment operator.\\
+	This expression often contains the variable it is assigned to.\\\ \\
+	To avoid redundancy, C offers the following short forms:\\
+	\begin{lstlisting}[numbers=none]
+a += 4;		/* a = a + 4; */
+a -= 4;		/* a = a - 4; */
+a *= b;		/* a = a * b; */
+b /= 42;	/* b = b / 42; */
+b %= 2;		/* b = b % 2; */
+c++;		/* c = c + 1; */
+++c;		/* c = c + 1; */
+c--;		/* c = c - 1; */
+--c;		/* c = c - 1; */
+\end{lstlisting}
+\end{frame}
+\section{Relational operators}
+\subsection{}
+\begin{frame}{The truth about expressions}
+	Expressions can also be evaluated to truth values.\\
+	If a value or a variable equals 0, its corresponding truth value is \textit{false}. Otherwise it's \textit{true}.\\
+	The representations of \textit{true} and \textit{false} are 0 and 1.\\
+	An expression containing relational operators gets evaluated to such a truth value.\\
+	\ \\Relational operators:
+	\begin{itemize}
+		\item $<$, $>$, $<$=, $>$=
+		\item == for "equal to"
+		\item != for "not equal to"
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Do not get confused}
+	Imagine the following
+	\begin{lstlisting}[numbers=none]
+(5 < 7) =@\,@= 1;	/* evaluated to 1 */
+\end{lstlisting}
+\ \\\ \\Why?
+\begin{itemize}
+	\item<2-> (5 $<$ 7) is \textbf{true} $\rightarrow$ \textbf{1}
+	\item<3-> 1 == 1 is \textbf{true} $\rightarrow$ \textbf{1}
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{A sign meant...}
+	Assignments are expressions that get evaluated and have a truth value, too.
+	Consider:
+		\begin{lstlisting}[numbers=none]
+c = 0;				/* false */
+c = 2 * 5;			/* 2 * 5 = 10, c = 10, true */
+c = (0 < 1);		/* 0 < 1 = true, c = 1, true */
+
+a = (b =@\,@= (c = d));	/* Wat? */
+\end{lstlisting}\ \\
+	\ \\\textit{c++} expressions are evaluated before the increment while \textit{++c} increments first (the same applies on \textit{c$--$} and \textit{$--$c}):
+	\begin{lstlisting}[numbers=none]
+int c = 42;
+int a = c++;	/* evaluates to c	   a is 42  c is 43 */
+int b = ++c;	/* evaluates to c + 1  b is 44  c is 44 */
+\end{lstlisting}
+\end{frame}
+\section{Logical operators}
+\subsection{}
+\begin{frame}{Boolean arithmetic}
+	Truth values can be connected by boolean operators resulting in a new truth value.
+	\begin{itemize}
+		\item \&\& for AND (results in \textbf{1} if both operands are true, else \textbf{0})
+		\item $||$ for OR (results in \textbf{1} if at least one operator is true, else \textbf{0})
+		\item ! for NOT (results in \textbf{1} if the operand is false, else \textbf{0})
+	\end{itemize}
+	\ \\\ \\Precedence order:\\
+	\centering
+	! \ $>$ \ \&\& \ $>$ \ $||$ 
+\end{frame}
+\begin{frame}[fragile]{Seems logic}
+	\begin{itemize}
+		\item How do you get NAND, NOR and XOR?
+	\end{itemize}
+	\begin{uncoverenv}<2->
+		\begin{lstlisting}[numbers=none]
+int a, b;
+...
+!(a && b);	/* NAND */
+!(a || b);	/* NOR */
+a != b;		/* XOR */
+\end{lstlisting}
+	\end{uncoverenv}
+\end{frame}
+\section{Exercise}
+\subsection{}
+\begin{frame}{Calculator Light}
+	\begin{itemize}
+		\item Write a program that asks the user for two decimal numbers and prints their sum, difference, product, integer quotient and remainder.
+		\item \textbf{Experts}: Implement a "real" division instead.
+	\end{itemize}
+\end{frame}
+\begin{frame}{Geometry}
+	\begin{itemize}
+		\item Write a program that asks for a radius and calculates the area of the corresponding circle. (Let's assume $\pi$ == 3.14)
+		\item \textbf{Experts}: ask for an additional number. Print 1, if the area is below that number, else print zero.
+	\end{itemize}
+\end{frame}
+% nothing to do from here on
+\end{document}
