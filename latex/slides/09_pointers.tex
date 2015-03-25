@@ -143,8 +143,8 @@ int calcB(char hexString[]) { ... }	/* returns B value */
 	\end{textblock}
 	\ \\\ \\\ \\\ \\\ \\\ \\\ \\\ \\\ \\
 	\begin{itemize}[<+->]
-		\item You'll have to pass the adress of this variable
-		\item This adress is stored in a \textit{pointer} variable
+		\item You'll have to pass the address of this variable
+		\item This address is stored in a \textit{pointer} variable
 		\item This method is called \textit{call by reference}
 	\end{itemize}
 \end{frame}
@@ -153,7 +153,7 @@ int calcB(char hexString[]) { ... }	/* returns B value */
 \begin{frame}[fragile]{Operators}
 	\begin{itemize}
 		\item To declare a Pointer, use the \textit{dereference operator} \textbf{*}
-		\item To get the adress of a variable, C comes with the \textit{adress operator} \textbf{\&}
+		\item To get the address of a variable, C comes with the \textit{adress operator} \textbf{\&}
 		\item To access the variable a pointer points to, dereference it with the \textit{dereference operator} \textbf{*}
 	\end{itemize}
 	\begin{lstlisting}[numbers=none]
@@ -172,7 +172,7 @@ int* pa = &a;	/* define pa as pointer to a */
 (*pa)--;		/* decrement a */
 \end{lstlisting}
 \ \\\ \\
-If you havent used the parentheses, you in-/decremented the pointer, not the variable it points to. Congratulations, you just invented pointer arithmetic but we'll talk later about that.
+If you had not used the parentheses, you would have in-/decremented the pointer, not the variable it points to. Congratulations, you just invented pointer arithmetic but we will talk later about that.
 \end{frame}
 \begin{frame}[fragile]{Back to RGB}
 	Now we can think of the RGB function as one function, taking the hexString and 3 Pointers:
@@ -229,8 +229,8 @@ int* someFunction() {
 \section{Pointer arithmetic}
 \subsection{}
 \begin{frame}[fragile]{p++}
-	You can in-/decrement a pointer. If you do so, the adress it points to will change.\\
-	The adress changes by the size of the pointer type.
+	You can in-/decrement a pointer. If you do so, the address it points to will change.\\
+	The address changes by the size of the pointer type.
 	\begin{columns}[T]
 		\column{.5\textwidth}
 		\begin{lstlisting}[numbers=none]
@@ -309,9 +309,10 @@ printf("%d %d\n", *pleet, *(pleet + 2));
 $ ./a.out string1 longer_string2
 \end{lstlisting}
 	\begin{itemize}
-		\item They are stored in \textit{argv}
+		\item They are stored in \textit{argv}\footnote{Short for \textit{argument value}}
 		\item \textit{argv} is an array of pointers to the first character of a string
-		\item \textit{argc} is the count of strings you passed
+		\item \textbf{Caution:} \textit{argv[0]} is the name by which you called the program
+		\item \textit{argc}\footnote{Short for \textit{argument count}} is the number of strings stored in \textit{argv}
 	\end{itemize}
 \end{frame}
 \section{Exercise}
@@ -319,7 +320,7 @@ $ ./a.out string1 longer_string2
 \begin{frame}{Hello, is it me you're looking for?}
 	\begin{itemize}
 		\item Write a program wich is greeting the name you pass to the main function.
-		\item \textbf{Experts:} The Program should write a greeting for each name, that's passed.
+		\item \textbf{Experts:} The Program should write a greeting for each name, that is passed.
 	\end{itemize}
 \end{frame}
 \begin{frame}{Printing strings}

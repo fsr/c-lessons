@@ -164,7 +164,7 @@ int *new_block = malloc(sizeof(int));
 	The adress of that memory block is stored in an \textit{int} pointer.
 	\end{onlyenv}
 	\only<5>{\textit{malloc()} just needs to know the size of the block it reserves. \\
-		Let's allocate a \textit{long} variable as well.}
+		Let us allocate a \textit{long} variable as well.}
 \end{frame}
 \begin{frame}[fragile]{\textit{malloc()} in detail}
 	The function declaration might be a little bit confusing:
@@ -179,10 +179,11 @@ void *malloc(size_t size);
 		\item A \textit{void} pointer is returned since \textit{malloc()} does not know how you want to use the reserved block. By assigning it to a regular pointer variable it is automatically converted to that type.
 	\end{itemize}
 \end{frame}
-\begin{frame}[fragile]{Cast or don't cast?}
+
+\begin{frame}[fragile]{Casting or not casting\dots}
 	Some people claim you had to explicitly \textit{cast} the return value of \textit{malloc()}.\\
 	\ \\
-	\only<2->{\textbf{They are lying.}} \ \\
+	\only<2->{\textbf{This is outdated.}} \ \\
 	\ \\
 	\begin{onlyenv}<3->
 		\begin{lstlisting}[numbers=none]
@@ -192,18 +193,19 @@ int *block = malloc((sizeof(int));
 	\begin{lstlisting}[numbers=none]
 int *block = (int*) malloc((sizeof(int));
 \end{lstlisting}
-	while the second one contains a reduntant \textit{cast} and if you want to change the type of \textit{block} later, you will have to hit more keys. Consider:
+	while the second one contains a redundant \textit{cast} and if you want to change the type of \textit{block} later, you will have to hit more keys. Consider:
 	\begin{lstlisting}[numbers=none]
-int *block = malloc(sizeof *block); /* for lazy people */
+int *block = malloc(sizeof *block); /* gold standard */
 \end{lstlisting}
 	\end{onlyenv}
 \end{frame}
-\begin{frame}{Cast or don't cast?}
+
+\begin{frame}{\dots that is the question}
 	\huge
 	\centering
 	Confused? \\
 	\ \\
-	\only<2->{Forget about type casts.}
+	\only<2->{\large Do not typecast the result of malloc() \& Co.}
 \end{frame}
 \begin{frame}[fragile]{Tidying up}
 	Unlike normally declared variables, dynamically allocated storage is not automatically released when the function returns.
@@ -222,7 +224,7 @@ free(void *ptr);
 
 \section{Dynamic arrays}
 \subsection{}
-\begin{frame}[fragile]{Reserving large junks}
+\begin{frame}[fragile]{Reserving large chunks}
 	To get a dynamic array of a certain \textit{type} and \textit{length}, you have to
 	\begin{itemize}
 		\item Pass the block size $length * sizeof(type)$ to \textit{malloc()}
@@ -231,14 +233,14 @@ free(void *ptr);
 	\ \\
 	\textit{int} array with 42 elements:
 	\begin{lstlisting}[numbers=none]
-int *field = malloc(42 * sizeof(int));
+int *field = malloc(42 * sizeof(*field));
 \end{lstlisting}\ \\
 	\ \\
 	Since the size of your dynamically allocated array is unknown at compile time, you cannot use \textit{sizeof} to get its length. Save it in its own variable!\\
 	\ \\
 	With the help of pointer arithmetic, you can use the dynamic array like a "normal" one.
-	
 \end{frame}
+
 \begin{frame}[fragile]{The fancy alternative}
 		\begin{lstlisting}[numbers=none]
 void *calloc(size_t nmemb, size_t size);
@@ -250,16 +252,17 @@ void *calloc(size_t nmemb, size_t size);
 	\ \\
 	\begin{lstlisting}[numbers=none]
 int field_length = 42;
-int *field = malloc(field_length * sizeof(int));
+int *field = malloc(field_length * sizeof(*field));
 for (int i = 0; i < field_length; i++)
 	field[i] = 0;
 \end{lstlisting}
 	\center	$\downarrow$ Feel the difference $\downarrow$
 	\begin{lstlisting}[numbers=none]
 int field_length = 42;
-int *field = calloc(field_length, sizeof(int));
+int *field = calloc(field_length, sizeof(*field));
 \end{lstlisting}
 \end{frame}
+
 \begin{frame}[fragile]{Resizing arrays}
 	Now we come to the point that motivated us to use dynamic arrays:\\
 	\ \\
@@ -304,7 +307,7 @@ struct int_array {
 	\begin{lstlisting}[numbers=none]
 char conststr[] = "Hello";			   /* not of much use */
 int bufsize = strlen(conststr) + 1;	   /* add '\0' char */
-char *str = calloc(bufsize, sizeof(char));
+char *str = calloc(bufsize, sizeof(*str));
 str = strncpy(str, conststr, bufsize); /* ready to go */
 \end{lstlisting}\ \\
 	\ \\
