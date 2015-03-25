@@ -22,20 +22,20 @@
 
 \section{Introduction}
 \subsection{}
-\begin{frame}{Don't reinvent the wheel}
-	If you split your problem into sub-problems and solve each of them in a seperate function, you're on a good way. \\ \ \\
+\begin{frame}{Do not reinvent the wheel}
+	If you split your problem into sub-problems and solve each of them in a separate function, you are on a good way. \\ \ \\
 	However, many of the very basic sub-problems have already been solved ages ago. \\ \ \\
 	These solution are provided in \textit{libraries} such as the \textit{glibc} used by the \textit{gcc}. \\ \ \\
-	Library implemetations are safer and more efficient than yours will ever be, \textit{plus} you save a lot of time using them.
+	Library implementations are safer and more efficient than yours will ever be, \textit{plus} you save a lot of time using them.
 \end{frame}
-\begin{frame}[fragile]{The Hitchhiker's Guide to the standard library}
+\begin{frame}[fragile]{The Hitchhikers Guide to the standard library}
 	The functions are \textit{declared} in a \textit{header file}. \\
 	Each header file has a certain name and the file extension \textit{.h}. \\ \ \\
 	The \textit{include} preprocessor statement puts them into your program, e.g.
 \begin{lstlisting}[numbers=none]
 #include <stdio.h>	/* We have done that so many times */
 \end{lstlisting} \ \\ \ \\
-	The actual function implementation is linked dynamically to your program during runtime. Let's not care about that. \\ \ \\
+	The actual function implementation is linked dynamically to your program during runtime. Let us not care about that for now. \\ \ \\
 	With less than 30 header files, the C library is rather small. \\
 	We will go through the ones that might be the most useful to you.
 \end{frame}
@@ -44,13 +44,13 @@
 \begin{frame}[fragile]{assert.h}
 	 \begin{itemize}
 	 	\item Contains the \textit{assert()} macro, witch evaluates the truth value of an expression
-	 	\item If it's true, nothing happens
+	 	\item If it is true, nothing happens
 	 	\item Else the program aborts and an error message is printed
 	 \end{itemize} \ \\ \ \\
 	 $\rightarrow$ useful to avoid undefined behaviour / worse errors at runtime \\ \ \\
 	 We can also use it if we just want to test things:
 	 \begin{lstlisting}[numbers=none]
-unisgned int input;
+unsigned int input;
 printf("Enter a one-digit decimal number:\n");
 scanf("%d", &input);
 assert(input < 10);
@@ -58,8 +58,8 @@ assert(input < 10);
 \end{frame}
 \begin{frame}[fragile]{math.h}
 	\begin{itemize}
-		\item Declares a lot of mathematic functions
-		\item Finally you're able to calculate square roots, logarithms, etc.
+		\item Declares a lot of mathematical functions
+		\item Finally you are able to calculate square roots, logarithms, etc.
 		\item Most of those functions have \textit{double} arguments and return values
 	\end{itemize} \ \\ \ \\
 	If you use functions from \textit{math.h}, add the \textit{-lm} as the \textbf{last} option to \textit{gcc} to avoid errors:
@@ -90,7 +90,7 @@ puts("Hello World!");
 		\item Search and sorting function
 		\item Dynamic memory management
 	\end{itemize}
-		\dots and more things you haven't even heard of
+		\dots and more things you have not even heard of (yet)
 \end{frame}
 \begin{frame}{string.h}
 	\begin{uncoverenv}<2->
@@ -172,7 +172,7 @@ $ man man
 \end{frame}
 \begin{frame}{Math exam}
 	\begin{itemize}
-		\item Write a program that asks the user to solve some simple mathematic tasks.
+		\item Write a program that asks the user to solve some simple mathematical tasks.
 		\item If the user answers wrong, the program should abort with an error.
 		\begin{itemize}
 			\item<2-> Remember the \textit{assert()} macro?

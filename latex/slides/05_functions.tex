@@ -153,7 +153,7 @@ int fib(int n) {
 	\begin{lstlisting}[numbers=none]
 fib_5();
 \end{lstlisting} \ \\ \ \\
-	Arguments must be written inside the parentheses, seperated by commas:
+	Arguments must be written inside the parentheses, separated by commas:
 	\begin{lstlisting}[numbers=none]
 fib(5);
 \end{lstlisting} \ \\ \ \\
@@ -280,8 +280,8 @@ void f(int i) {
 \subsection{}
 \begin{frame}[fragile]{Recursive functions}
 	\begin{itemize}
-		\item Functions calling theirselves
-		\item Used to implement many mathematic algorithms
+		\item Functions calling themselves
+		\item Used to implement many mathematical algorithms
 		\item Easy to think up, but they run slow
 	\end{itemize} \ \\ \ \\
 	Careful:
@@ -290,7 +290,7 @@ void foo() {
 	foo();
 }
 \end{lstlisting}
-	creates an infinite loop. \\
+	creates an infinite loop.\footnote{And, at some point, a program crash (\textit{stack overflow})} \\
 	There must always be an \textit{exit condition} if using recursion!
 \end{frame}
 \begin{frame}[fragile]{Exponentiation}
@@ -312,9 +312,9 @@ int power(int base, int exponent) {
 \begin{frame}{Saving lines in Calculator}
 	\begin{itemize}
 		\item Take the calculator task and unburden the switch by adding functions for each operation.\\
-		Now delete the \textit{substract} and the \textit{divide} function (and find a way the calculator works anyway).
+		Now delete the \textit{subtract} and the \textit{divide} function (and find a way the calculator works anyway).
 		\begin{itemize}
-			\item<2-> Hint: How can you substract through addition?
+			\item<2-> Hint: How can you subtract through addition?
 			\item<3-> Hint: You can pass any expression as a parameter.
 		\end{itemize}
 		\item \textbf{Experts:} add the functionality to exponentiate.\\
