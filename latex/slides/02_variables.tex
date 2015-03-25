@@ -75,8 +75,8 @@ int a = 23, b = 23;
 	\begin{lstlisting}[numbers=none]
 int a, b = 23;
 \end{lstlisting}
-	
-\end{columns}
+\end{columns}\ \\ \ \\
+$\rightarrow$ Avoid multiple variable definitions at one line!
 \end{frame}
 \section{Data types}
 \subsection{}
@@ -114,7 +114,7 @@ double y = 111111.111111;	/* Precision: 15 to 16 digits */
 		\item Keyword: \textit{char}
 		\item Can be \textit{signed}(default) or \textit{unsigned}	
 		\item Size: 1 Byte (8 Bit) on almost every architecture
-		\item Indented to represent a single character
+		\item Intended to represent a single character
 		\item Stores its \textit{ASCII} number (e.g. 'A' $\Rightarrow$ 65)
 	\end{itemize}\ \\
 	\ \\
@@ -206,7 +206,8 @@ int main(char argc, char *argv[]) {
 \begin{frame}[fragile]{\textit{printf()} with placeholders}
 	The string you pass to \textit{printf} may contain placeholders:
 	\begin{lstlisting}[numbers=none]
-int a = 3, b = 5;
+int a = 3;
+int b = 5;
 float c = 7.4;
 printf("a: %d\n", a);
 printf("b: %d\nc: %f\n", b, c);
