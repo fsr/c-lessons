@@ -14,7 +14,7 @@
         "html": {
             "source_dir": "latex/slides",
             "target_dir": "build/html",
-            "command": "htlatex",
+            "command": "hevea",
             "files": [
                 "c_advanced_info.tex",
                 "c_info.tex",
