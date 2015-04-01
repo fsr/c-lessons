@@ -23,7 +23,16 @@
 \end{frame}
 
 \begin{frame}
-	\begin{tikzpicture}[scale=.8]
+	\begin{tikzpicture}[scale=.73,font=\scriptsize]
+			
+		\draw (-2.5,.1) -- (-1,.1);
+		\draw (-2.5,.1) -- (-2.5,.45);
+		\draw (-2.5,.45) -- (-1,.45);
+		\draw (-1,.45) -- (-1,.1);
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (-1.18,.275) {};
+		\node at (-2.6,.275) [right] {head};
+		\draw (-1.05,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (0,1);
+	
 		\draw (0,0) -- (0,1);
 		\draw (0,0) -- (2,0);
 		\draw (0,1) -- (2,1);
@@ -33,14 +42,18 @@
 		\draw (.1,.1) -- (1.9,.1);
 		\draw (.1,.45) -- (1.9,.45);
 		\draw (1.9,.1) -- (1.9,.45);
+		\node at (0,.275) [right] {next};
 		
-		\node[circle, thick, draw=black, minimum size=6pt, inner sep = 0pt] at (1.72,.275) {};
-		\draw (1.85,.275) edge[out=0,in=135,->,shorten >=.2ex] (3,1);
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (1.72,.275) {};
+		\begin{uncoverenv}<-1>
+			\draw (1.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (3,1);
+		\end{uncoverenv}
 		
 		\draw (.1,.55) -- (.1,.9);
 		\draw (.1,.55) -- (1.9,.55);
 		\draw (.1,.9) -- (1.9,.9);
 		\draw (1.9,.55) -- (1.9,.9);
+		\node at (0,.725) [right] {value = ...};
 		
 		
 		\draw (3,0) -- (3,1);
@@ -52,14 +65,17 @@
 		\draw (3.1,.1) -- (4.9,.1);
 		\draw (3.1,.45) -- (4.9,.45);
 		\draw (4.9,.1) -- (4.9,.45);
-		\node[circle, thick, draw=black, minimum size=6pt, inner sep = 0pt] at (4.72,.275) {};
-		\draw (4.85,.275) edge[out=0,in=135,->,shorten >=.2ex] (6,1);
+		\node at (3,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (4.72,.275) {};
+		\draw (4.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (6,1);
 		
 		
 		\draw (3.1,.55) -- (3.1,.9);
 		\draw (3.1,.55) -- (4.9,.55);
 		\draw (3.1,.9) -- (4.9,.9);
 		\draw (4.9,.55) -- (4.9,.9);
+		\node at (3,.725) [right] {value = ...};
 		
 		
 		\draw (6,0) -- (6,1);
@@ -71,13 +87,16 @@
 		\draw (6.1,.1) -- (7.9,.1);
 		\draw (6.1,.45) -- (7.9,.45);
 		\draw (7.9,.1) -- (7.9,.45);
-		\node[circle, thick, draw=black, minimum size=6pt, inner sep = 0pt] at (7.72,.275) {};
-		\draw (7.85,.275) edge[out=0,in=135,->,shorten >=.2ex] (9,1);
+		\node at (6,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (7.72,.275) {};
+		\draw (7.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (9,1);
 		
 		\draw (6.1,.55) -- (6.1,.9);
 		\draw (6.1,.55) -- (7.9,.55);
 		\draw (6.1,.9) -- (7.9,.9);
 		\draw (7.9,.55) -- (7.9,.9);
+		\node at (6,.725) [right] {value = ...};
 		
 		
 		\draw (9,0) -- (9,1);
@@ -89,12 +108,52 @@
 		\draw (9.1,.1) -- (10.9,.1);
 		\draw (9.1,.45) -- (10.9,.45);
 		\draw (10.9,.1) -- (10.9,.45);
-		\node[circle, thick, draw=black, minimum size=6pt, inner sep = 0pt] at (10.72,.275) {};
+		\node at (9,.275) [right] {next};
+		
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (10.72,.275) {};
+		\draw (10.85,.275) edge[thick,out=0,in=155,->,shorten >=.2ex] (11.5,.45);
 		
 		\draw (9.1,.55) -- (9.1,.9);
 		\draw (9.1,.55) -- (10.9,.55);
 		\draw (9.1,.9) -- (10.9,.9);
 		\draw (10.9,.55) -- (10.9,.9);
+		\node at (9,.725) [right] {value = ...};
+
+		\draw (11.5,.1) -- (11.5,.45);
+		\draw (11.5,.1) -- (12.5,.1);
+		\draw (11.5,.45) -- (12.5,.45);
+		\draw (12.5,.1) -- (12.5,.45);
+		\node at (11.4,.265) [right] {NULL};
+		
+		
+		\begin{uncoverenv}<-2>
+			\draw (2,-.5) -- (2,-1.5);
+			\draw (2,-.5) -- (4,-.5);
+			\draw (4,-.5) -- (4,-1.5);
+			\draw (4,-1.5) -- (2,-1.5);
+			
+			\draw (2.1,-.6) -- (2.1, -.95);
+			\draw (2.1,-.6) -- (3.9,-.6);
+			\draw (3.9,-.6) -- (3.9,-.95);
+			\draw (3.9,-.95) -- (2.1,-.95);
+			\node at (2,-.775) [right] {value = ...};
+			
+			
+			\draw (2.1, -1.05) -- (2.1, -1.4);
+			\draw (2.1,-1.05) -- (3.9,-1.05);
+			\draw (3.9,-1.05) -- (3.9,-1.4);
+			\draw (3.9,-1.4) -- (2.1,-1.4);
+			\node at (2,-1.225) [right] {next};
+			\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (3.72,-1.225) {};
+			
+			
+		\end{uncoverenv}
+		\begin{uncoverenv}
+		\draw [thick,blue,->,shorten >=.2ex] (3.85,-1.225) to[out=0,in=-35] (4,-.4) to[out=180-35,in=-45] (2.5,-.1) to[out=180-45,in=135] (3,1);
+		\draw [thick,red,->,shorten >=.2ex] (1.72,.145) to[out=-90,in=135] (2,-.5);
+		\end{uncoverenv}
+		
 		
 	\end{tikzpicture}
 \end{frame}
