@@ -14,7 +14,10 @@
                 "07_arrays.tex",
                 "08_complex_data_types.tex",
                 "09_pointers.tex",
-                "10_dynamic_storage.tex"
+                "10_dynamic_storage.tex",
+                "c_advanced_info.tex",
+                "c_info.tex",
+                "c_introduction_info.tex"
             ]
         },
         "html": {
@@ -31,7 +34,10 @@
                 "07_arrays.tex",
                 "08_complex_data_types.tex",
                 "09_pointers.tex",
-                "10_dynamic_storage.tex"
+                "10_dynamic_storage.tex",
+                "c_advanced_info.tex",
+                "c_info.tex",
+                "c_introduction_info.tex"
             ]
         }
     }
