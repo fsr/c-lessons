@@ -22,7 +22,8 @@
 	\tableofcontents
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Single-chained lists}
+
 	\begin{tikzpicture}[scale=.73,font=\scriptsize]
 			
 		\draw (-2.5,.1) -- (-1,.1);
@@ -45,8 +46,11 @@
 		\node at (0,.275) [right] {next};
 		
 		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (1.72,.275) {};
-		\begin{uncoverenv}<-1>
+		\begin{uncoverenv}<-3>
 			\draw (1.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (3,1);
+		\end{uncoverenv}
+		\begin{uncoverenv}<4>
+			\draw (1.85,.275) edge[red,thick,out=0,in=135,->,shorten >=.2ex] (3,1);
 		\end{uncoverenv}
 		
 		\draw (.1,.55) -- (.1,.9);
@@ -127,7 +131,7 @@
 		\node at (11.4,.265) [right] {NULL};
 		
 		
-		\begin{uncoverenv}<-2>
+		\begin{uncoverenv}<2->
 			\draw (2,-.5) -- (2,-1.5);
 			\draw (2,-.5) -- (4,-.5);
 			\draw (4,-.5) -- (4,-1.5);
@@ -149,9 +153,11 @@
 			
 			
 		\end{uncoverenv}
-		\begin{uncoverenv}
-		\draw [thick,blue,->,shorten >=.2ex] (3.85,-1.225) to[out=0,in=-35] (4,-.4) to[out=180-35,in=-45] (2.5,-.1) to[out=180-45,in=135] (3,1);
-		\draw [thick,red,->,shorten >=.2ex] (1.72,.145) to[out=-90,in=135] (2,-.5);
+		\begin{uncoverenv}<3->
+			\draw [thick,blue,->,shorten >=.2ex] (3.85,-1.225) to[out=0,in=-35] (4,-.4) to[out=180-35,in=-45] (2.5,-.1) to[out=180-45,in=135] (3,1);
+		\end{uncoverenv}
+		\begin{uncoverenv}<5>
+			\draw [thick,red,->,shorten >=.2ex] (1.72,.145) to[out=-90,in=135] (2,-.5);
 		\end{uncoverenv}
 		
 		
