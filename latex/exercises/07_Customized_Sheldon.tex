@@ -1,0 +1,43 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Customized Sheldon} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Easy} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Variables, input/output, loops} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{Looping around} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+\begin{itemize}
+	\item Write a program, that lets the user decide how often \textit{"Knock, knock, knock - Penny?"} is printed.
+	\item \textbf{Experts:} Let the program additionally ask how often Sheldon knocks each time.
+	\begin{itemize}
+		\item Take care, that the first "Knock"\ starts with a Capital K
+	\end{itemize}
+\end{itemize}	
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\ \\\ \\\ \\\ \\\ \\
+\section*{Hints}
+	\begin{itemize}
+		\item \textbf{Experts:} You can use loops inside loops
+		\item \textbf{Experts:} You should use a different index for the inner loop
+	\end{itemize}
+ 
+\end{document}

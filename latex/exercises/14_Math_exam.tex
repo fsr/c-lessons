@@ -1,0 +1,40 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Math exam} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Hard} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Standard library} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{Learn to work with the standard library} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+\begin{itemize}
+	\item Write a program that asks the user to solve some simple mathematic tasks.
+	\item If the user answers wrong, the program should abort with an error.
+	\item \textbf{Experts}: At the end, print the time it took the user to answer all the questions.
+\end{itemize}	
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\ \\\ \\\ \\\ \\\ \\
+\section*{Hints}
+	\begin{itemize}
+		\item Remember the \textit{assert()} macro?
+	\end{itemize}
+ 
+\end{document}

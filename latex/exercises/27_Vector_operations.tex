@@ -1,0 +1,43 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Vector operations} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Hard} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Dynamic storage} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{allocate memory} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+
+\begin{itemize}
+	\item Write a program that takes two vectors as input and prints their sum.
+	\item The number of elements in each vector is up to the user.
+	\item \textbf{Experts}: do the same with two matrices
+\end{itemize}	
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\ \\\ \\\ \\\ \\\ \\
+\section*{Hints}
+	\begin{itemize}
+		\item You need some conventions to allow the user to tell you when the input of a vector is finished.
+		\item Think of possible input errors, e.g. one vector having more elements.
+		\item \textbf{Experts:} A 2D dynamic array is a dynamic array of pointers. Each of those pointers has its own dynamic array allocated to it.
+		\item \textbf{Experts:} You need a lot more conventions!
+	\end{itemize}
+ 
+\end{document}

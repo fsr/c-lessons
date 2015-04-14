@@ -315,56 +315,11 @@ $ man string.h
 \end{frame}
 \section{Exercise}
 \subsection{}
-\begin{frame}[fragile]{String concatenation}
-	\textit{strncat()} concatenates two strings. Have a closer look at it:
-	\begin{lstlisting}[numbers=none]
-$ man 3 strncat
-\end{lstlisting}
+\begin{frame}{Exercises}
 	\begin{itemize}
-		\item Write a program that reads a series of strings from the user input and concatenates them.
-		\item Each string is put at the front so that the result is in reversed order.
-		\begin{itemize}
-			\item<2-> Hint: End the input phase when a '\textbackslash n' is read (empty line).
-			\item<3-> Hint: Always check if your buffer is large enough and resize it, if needed.
-		\end{itemize}
-		\item \textbf{Experts}: At the end, let the user enter one last string. Check, if that one occures in the string you have put together.
-		\begin{itemize}
-			\item<4-> Hint: \textit{strstr()} may be an option.
-		\end{itemize}
-	\end{itemize}		
-\end{frame}
-\begin{frame}{Vector operations}
-	\begin{itemize}
-		\item Write a program that takes two vectors as input and prints their sum.
-		\item The number of elements in each vector is up to the user.
-		\begin{itemize}
-			\item<2-> Hint: You need some conventions to allow the user to tell you when the input of a vector is finished.
-			\item<3-> Hint: Think of possible input errors, e.g. one vector having more elements.
-		\end{itemize}
-		\item \textbf{Experts}: do the same with two matrices
-		\begin{itemize}
-			\item<4-> Hint: A 2D dynamic array is a dynamic array of pointers. Each of those pointers has its own dynamic array allocated to it.
-			\item<5-> Hint: You need a lot more conventions!
-		\end{itemize}
+		\item You are now able to solve tasks 26, 27 and 28.
+		\item You additionally are now able to visit the advanced C course.
 	\end{itemize}
-\end{frame}
-\begin{frame}[fragile]{Hangman}
-	Write a simple hangman game! Everytime the player is wrong,
-	add a new part to the gallows / the hanging man and print it to the terminal:
-	\begin{lstlisting}[numbers=none]
-       -----    
-       |/  o 
-       |  ^W^
-       |  / \		word: game o_e_
-       |     		wrong: hfnwitc
-     -----   
-    /     \
-   /       \
-===============
-\end{lstlisting}
-	\textbf{Experts}: Have a list of possible words in the source code and let the program randomly choose one at the start.\\
-	\ \\
-	Hint: \textit{strncmp()} compares two strings.
 \end{frame}
 % nothing to do from here on
 \end{document}

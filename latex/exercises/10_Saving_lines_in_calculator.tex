@@ -1,0 +1,42 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Saving lines in Calculator} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Easy} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Functions} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{Write clear code, abstract} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+\begin{itemize}
+	\item Take the calculator task and unburden the switch by adding functions for each operation.\\
+	Now delete the \textit{substract} and the \textit{divide} function (and find a way the calculator works anyway).
+	\item \textbf{Experts:} add the functionality to exponentiate.\\
+	Implement the \textit{exponentiate} function by calling the \textit{multiply} function.
+\end{itemize}	
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\ \\\ \\\ \\\ \\\ \\
+\section*{Hints}
+	\begin{itemize}
+		\item How can you substract through addition?
+		\item You can pass any expression as a parameter.
+	\end{itemize}
+ 
+\end{document}

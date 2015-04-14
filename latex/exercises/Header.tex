@@ -1,0 +1,59 @@
+%
+% by Max Marx 2013, 
+% edited by Fredo Erxleben 2014
+%
+\documentclass[12pt,a4paper]{scrartcl}
+ 
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+%\usepackage{concrete}
+%\usepackage{eulervm}
+\usepackage{listings}
+% \usepackage{etex}
+\usepackage{tabularx}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+ 
+\lstset{ %
+  language=c,
+  flexiblecolumns=false,
+  basewidth={0.5em,0.45em},
+  basicstyle=\ttfamily\upshape\small,
+  sensitive=true,
+  showstringspaces=false,
+  numberstyle=\small,
+  numberblanklines=true,
+  showspaces=false,
+  breaklines=true,
+  showtabs=false
+  tabsize=2,
+  keywordstyle=\color{mymauve},
+  stringstyle=\color{blue},
+  numbers=left,
+  numberstyle=\tiny\color{mygray},
+  commentstyle=\color{mygreen}
+}
+\newcommand{\difficulty}{undefined}
+\newcommand{\requirements}{none}
+\newcommand{\aims}{learning Java}
+
+\newcommand{\taskinfos}{
+\renewcommand*{\arraystretch}{1.4}
+\begin{center}
+\begin{tabularx}{\textwidth}{|lX|}
+    \hline
+    \textbf{Difficulty:} & \difficulty \\
+    \textbf{Requirements:} & \requirements \\
+    \textbf{Aims:} & \aims \\
+    \hline
+\end{tabularx}
+\end{center}
+}
+
+\date{} % empty because it should be ommited
+\renewcommand*{\familydefault}{\sfdefault} 
+% I expect the document to be read on a screen most of the time,
+% so I am going for a sans-serif font
