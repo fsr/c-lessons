@@ -21,6 +21,56 @@
 \begin{frame}{Contents}
 	\tableofcontents
 \end{frame}
+\section{Overview}
+\subsection{}
+\begin{frame}{Taking dynamic datastructures to a new level}
+	To store a lot of similar variables, you use \textit{Arrays}.\\
+	To store a lot of different variables in one context, you use \textit{structs}.\\
+	What about storing a lot of similar \textit{structs}?\\
+	\ \\
+	It is possible to create \textit{arrays} of \textit{structs} but that can become confusing:\\
+	\textit{Arrays} of \textit{structs} containing \textit{Arrays} of \textit{structs} containing \textit{Arrays}...\\
+	\ \\
+	There is another strategie to handle this Problem.
+\end{frame}
+
+\begin{frame}[fragile]{Yay, Pointers}
+	For better handling of datastructures, we define \textit{structs} with additional pointers to itself:\\\ \\
+	\begin{columns}[c]
+		\column{.5\textwidth}
+		\begin{lstlisting}[numbers=none]
+struct listElement {
+	int value;
+	sctruct listElement *next;
+}
+\end{lstlisting}
+		\column{.5\textwidth}
+		\begin{tikzpicture}[scale=1.5,font=\scriptsize]
+			\node[font=\small] at (0,1) [above] {struct listElement};
+			
+			\draw (0,0) -- (0,1);
+			\draw (0,0) -- (2,0);
+			\draw (0,1) -- (2,1);
+			\draw (2,0) -- (2,1);
+			
+			\draw (.1,.1) -- (.1,.45);
+			\draw (.1,.1) -- (1.9,.1);
+			\draw (.1,.45) -- (1.9,.45);
+			\draw (1.9,.1) -- (1.9,.45);
+			\node at (0.1,.275) [right] {struct listElement*};
+			
+			\node[circle, thick, draw=black, minimum size=10pt, inner sep = 0pt] at (1.72,.275) {};
+			\draw [thick,->,shorten >=.2ex] (1.85,.257) to[out=0,in=-90] (2.15,1) to[out=90,in=0] (1.5,1.25) to[out=180,in=90](1,1);
+			
+			\draw (.1,.55) -- (.1,.9);
+			\draw (.1,.55) -- (1.9,.55);
+			\draw (.1,.9) -- (1.9,.9);
+			\draw (1.9,.55) -- (1.9,.9);
+			\node at (0.1,.725) [right] {int};
+		\end{tikzpicture}
+	\end{columns}
+\end{frame}
+
 \section{Lists}
 \subsection{}
 \begin{frame}{Single-chained lists}
@@ -469,13 +519,13 @@
 \section{Binary trees}
 \subsection{}
 \begin{frame}{Binary trees}
-	\begin{tikzpicture}[scale=.1,font=\tiny]
+	\begin{tikzpicture}[scale=.12,font=\scriptsize]
 		\draw (-5,0) -- (5,0);
 		\draw (5,0) -- (5,-2);
 		\draw (5,-2) -- (-5,-2);
 		\draw (-5,-2) -- (-5,0);
 		
-		\node at (-1,.9)[below] {root};
+		\node at (-1,.7)[below] {root};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (4,-1) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (4,-1) to[out=-90,in=90] (0,-7);
 		
@@ -489,13 +539,13 @@
 		\draw (4.5,-7.5) -- (4.5,-9.5);
 		\draw (4.5,-9.5) -- (-4.5,-9.5);
 		\draw (-4.5,-9.5) -- (-4.5,-7.5);
-		\node at (0,-6.4)[below] {value = \dots};
+		\node at (0,-6.7)[below] {value};
 		
 		\draw (-4.5,-10) -- (4.5,-10);
 		\draw (4.5,-10) -- (4.5,-12);
 		\draw (4.5,-12) -- (-4.5,-12);
 		\draw (-4.5,-12) -- (-4.5,-10);
-		\node at (-1,-8.9)[below] {left};
+		\node at (-1,-9.1)[below] {right};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (3.5,-11) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (3.5,-11) to[out=0,in=90] (10,-22);
 		
@@ -503,7 +553,7 @@
 		\draw (4.5,-12.5) -- (4.5,-14.5);
 		\draw (4.5,-14.5) -- (-4.5,-14.5);
 		\draw (-4.5,-14.5) -- (-4.5,-12.5);
-		\node at (1,-11.4)[below] {right};
+		\node at (1,-11.7)[below] {left};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-3.5,-13.5) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-3.5,-13.5) to[out=-180,in=90] (-10,-22);
 		
@@ -517,13 +567,13 @@
 		\draw (-5.5,-22.5) -- (-5.5,-24.5);
 		\draw (-5.5,-24.5) -- (-14.5,-24.5);
 		\draw (-14.5,-24.5) -- (-14.5,-22.5);
-		\node at (-10,-21.4)[below] {value = \dots};
+		\node at (-10,-21.7)[below] {value};
 		
 		\draw (-14.5,-25) -- (-5.5,-25);
 		\draw (-5.5,-25) -- (-5.5,-27);
 		\draw (-5.5,-27) -- (-14.5,-27);
 		\draw (-14.5,-27) -- (-14.5,-25);
-		\node at (-11,-23.9)[below] {left};
+		\node at (-11,-24.1)[below] {right};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-6.5,-26) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-6.5,-26) to[out=0,in=90] (-3,-37);
 		
@@ -531,7 +581,7 @@
 		\draw (-5.5,-27.5) -- (-5.5,-29.5);
 		\draw (-5.5,-29.5) -- (-14.5,-29.5);
 		\draw (-14.5,-29.5) -- (-14.5,-27.5);
-		\node at (-9,-26.4)[below] {right};
+		\node at (-9,-26.7)[below] {left};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-13.5,-28.5) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-13.5,-28.5) to[out=180,in=90] (-20,-37);
 		
@@ -546,13 +596,13 @@
 		\draw (14.5,-22.5) -- (14.5,-24.5);
 		\draw (14.5,-24.5) -- (5.5,-24.5);
 		\draw (5.5,-24.5) -- (5.5,-22.5);
-		\node at (10,-21.4)[below] {value = \dots};
+		\node at (10,-21.7)[below] {value};
 		
 		\draw (5.5,-25) -- (14.5,-25);
 		\draw (14.5,-25) -- (14.5,-27);
 		\draw (14.5,-27) -- (5.5,-27);
 		\draw (5.5,-27) -- (5.5,-25);
-		\node at (9,-23.9)[below] {left};
+		\node at (9,-24.1)[below] {right};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (13.5,-26) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (13.5,-26) to[out=0,in=90] (20,-37);
 		
@@ -560,7 +610,7 @@
 		\draw (14.5,-27.5) -- (14.5,-29.5);
 		\draw (14.5,-29.5) -- (5.5,-29.5);
 		\draw (5.5,-29.5) -- (5.5,-27.5);
-		\node at (11,-26.4)[below] {right};
+		\node at (11,-26.7)[below] {left};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (6.5,-28.5) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (6.5,-28.5) to[out=180,in=90] (3,-37);
 		
@@ -576,13 +626,13 @@
 		\draw (-15.5,-37.5) -- (-15.5,-39.5);
 		\draw (-15.5,-39.5) -- (-24.5,-39.5);
 		\draw (-24.5,-39.5) -- (-24.5,-37.5);
-		\node at (-20,-36.4)[below] {value = \dots};
+		\node at (-20,-36.7)[below] {value};
 		
 		\draw (-24.5,-40) -- (-15.5,-40);
 		\draw (-15.5,-40) -- (-15.5,-42);
 		\draw (-15.5,-42) -- (-24.5,-42);
 		\draw (-24.5,-42) -- (-24.5,-40);
-		\node at (-21,-38.9)[below] {left};
+		\node at (-21,-39.1)[below] {right};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-16.5,-41) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-16.5,-41) to[out=0,in=90] (-10,-52);
 		
@@ -590,7 +640,7 @@
 		\draw (-15.5,-42.5) -- (-15.5,-44.5);
 		\draw (-15.5,-44.5) -- (-24.5,-44.5);
 		\draw (-24.5,-44.5) -- (-24.5,-42.5);
-		\node at (-19,-41.4)[below] {right};
+		\node at (-19,-41.7)[below] {left};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-23.5,-43.5) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-23.5,-43.5) to[out=-180,in=90] (-30,-52);
 
@@ -606,13 +656,13 @@
 		\draw (9.5,-37.5) -- (9.5,-39.5);
 		\draw (9.5,-39.5) -- (.5,-39.5);
 		\draw (.5,-39.5) -- (.5,-37.5);
-		\node at (5,-36.4)[below] {value = \dots};
+		\node at (5,-36.7)[below] {value};
 		
 		\draw (.5,-40) -- (9.5,-40);
 		\draw (9.5,-40) -- (9.5,-42);
 		\draw (9.5,-42) -- (.5,-42);
 		\draw (.5,-42) -- (.5,-40);
-		\node at (4,-38.9)[below] {left};
+		\node at (4,-39.1)[below] {right};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (8.5,-41) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (8.5,-41) to[out=0,in=90] (15,-52);
 		
@@ -620,7 +670,7 @@
 		\draw (9.5,-42.5) -- (9.5,-44.5);
 		\draw (9.5,-44.5) -- (.5,-44.5);
 		\draw (.5,-44.5) -- (.5,-42.5);
-		\node at (6,-41.4)[below] {right};
+		\node at (6,-41.7)[below] {left};
 		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (1.5,-43.5) {};
 		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (1.5,-43.5) to[out=-180,in=90] (-3,-52);
 
@@ -630,7 +680,7 @@
 		\draw (-35,-52) -- (-35,-54);
 		\draw (-25,-52) -- (-25,-54);
 		\draw (-35,-54) -- (-25,-54);
-		\node at (-30,-50.9)[below] {NULL};
+		\node at (-30,-51.2)[below] {NULL};
 
 
 
@@ -639,7 +689,7 @@
 		\draw (-18,-52) -- (-18,-54);
 		\draw (-8,-52) -- (-8,-54);
 		\draw (-18,-54) -- (-8,-54);
-		\node at (-13,-50.9)[below] {NULL};
+		\node at (-13,-51.2)[below] {NULL};
 
 
 
@@ -648,7 +698,7 @@
 		\draw (-5,-52) -- (-5,-54);
 		\draw (5,-52) -- (5,-54);
 		\draw (-5,-54) -- (5,-54);
-		\node at (0,-50.9)[below] {NULL};
+		\node at (0,-51.2)[below] {NULL};
 
 
 
@@ -657,7 +707,7 @@
 		\draw (20,-52) -- (20,-54);
 		\draw (10,-52) -- (10,-54);
 		\draw (10,-54) -- (20,-54);
-		\node at (15,-50.9)[below] {NULL};
+		\node at (15,-51.2)[below] {NULL};
 
 
 
@@ -665,7 +715,7 @@
 		\draw (-12,-37) -- (-12,-39);
 		\draw (-2,-37) -- (-2,-39);
 		\draw (-12,-39) -- (-2,-39);
-		\node at (-7,-35.9)[below] {NULL};
+		\node at (-7,-36.2)[below] {NULL};
 
 
 
@@ -674,7 +724,7 @@
 		\draw (15,-37) -- (15,-39);
 		\draw (25,-37) -- (25,-39);
 		\draw (15,-39) -- (25,-39);
-		\node at (20,-35.9)[below] {NULL};
+		\node at (20,-36.2)[below] {NULL};
 	\end{tikzpicture}
 \end{frame}
 
