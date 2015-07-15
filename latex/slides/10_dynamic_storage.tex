@@ -187,11 +187,11 @@ void *malloc(size_t size);
 	\ \\
 	\begin{onlyenv}<3->
 		\begin{lstlisting}[numbers=none]
-int *block = malloc((sizeof(int));
+int *block = malloc(sizeof(int));
 \end{lstlisting}
 	has the same result as
 	\begin{lstlisting}[numbers=none]
-int *block = (int*) malloc((sizeof(int));
+int *block = (int*) malloc(sizeof(int));
 \end{lstlisting}
 	while the second one contains a redundant \textit{cast} and if you want to change the type of \textit{block} later, you will have to hit more keys. Consider:
 	\begin{lstlisting}[numbers=none]
