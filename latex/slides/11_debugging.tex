@@ -45,12 +45,12 @@
 \end{frame}
 \begin{frame}{The dungeon}
 	We prepared a little ASCII dungeon.\\
-	You can find it in \textit{TODO: insert path}\\
+	You can find it in the directory (\url{https://github.com/fsr/c-slides}) in folder \textit{materials/1\_before/}\\
 	\begin{itemize}
 		\item Look at the code and try to understand what should happen.
 		\item If you find mistakes, please leave them. We'll fix them later.
 		\\\ 
-		\item Copile it (with \textit{-std=c99})
+		\item Compile it (with \textit{-std=c99})
 		\\\ 
 		\item And now run it.
 	\end{itemize}
@@ -102,20 +102,21 @@ $ gdb a.out
 \end{frame}
 \begin{frame}{Commands}
 	\begin{itemize}
-		\item If you started gdb without a file you can load it with \textit{file file\_name}.
-		\item Use \textit{run} to execute the program with gdb.\\
+		\item If you started gdb without a file you can load it with \textbf{file} \textit{file\_name}.
+		\item Use \textbf{r[un]} to execute the program with gdb.\\
 		You should begin with it. It will give you further information about the crash.
-		\item You can set an arbitrary amount of breakpoints with \textit{break line\_number} or \textit{break function\_name}.\\
+		\item You can set an arbitrary amount of breakpoints with \textbf{b[reak]} \textit{line\_number} or \textbf{b[reak]} \textit{function\_name}.\\
 		Begin with a breakpoint at the point the program crashes.
-		\item Print values with \textit{print identifier}.
-		\item Use \textit{watch identifier} to break and print a variable when it's changed.
+		\item Print values with \textbf{p[rint]} \textit{identifier}.
+		\item Use \textbf{w[atch]} \textit{identifier} to break and print a variable when it's changed.
 	\end{itemize}
 \end{frame}
 \begin{frame}{Once you're at a breakpoint}
 	\begin{itemize}
-		\item Use \textit{next} to execute the next program line only.
-		\item You can jump to the next breakpoint with \textit{continue}.
-		\item To see How you have come to this point in the program flow, type \textit{backtrace} or \textit{bt}.\\
+		\item Use \textbf{n[ext]} to execute the next program line only.
+		\item \textbf{s[tep]} executes the next instruction.
+		\item You can jump to the next breakpoint with \textbf{c[ontinue]}.
+		\item To see How you have come to this point in the program flow, type \textbf{backtrace} or \textbf{bt}.\\
 		This shows you all functions you called to come there.
 		\\\ \\
 		\item By only hitting the \textit{return key}, you repeat the last entered  command.
@@ -128,14 +129,15 @@ $ gdb a.out
 		\item Find and fix all Bugs in the dungeon.\\\ \\
 		\begin{tabular}{|l|l|}
 			\hline
-			\textit{file} & load program\\\hline
-			\textit{run} & execute program\\\hline
-			\textit{break} & set breakpoint\\\hline
-			\textit{print} & print variable\\\hline
-			\textit{watch} & print variable when it changes\\\hline
-			\textit{next} & execute next line and break\\\hline
-			\textit{continue} & execute until next breakpoint\\\hline
-			\textit{backtrace} / \textit{bt} & How did i end up here?\\\hline
+			\textbf{file} & load program\\\hline
+			\textbf{r[un]} & execute program\\\hline
+			\textbf{b[reak]} & set breakpoint\\\hline
+			\textbf{p[rint]} & print variable\\\hline
+			\textbf{w[atch]} & break and print variable when it changes\\\hline
+			\textbf{n[ext]} & execute next line and break\\\hline
+			\textbf{s[tep]} & execute next instruction and break\\\hline
+			\textbf{c[ontinue]} & execute until next breakpoint\\\hline
+			\textbf{backtrace} / \textbf{bt} & How did I end up here?\\\hline
 		\end{tabular}
 	\end{itemize}
 \end{frame}
