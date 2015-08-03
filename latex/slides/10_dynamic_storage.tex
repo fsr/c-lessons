@@ -187,11 +187,11 @@ void *malloc(size_t size);
 	\ \\
 	\begin{onlyenv}<3->
 		\begin{lstlisting}[numbers=none]
-int *block = malloc((sizeof(int));
+int *block = malloc(sizeof(int));
 \end{lstlisting}
 	has the same result as
 	\begin{lstlisting}[numbers=none]
-int *block = (int*) malloc((sizeof(int));
+int *block = (int*) malloc(sizeof(int));
 \end{lstlisting}
 	while the second one contains a redundant \textit{cast} and if you want to change the type of \textit{block} later, you will have to hit more keys. Consider:
 	\begin{lstlisting}[numbers=none]
@@ -246,7 +246,7 @@ int *field = malloc(42 * sizeof(*field));
 void *calloc(size_t nmemb, size_t size);
 \end{lstlisting}
 	\begin{itemize}
-		\item Allocates a block of $nmemb * size$ bytes, where \textit{nmemb} is supposed to be the array's length and \textit{size} the size its type.
+		\item Allocates a block of $nmemb * size$ bytes, where \textit{nmemb} is supposed to be the array's length and \textit{size} the size of its type.
 		\item The whole block is filled with \textit{0}s
 	\end{itemize}
 	\ \\
@@ -282,7 +282,7 @@ void *realloc(void *ptr, size_t size);
 	\end{itemize}
 \end{frame}
 \begin{frame}[fragile]{Clean up your code}
-	Passing arrays between functions can be complicated if you store the pointer and the length seperataly.\\
+	Passing arrays between functions can be complicated if you store the pointer and the length seperately.\\
 	\ \\
 	Do you remember a way to keep different things together?\\
 	\ \\

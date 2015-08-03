@@ -37,8 +37,8 @@
 		\item<2-> It looks like a multiple repetition of
 		\begin{lstlisting}
 for (i = 0, fib1 = 0, fib2 = 1; i < n; i++) {
-	int buffer = fib 1;
-	fib 1 = fib2;
+	int buffer = fib1;
+	fib1 = fib2;
 	fib2 = fib2 + buffer;
 }
 printf("fib(%d) = %d\n", i, fib1);
@@ -51,7 +51,7 @@ printf("fib(%d) = %d\n", i, fib1);
 	Functions serve the \textit{divide and conquer} programming paradigma - breaking down a problem into sub-problems easier to solve.
 \end{frame}
 \begin{frame}[fragile]{Theory crafting}
-	Since we need \textit{fib(n)} twice, we can imagine a function:
+	Since we need \textit{fib(5)} twice, we can imagine a function:
 	\begin{lstlisting}[numbers=none]
 Function fib_5:
 	// calculate fib(5) here and print it
@@ -121,7 +121,9 @@ Function fib(int n):
 	The function that calculates \textit{fib(5)} and prints it directly:
 	\begin{lstlisting}
 void fib_5() {
-	int i, fib1, fib2;
+	int i;
+	int fib1;
+	int fib2;
 	for (i = 0, fib1 = 0, fib2 = 1; i < 5; i++) {
 		int buffer = fib1;
 		fib1 = fib2;
@@ -137,7 +139,9 @@ void fib_5() {
 	The function that calculates \textit{fib(n)} and returns the result:
 	\begin{lstlisting}
 int fib(int n) {
-	int i, fib1, fib2;
+	int i;
+	int fib1;
+	int fib2;
 	for (i = 0, fib1 = 0, fib2 = 1; i < n; i++) {
 		int buffer = fib1;
 		fib1 = fib2;
@@ -146,7 +150,7 @@ int fib(int n) {
 	return fib1;
 }
 \end{lstlisting}
-		It takes an \textit{int} argument and returns an \textit{int} value.
+		It takes an \textit{int} argument and returns an \textit{int} value.\\\ 
 \end{frame}
 \begin{frame}[fragile]{Call of functions}
 	You can call a function in a statement by typing its name followed by \textit{()}:
@@ -172,9 +176,10 @@ void foo(int value, char dec1, char dec2) {
 
 ...
 
-int main(int argc, char* argv[]) {
+int main(void) {
 	int number = 42;
-	char dec1 = '4', dec2 = '2';
+	char dec1 = '4';
+	char dec2 = '2';
 	foo(number, dec1, dec2);
 	return 0;
 }
@@ -184,7 +189,7 @@ int main(int argc, char* argv[]) {
 	Take a look back at our Fibonacci numbers program and apply all the changes we discussed! \ \\ \ \\
 	\begin{uncoverenv}<2->
 		\begin{lstlisting}
-int main(int argc, char* argv[]) {
+int main(void) {
 	printf("fib(%d) = %d\n", 3, fib(3);
 	printf("fib(%d) = %d\n", 5, fib(5);
 	printf("fib(%d) = %d\n", 11, fib(11);
@@ -209,7 +214,7 @@ void foo() {
 	globe = 23;
 }
 
-int main(int argc, char* argv[]) {
+int main(void) {
 	printf("%d\n", globe);	/* Prints 42 */
 	foo();
 	printf("%d\n", globe);	/* Prints 23 */
@@ -259,7 +264,7 @@ void g(int i) {...}	/* g() definition, similar to f() */
 void f(int i);
 void g(int i);
 
-int main(int argc, char* argv[]) {
+int main(void) {
 	...
 }
 
