@@ -1,0 +1,143 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info}
+
+% meta-information
+\newcommand{\topic}{
+	Debugging
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Bugs}
+\subsection{}
+\begin{frame}{It's not a bug...}
+	There are different kinds of errors.
+	\begin{itemize}
+		\item Compilitime errors
+		\item Runtime errors (\textit{Bugs})
+	\end{itemize}\ \\\ \\
+	\textit{Compiletime errors} are easily handable since the compiler shows you where to fix them.\\\ \\
+	\textit{Bugs} on the other hand are harder to find because you have no idea where to look for them.
+\end{frame}
+\begin{frame}{... it's a feature.}
+	Bugs can appear due to different reasons
+	\begin{itemize}
+		\item Variable overflow
+		\item Division by Zero
+		\item Infinite loops / recursions
+		\item Range excess
+		\item Segmentation fault
+		\item Dereferencing \textit{NULL pointers}
+		\item ...
+	\end{itemize}
+\end{frame}
+\begin{frame}{The dungeon}
+	We prepared a little ASCII dungeon.\\
+	You can find it in \textit{TODO: insert path}\\
+	\begin{itemize}
+		\item Look at the code and try to understand what should happen.
+		\item If you find mistakes, please leave them. We'll fix them later.
+		\\\ 
+		\item Copile it (with \textit{-std=c99})
+		\\\ 
+		\item And now run it.
+	\end{itemize}
+	
+\end{frame}
+\section{Warnings}
+\subsection{}
+\begin{frame}{\textit{gcc} flags}
+	You can instruct \textit{gcc} to display different warning levels and even abort compiling when warnings appear.
+	These instructions are called flags.\\\ \\\ \\
+	\begin{tabular}{|l|l|}\hline
+		\textit{-Wall} & enables a bunch of compiler warnings\\\hline
+		\textit{-Wextra} & enables further compiler warnings\\\hline
+		\textit{-Werror} & warnings are interpreted as errors (compiling doesn't succeed)\\\hline
+	\end{tabular}
+	\ \\\ \\\ \\
+	\begin{itemize}
+		\item You can pass an arbitrary amount of flags
+		\item Seperate them with whitespaces
+	\end{itemize}
+\end{frame}
+\begin{frame}{Debugging light}
+	\begin{itemize}
+		\item Compile the dungeon with \textit{-Wall} and \textit{-Wextra}
+		\begin{itemize}		
+			\item There are 3 Warnings. The 3rd one matters.
+			\item There is a variable that's set but not used.
+		\end{itemize}
+		\item You may find a bug there. Fix it.
+	\end{itemize}
+\end{frame}
+\section{GDB}
+\subsection{}
+\begin{frame}[fragile]{The \textbf{G}NU \textbf{D}e\textbf{B}ugger}
+	There are tools helping with bugs, called debuggers. GDB is one of them.
+	To Use it
+	\begin{itemize}
+		\item You have to install the package \textit{gdb}\\
+		On Windows, hope your cygwin installation came with it
+		\item You have to compile your program with the \textit{-g} flag
+		\begin{lstlisting}[numbers=none]
+$ gcc -g main.c
+\end{lstlisting}
+		\item After that you can start your program with gdb:
+		\begin{lstlisting}[numbers=none]
+$ gdb a.out
+\end{lstlisting}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Commands}
+	\begin{itemize}
+		\item If you started gdb without a file you can load it with \textit{file file\_name}.
+		\item Use \textit{run} to execute the program with gdb.\\
+		You should begin with it. It will give you further information about the crash.
+		\item You can set an arbitrary amount of breakpoints with \textit{break line\_number} or \textit{break function\_name}.\\
+		Begin with a breakpoint at the point the program crashes.
+		\item Print values with \textit{print identifier}.
+		\item Use \textit{watch identifier} to break and print a variable when it's changed.
+	\end{itemize}
+\end{frame}
+\begin{frame}{Once you're at a breakpoint}
+	\begin{itemize}
+		\item Use \textit{next} to execute the next program line only.
+		\item You can jump to the next breakpoint with \textit{continue}.
+		\item To see How you have come to this point in the program flow, type \textit{backtrace} or \textit{bt}.\\
+		This shows you all functions you called to come there.
+		\\\ \\
+		\item By only hitting the \textit{return key}, you repeat the last entered  command.
+	\end{itemize}
+	\ \\\ \\
+	GDB is much more mighty than this few commands, but that should be sufficient to solv your final quest.
+\end{frame}
+\begin{frame}{Now it's up to you}
+	\begin{itemize}
+		\item Find and fix all Bugs in the dungeon.\\\ \\
+		\begin{tabular}{|l|l|}
+			\hline
+			\textit{file} & load program\\\hline
+			\textit{run} & execute program\\\hline
+			\textit{break} & set breakpoint\\\hline
+			\textit{print} & print variable\\\hline
+			\textit{watch} & print variable when it changes\\\hline
+			\textit{next} & execute next line and break\\\hline
+			\textit{continue} & execute until next breakpoint\\\hline
+			\textit{backtrace} / \textit{bt} & How did i end up here?\\\hline
+		\end{tabular}
+	\end{itemize}
+\end{frame}
+% nothing to do from here on
+\end{document}

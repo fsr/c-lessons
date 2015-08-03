@@ -1,0 +1,734 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Advanced data structures
+}
+
+\usepackage{tikz}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+\section{Overview}
+\subsection{}
+\begin{frame}{Taking dynamic datastructures to a new level}
+	To store a lot of similar variables, you use \textit{Arrays}.\\
+	To store a lot of different variables in one context, you use \textit{structs}.\\
+	What about storing a lot of similar \textit{structs}?\\
+	\ \\
+	It is possible to create \textit{arrays} of \textit{structs} but that can become confusing:\\
+	\textit{Arrays} of \textit{structs} containing \textit{Arrays} of \textit{structs} containing \textit{Arrays}...\\
+	\ \\
+	There is another strategie to handle this Problem.
+\end{frame}
+
+\begin{frame}[fragile]{Yay, Pointers}
+	For better handling of datastructures, we define \textit{structs} with additional pointers to itself:\\\ \\
+	\begin{columns}[c]
+		\column{.5\textwidth}
+		\begin{lstlisting}[numbers=none]
+struct listElement {
+	int value;
+	sctruct listElement *next;
+}
+\end{lstlisting}
+		\column{.5\textwidth}
+		\begin{tikzpicture}[scale=1.5,font=\scriptsize]
+			\node[font=\small] at (0,1) [above] {struct listElement};
+			
+			\draw (0,0) -- (0,1);
+			\draw (0,0) -- (2,0);
+			\draw (0,1) -- (2,1);
+			\draw (2,0) -- (2,1);
+			
+			\draw (.1,.1) -- (.1,.45);
+			\draw (.1,.1) -- (1.9,.1);
+			\draw (.1,.45) -- (1.9,.45);
+			\draw (1.9,.1) -- (1.9,.45);
+			\node at (0.1,.275) [right] {struct listElement*};
+			
+			\node[circle, thick, draw=black, minimum size=10pt, inner sep = 0pt] at (1.72,.275) {};
+			\draw [thick,->,shorten >=.2ex] (1.85,.257) to[out=0,in=-90] (2.15,1) to[out=90,in=0] (1.5,1.25) to[out=180,in=90](1,1);
+			
+			\draw (.1,.55) -- (.1,.9);
+			\draw (.1,.55) -- (1.9,.55);
+			\draw (.1,.9) -- (1.9,.9);
+			\draw (1.9,.55) -- (1.9,.9);
+			\node at (0.1,.725) [right] {int};
+		\end{tikzpicture}
+	\end{columns}
+\end{frame}
+
+\section{Lists}
+\subsection{}
+\begin{frame}{Single-chained lists}
+
+	\begin{tikzpicture}[scale=.73,font=\scriptsize]
+			
+		\draw (-2.5,.1) -- (-1,.1);
+		\draw (-2.5,.1) -- (-2.5,.45);
+		\draw (-2.5,.45) -- (-1,.45);
+		\draw (-1,.45) -- (-1,.1);
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (-1.18,.275) {};
+		\node at (-2.6,.275) [right] {head};
+		\draw (-1.05,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (0,1);
+	
+		\draw (0,0) -- (0,1);
+		\draw (0,0) -- (2,0);
+		\draw (0,1) -- (2,1);
+		\draw (2,0) -- (2,1);
+		
+		\draw (.1,.1) -- (.1,.45);
+		\draw (.1,.1) -- (1.9,.1);
+		\draw (.1,.45) -- (1.9,.45);
+		\draw (1.9,.1) -- (1.9,.45);
+		\node at (0,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (1.72,.275) {};
+		\begin{uncoverenv}<-3>
+			\draw (1.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (3,1);
+		\end{uncoverenv}
+		\begin{uncoverenv}<4>
+			\draw (1.85,.275) edge[red,thick,out=0,in=135,->,shorten >=.2ex] (3,1);
+		\end{uncoverenv}
+		
+		\draw (.1,.55) -- (.1,.9);
+		\draw (.1,.55) -- (1.9,.55);
+		\draw (.1,.9) -- (1.9,.9);
+		\draw (1.9,.55) -- (1.9,.9);
+		\node at (0,.725) [right] {value = ...};
+		
+		
+		\draw (3,0) -- (3,1);
+		\draw (3,0) -- (5,0);
+		\draw (3,1) -- (5,1);
+		\draw (5,0) -- (5,1);
+		
+		\draw (3.1,.1) -- (3.1,.45);
+		\draw (3.1,.1) -- (4.9,.1);
+		\draw (3.1,.45) -- (4.9,.45);
+		\draw (4.9,.1) -- (4.9,.45);
+		\node at (3,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (4.72,.275) {};
+		\draw (4.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (6,1);
+		
+		
+		\draw (3.1,.55) -- (3.1,.9);
+		\draw (3.1,.55) -- (4.9,.55);
+		\draw (3.1,.9) -- (4.9,.9);
+		\draw (4.9,.55) -- (4.9,.9);
+		\node at (3,.725) [right] {value = ...};
+		
+		
+		\draw (6,0) -- (6,1);
+		\draw (6,0) -- (8,0);
+		\draw (6,1) -- (8,1);
+		\draw (8,0) -- (8,1);
+		
+		\draw (6.1,.1) -- (6.1,.45);
+		\draw (6.1,.1) -- (7.9,.1);
+		\draw (6.1,.45) -- (7.9,.45);
+		\draw (7.9,.1) -- (7.9,.45);
+		\node at (6,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (7.72,.275) {};
+		\draw (7.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (9,1);
+		
+		\draw (6.1,.55) -- (6.1,.9);
+		\draw (6.1,.55) -- (7.9,.55);
+		\draw (6.1,.9) -- (7.9,.9);
+		\draw (7.9,.55) -- (7.9,.9);
+		\node at (6,.725) [right] {value = ...};
+		
+		
+		\draw (9,0) -- (9,1);
+		\draw (9,0) -- (11,0);
+		\draw (9,1) -- (11,1);
+		\draw (11,0) -- (11,1);
+		
+		\draw (9.1,.1) -- (9.1,.45);
+		\draw (9.1,.1) -- (10.9,.1);
+		\draw (9.1,.45) -- (10.9,.45);
+		\draw (10.9,.1) -- (10.9,.45);
+		\node at (9,.275) [right] {next};
+		
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (10.72,.275) {};
+		\draw (10.85,.275) edge[thick,out=0,in=155,->,shorten >=.2ex] (11.5,.45);
+		
+		\draw (9.1,.55) -- (9.1,.9);
+		\draw (9.1,.55) -- (10.9,.55);
+		\draw (9.1,.9) -- (10.9,.9);
+		\draw (10.9,.55) -- (10.9,.9);
+		\node at (9,.725) [right] {value = ...};
+
+		\draw (11.5,.1) -- (11.5,.45);
+		\draw (11.5,.1) -- (12.5,.1);
+		\draw (11.5,.45) -- (12.5,.45);
+		\draw (12.5,.1) -- (12.5,.45);
+		\node at (11.4,.265) [right] {NULL};
+		
+		
+		\begin{uncoverenv}<2->
+			\draw (2,-.5) -- (2,-1.5);
+			\draw (2,-.5) -- (4,-.5);
+			\draw (4,-.5) -- (4,-1.5);
+			\draw (4,-1.5) -- (2,-1.5);
+			
+			\draw (2.1,-.6) -- (2.1, -.95);
+			\draw (2.1,-.6) -- (3.9,-.6);
+			\draw (3.9,-.6) -- (3.9,-.95);
+			\draw (3.9,-.95) -- (2.1,-.95);
+			\node at (2,-.775) [right] {value = ...};
+			
+			
+			\draw (2.1, -1.05) -- (2.1, -1.4);
+			\draw (2.1,-1.05) -- (3.9,-1.05);
+			\draw (3.9,-1.05) -- (3.9,-1.4);
+			\draw (3.9,-1.4) -- (2.1,-1.4);
+			\node at (2,-1.225) [right] {next};
+			\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (3.72,-1.225) {};
+			
+			
+		\end{uncoverenv}
+		\begin{uncoverenv}<3->
+			\draw [thick,blue,->,shorten >=.2ex] (3.85,-1.225) to[out=0,in=-35] (4,-.4) to[out=180-35,in=-45] (2.5,-.1) to[out=180-45,in=135] (3,1);
+		\end{uncoverenv}
+		\begin{uncoverenv}<5>
+			\draw [thick,red,->,shorten >=.2ex] (1.72,.145) to[out=-90,in=135] (2,-.5);
+		\end{uncoverenv}
+		
+		
+	\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Double-chained lists}
+
+	\begin{tikzpicture}[scale=.73,font=\scriptsize]
+			
+		\draw (-2.5,.1) -- (-1,.1);
+		\draw (-2.5,.1) -- (-2.5,.45);
+		\draw (-2.5,.45) -- (-1,.45);
+		\draw (-1,.45) -- (-1,.1);
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (-1.18,.275) {};
+		\node at (-2.6,.275) [right] {head};
+		\draw (-1.05,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (0,1);
+		
+		\draw (-2,-.1) -- (-1,-.1);
+		\draw (-2,-.1) -- (-2,-.45);
+		\draw (-2,-.45) -- (-1,-.45);
+		\draw (-1,-.45) -- (-1,-.1);
+		\node at (-2.1,-.275) [right] {NULL};
+	
+		\draw (0,-.45) -- (0,1);
+		\draw (0,-.45) -- (2,-.45);
+		\draw (0,1) -- (2,1);
+		\draw (2,-.45) -- (2,1);
+		
+		\draw (.1,-.35) -- (.1,0);
+		\draw (.1,-.35) -- (1.9,-.35);
+		\draw (.1,0) -- (1.9,0);
+		\draw (1.9,-.35) -- (1.9,0);
+		\node at (.3,-.225) [right] {prev};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (.28,-.175) {};
+		\draw (.15,-.175) edge[thick,out=180,in=-35,->,shorten >=.2ex] (-1,-.45);
+		
+		\draw (.1,.1) -- (.1,.45);
+		\draw (.1,.1) -- (1.9,.1);
+		\draw (.1,.45) -- (1.9,.45);
+		\draw (1.9,.1) -- (1.9,.45);
+		\node at (0,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (1.72,.275) {};
+		\begin{uncoverenv}<-3>
+			\draw (1.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (3,1);
+		\end{uncoverenv}
+		\begin{uncoverenv}<4>
+			\draw (1.85,.275) edge[red,thick,out=0,in=135,->,shorten >=.2ex] (3,1);
+		\end{uncoverenv}
+		
+		\draw (.1,.55) -- (.1,.9);
+		\draw (.1,.55) -- (1.9,.55);
+		\draw (.1,.9) -- (1.9,.9);
+		\draw (1.9,.55) -- (1.9,.9);
+		\node at (0,.725) [right] {value = ...};
+		
+		
+		\draw (3,-.45) -- (3,1);
+		\draw (3,-.45) -- (5,-.45);
+		\draw (3,1) -- (5,1);
+		\draw (5,-.45) -- (5,1);
+		
+		\draw (3.1,-.35) -- (3.1,0);
+		\draw (3.1,-.35) -- (4.9,-.35);
+		\draw (3.1,0) -- (4.9,0);
+		\draw (4.9,-.35) -- (4.9,0);
+		\node at (3.3,-.225) [right] {prev};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (3.28,-.175) {};
+		\begin{uncoverenv}<-3>
+			\draw (3.15,-.175) edge[thick,out=180,in=-45,->,shorten >=.2ex] (2,-.45);
+		\end{uncoverenv}
+		\begin{uncoverenv}<4>
+			\draw (3.15,-.175) edge[red,thick,out=180,in=-45,->,shorten >=.2ex] (2,-.45);
+		\end{uncoverenv}
+		
+		\draw (3.1,.1) -- (3.1,.45);
+		\draw (3.1,.1) -- (4.9,.1);
+		\draw (3.1,.45) -- (4.9,.45);
+		\draw (4.9,.1) -- (4.9,.45);
+		\node at (3,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (4.72,.275) {};
+		\draw (4.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (6,1);
+		
+		
+		\draw (3.1,.55) -- (3.1,.9);
+		\draw (3.1,.55) -- (4.9,.55);
+		\draw (3.1,.9) -- (4.9,.9);
+		\draw (4.9,.55) -- (4.9,.9);
+		\node at (3,.725) [right] {value = ...};
+		
+		
+		\draw (6,-.45) -- (6,1);
+		\draw (6,-.45) -- (8,-.45);
+		\draw (6,1) -- (8,1);
+		\draw (8,-.45) -- (8,1);
+		
+		\draw (6.1,-.35) -- (6.1,0);
+		\draw (6.1,-.35) -- (7.9,-.35);
+		\draw (6.1,0) -- (7.9,0);
+		\draw (7.9,-.35) -- (7.9,0);
+		\node at (6.3,-.225) [right] {prev};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (6.28,-.175) {};
+		\draw (6.15,-.175) edge[thick,out=180,in=-45,->,shorten >=.2ex] (5,-.45);
+		
+		\draw (6.1,.1) -- (6.1,.45);
+		\draw (6.1,.1) -- (7.9,.1);
+		\draw (6.1,.45) -- (7.9,.45);
+		\draw (7.9,.1) -- (7.9,.45);
+		\node at (6,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (7.72,.275) {};
+		\draw (7.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (9,1);
+		
+		\draw (6.1,.55) -- (6.1,.9);
+		\draw (6.1,.55) -- (7.9,.55);
+		\draw (6.1,.9) -- (7.9,.9);
+		\draw (7.9,.55) -- (7.9,.9);
+		\node at (6,.725) [right] {value = ...};
+		
+		
+		\draw (9,-.45) -- (9,1);
+		\draw (9,-.45) -- (11,-.45);
+		\draw (9,1) -- (11,1);
+		\draw (11,-.45) -- (11,1);
+		
+		\draw (9.1,-.35) -- (9.1,0);
+		\draw (9.1,-.35) -- (10.9,-.35);
+		\draw (9.1,0) -- (10.9,0);
+		\draw (10.9,-.35) -- (10.9,0);
+		\node at (9.3,-.225) [right] {prev};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (9.28,-.175) {};
+		\draw (9.15,-.175) edge[thick,out=180,in=-45,->,shorten >=.2ex] (8,-.45);
+		
+		\draw (9.1,.1) -- (9.1,.45);
+		\draw (9.1,.1) -- (10.9,.1);
+		\draw (9.1,.45) -- (10.9,.45);
+		\draw (10.9,.1) -- (10.9,.45);
+		\node at (9,.275) [right] {next};
+		
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (10.72,.275) {};
+		\draw (10.85,.275) edge[thick,out=0,in=155,->,shorten >=.2ex] (11.5,.45);
+		
+		\draw (9.1,.55) -- (9.1,.9);
+		\draw (9.1,.55) -- (10.9,.55);
+		\draw (9.1,.9) -- (10.9,.9);
+		\draw (10.9,.55) -- (10.9,.9);
+		\node at (9,.725) [right] {value = ...};
+
+		\draw (11.5,.1) -- (11.5,.45);
+		\draw (11.5,.1) -- (12.5,.1);
+		\draw (11.5,.45) -- (12.5,.45);
+		\draw (12.5,.1) -- (12.5,.45);
+		\node at (11.4,.265) [right] {NULL};
+		
+		
+		\begin{uncoverenv}<2->
+			\draw (2,-1.5) -- (2,-2.95);
+			\draw (2,-1.5) -- (4,-1.5);
+			\draw (4,-1.5) -- (4,-2.95);
+			\draw (4,-2.95) -- (2,-2.95);
+			
+			\draw (2.1,-1.6) -- (2.1, -1.95);
+			\draw (2.1,-1.6) -- (3.9,-1.6);
+			\draw (3.9,-1.6) -- (3.9,-1.95);
+			\draw (3.9,-1.95) -- (2.1,-1.95);
+			\node at (2,-1.775) [right] {value = ...};
+			
+			\draw (2.1, -2.05) -- (2.1, -2.4);
+			\draw (2.1,-2.05) -- (3.9,-2.05);
+			\draw (3.9,-2.05) -- (3.9,-2.4);
+			\draw (3.9,-2.4) -- (2.1,-2.4);
+			\node at (2,-2.225) [right] {next};
+			\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (3.72,-2.225) {};
+			
+			\draw (2.1, -2.5) -- (2.1, -2.85);
+			\draw (2.1,-2.5) -- (3.9,-2.5);
+			\draw (3.9,-2.5) -- (3.9,-2.85);
+			\draw (3.9,-2.85) -- (2.1,-2.85);
+			\node at (2.3,-2.725) [right] {prev};
+			\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (2.28,-2.675) {};
+			
+			
+		\end{uncoverenv}
+		\begin{uncoverenv}<3->
+			\draw [thick,blue,->,shorten >=.2ex] (3.85,-2.225) to[out=0,in=-35] (4,-1.4) to[out=180-35,in=-45] (2.8,-1.1) to[out=180-45,in=135] (3,1);
+			\draw [thick,blue,->,shorten >=.2ex] (2.15,-2.675) to[out=180,in=180+35] (1.8,-1) to[out=35,in=-45] (2,-.45);
+		\end{uncoverenv}
+		\begin{uncoverenv}<5>
+			\draw [thick,red,->,shorten >=.2ex] (1.85,.275) to[out=0,in=90] (2.25,-.5) to[out=270,in=135] (2,-1.5);
+			\draw [thick,red,->,shorten >=.2ex] (3.28,-.305) to[out=-90,in=90] (4.6,-1.8) to[out=270,in=-45] (4,-2.95);
+		\end{uncoverenv}
+		
+		
+	\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}{Cyclical lists}
+
+	\begin{tikzpicture}[scale=.73,font=\scriptsize]
+			
+		\draw (-2.5,.1) -- (-1,.1);
+		\draw (-2.5,.1) -- (-2.5,.45);
+		\draw (-2.5,.45) -- (-1,.45);
+		\draw (-1,.45) -- (-1,.1);
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (-1.18,.275) {};
+		\node at (-2.6,.275) [right] {head};
+		\draw (-1.05,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (0,1);
+	
+		\draw (0,0) -- (0,1);
+		\draw (0,0) -- (2,0);
+		\draw (0,1) -- (2,1);
+		\draw (2,0) -- (2,1);
+		
+		\draw (.1,.1) -- (.1,.45);
+		\draw (.1,.1) -- (1.9,.1);
+		\draw (.1,.45) -- (1.9,.45);
+		\draw (1.9,.1) -- (1.9,.45);
+		\node at (0,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (1.72,.275) {};
+			\draw (1.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (3,1);
+		
+		\draw (.1,.55) -- (.1,.9);
+		\draw (.1,.55) -- (1.9,.55);
+		\draw (.1,.9) -- (1.9,.9);
+		\draw (1.9,.55) -- (1.9,.9);
+		\node at (0,.725) [right] {value = ...};
+		
+		
+		\draw (3,0) -- (3,1);
+		\draw (3,0) -- (5,0);
+		\draw (3,1) -- (5,1);
+		\draw (5,0) -- (5,1);
+		
+		\draw (3.1,.1) -- (3.1,.45);
+		\draw (3.1,.1) -- (4.9,.1);
+		\draw (3.1,.45) -- (4.9,.45);
+		\draw (4.9,.1) -- (4.9,.45);
+		\node at (3,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (4.72,.275) {};
+		\draw (4.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (6,1);
+		
+		
+		\draw (3.1,.55) -- (3.1,.9);
+		\draw (3.1,.55) -- (4.9,.55);
+		\draw (3.1,.9) -- (4.9,.9);
+		\draw (4.9,.55) -- (4.9,.9);
+		\node at (3,.725) [right] {value = ...};
+		
+		
+		\draw (6,0) -- (6,1);
+		\draw (6,0) -- (8,0);
+		\draw (6,1) -- (8,1);
+		\draw (8,0) -- (8,1);
+		
+		\draw (6.1,.1) -- (6.1,.45);
+		\draw (6.1,.1) -- (7.9,.1);
+		\draw (6.1,.45) -- (7.9,.45);
+		\draw (7.9,.1) -- (7.9,.45);
+		\node at (6,.275) [right] {next};
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (7.72,.275) {};
+		\draw (7.85,.275) edge[thick,out=0,in=135,->,shorten >=.2ex] (9,1);
+		
+		\draw (6.1,.55) -- (6.1,.9);
+		\draw (6.1,.55) -- (7.9,.55);
+		\draw (6.1,.9) -- (7.9,.9);
+		\draw (7.9,.55) -- (7.9,.9);
+		\node at (6,.725) [right] {value = ...};
+		
+		
+		\draw (9,0) -- (9,1);
+		\draw (9,0) -- (11,0);
+		\draw (9,1) -- (11,1);
+		\draw (11,0) -- (11,1);
+		
+		\draw (9.1,.1) -- (9.1,.45);
+		\draw (9.1,.1) -- (10.9,.1);
+		\draw (9.1,.45) -- (10.9,.45);
+		\draw (10.9,.1) -- (10.9,.45);
+		\node at (9,.275) [right] {next};
+		
+		
+		\node[circle, thick, draw=black, minimum size=5pt, inner sep = 0pt] at (10.72,.275) {};
+		\draw [thick,->,shorten >=.2ex] (10.72,.175) to[out=-90,in=0] (9,-.5) to[out=180,in=0] (3.5,-.5) to[out=180,in=-45] (2,0);
+		
+		\draw (9.1,.55) -- (9.1,.9);
+		\draw (9.1,.55) -- (10.9,.55);
+		\draw (9.1,.9) -- (10.9,.9);
+		\draw (10.9,.55) -- (10.9,.9);
+		\node at (9,.725) [right] {value = ...};
+		
+	\end{tikzpicture}\\\ \\\ \\\ \\
+	\begin{itemize}
+		\item You can also implement \textit{double-chained cyclical lists}.
+	\end{itemize}
+\end{frame}
+
+\section{Binary trees}
+\subsection{}
+\begin{frame}{Binary trees}
+	\begin{tikzpicture}[scale=.12,font=\scriptsize]
+		\draw (-5,0) -- (5,0);
+		\draw (5,0) -- (5,-2);
+		\draw (5,-2) -- (-5,-2);
+		\draw (-5,-2) -- (-5,0);
+		
+		\node at (-1,.7)[below] {root};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (4,-1) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (4,-1) to[out=-90,in=90] (0,-7);
+		
+		
+		\draw (-5,-7) -- (5,-7);
+		\draw (5,-7) -- (5,-15);
+		\draw (5,-15) -- (-5,-15);
+		\draw (-5,-15) -- (-5,-7);
+		
+		\draw (-4.5,-7.5) -- (4.5,-7.5);
+		\draw (4.5,-7.5) -- (4.5,-9.5);
+		\draw (4.5,-9.5) -- (-4.5,-9.5);
+		\draw (-4.5,-9.5) -- (-4.5,-7.5);
+		\node at (0,-6.7)[below] {value};
+		
+		\draw (-4.5,-10) -- (4.5,-10);
+		\draw (4.5,-10) -- (4.5,-12);
+		\draw (4.5,-12) -- (-4.5,-12);
+		\draw (-4.5,-12) -- (-4.5,-10);
+		\node at (-1,-9.1)[below] {right};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (3.5,-11) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (3.5,-11) to[out=0,in=90] (10,-22);
+		
+		\draw (-4.5,-12.5) -- (4.5,-12.5);
+		\draw (4.5,-12.5) -- (4.5,-14.5);
+		\draw (4.5,-14.5) -- (-4.5,-14.5);
+		\draw (-4.5,-14.5) -- (-4.5,-12.5);
+		\node at (1,-11.7)[below] {left};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-3.5,-13.5) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-3.5,-13.5) to[out=-180,in=90] (-10,-22);
+		
+		
+		\draw (-15,-22) -- (-5,-22);
+		\draw (-5,-22) -- (-5,-30);
+		\draw (-5,-30) -- (-15,-30);
+		\draw (-15,-30) -- (-15,-22);
+		
+		\draw (-14.5,-22.5) -- (-5.5,-22.5);
+		\draw (-5.5,-22.5) -- (-5.5,-24.5);
+		\draw (-5.5,-24.5) -- (-14.5,-24.5);
+		\draw (-14.5,-24.5) -- (-14.5,-22.5);
+		\node at (-10,-21.7)[below] {value};
+		
+		\draw (-14.5,-25) -- (-5.5,-25);
+		\draw (-5.5,-25) -- (-5.5,-27);
+		\draw (-5.5,-27) -- (-14.5,-27);
+		\draw (-14.5,-27) -- (-14.5,-25);
+		\node at (-11,-24.1)[below] {right};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-6.5,-26) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-6.5,-26) to[out=0,in=90] (-3,-37);
+		
+		\draw (-14.5,-27.5) -- (-5.5,-27.5);
+		\draw (-5.5,-27.5) -- (-5.5,-29.5);
+		\draw (-5.5,-29.5) -- (-14.5,-29.5);
+		\draw (-14.5,-29.5) -- (-14.5,-27.5);
+		\node at (-9,-26.7)[below] {left};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-13.5,-28.5) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-13.5,-28.5) to[out=180,in=90] (-20,-37);
+		
+		
+		
+		\draw (5,-22) -- (15,-22);
+		\draw (15,-22) -- (15,-30);
+		\draw (15,-30) -- (5,-30);
+		\draw (5,-30) -- (5,-22);
+		
+		\draw (5.5,-22.5) -- (14.5,-22.5);
+		\draw (14.5,-22.5) -- (14.5,-24.5);
+		\draw (14.5,-24.5) -- (5.5,-24.5);
+		\draw (5.5,-24.5) -- (5.5,-22.5);
+		\node at (10,-21.7)[below] {value};
+		
+		\draw (5.5,-25) -- (14.5,-25);
+		\draw (14.5,-25) -- (14.5,-27);
+		\draw (14.5,-27) -- (5.5,-27);
+		\draw (5.5,-27) -- (5.5,-25);
+		\node at (9,-24.1)[below] {right};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (13.5,-26) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (13.5,-26) to[out=0,in=90] (20,-37);
+		
+		\draw (5.5,-27.5) -- (14.5,-27.5);
+		\draw (14.5,-27.5) -- (14.5,-29.5);
+		\draw (14.5,-29.5) -- (5.5,-29.5);
+		\draw (5.5,-29.5) -- (5.5,-27.5);
+		\node at (11,-26.7)[below] {left};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (6.5,-28.5) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (6.5,-28.5) to[out=180,in=90] (3,-37);
+		
+		
+		
+		
+		\draw (-25,-37) -- (-15,-37);
+		\draw (-15,-37) -- (-15,-45);
+		\draw (-15,-45) -- (-25,-45);
+		\draw (-25,-45) -- (-25,-37);
+		
+		\draw (-24.5,-37.5) -- (-15.5,-37.5);
+		\draw (-15.5,-37.5) -- (-15.5,-39.5);
+		\draw (-15.5,-39.5) -- (-24.5,-39.5);
+		\draw (-24.5,-39.5) -- (-24.5,-37.5);
+		\node at (-20,-36.7)[below] {value};
+		
+		\draw (-24.5,-40) -- (-15.5,-40);
+		\draw (-15.5,-40) -- (-15.5,-42);
+		\draw (-15.5,-42) -- (-24.5,-42);
+		\draw (-24.5,-42) -- (-24.5,-40);
+		\node at (-21,-39.1)[below] {right};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-16.5,-41) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-16.5,-41) to[out=0,in=90] (-10,-52);
+		
+		\draw (-24.5,-42.5) -- (-15.5,-42.5);
+		\draw (-15.5,-42.5) -- (-15.5,-44.5);
+		\draw (-15.5,-44.5) -- (-24.5,-44.5);
+		\draw (-24.5,-44.5) -- (-24.5,-42.5);
+		\node at (-19,-41.7)[below] {left};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (-23.5,-43.5) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (-23.5,-43.5) to[out=-180,in=90] (-30,-52);
+
+
+
+
+		\draw (0,-37) -- (10,-37);
+		\draw (10,-37) -- (10,-45);
+		\draw (10,-45) -- (0,-45);
+		\draw (0,-45) -- (0,-37);
+		
+		\draw (.5,-37.5) -- (9.5,-37.5);
+		\draw (9.5,-37.5) -- (9.5,-39.5);
+		\draw (9.5,-39.5) -- (.5,-39.5);
+		\draw (.5,-39.5) -- (.5,-37.5);
+		\node at (5,-36.7)[below] {value};
+		
+		\draw (.5,-40) -- (9.5,-40);
+		\draw (9.5,-40) -- (9.5,-42);
+		\draw (9.5,-42) -- (.5,-42);
+		\draw (.5,-42) -- (.5,-40);
+		\node at (4,-39.1)[below] {right};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (8.5,-41) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (8.5,-41) to[out=0,in=90] (15,-52);
+		
+		\draw (.5,-42.5) -- (9.5,-42.5);
+		\draw (9.5,-42.5) -- (9.5,-44.5);
+		\draw (9.5,-44.5) -- (.5,-44.5);
+		\draw (.5,-44.5) -- (.5,-42.5);
+		\node at (6,-41.7)[below] {left};
+		\node[circle, thick, draw=black, minimum size=4pt, inner sep = 0pt] at (1.5,-43.5) {};
+		\draw [thick,->,shorten >=.2ex,shorten <=.4ex] (1.5,-43.5) to[out=-180,in=90] (-3,-52);
+
+
+
+		\draw (-35,-52) -- (-25,-52);
+		\draw (-35,-52) -- (-35,-54);
+		\draw (-25,-52) -- (-25,-54);
+		\draw (-35,-54) -- (-25,-54);
+		\node at (-30,-51.2)[below] {NULL};
+
+
+
+
+		\draw (-18,-52) -- (-8,-52);
+		\draw (-18,-52) -- (-18,-54);
+		\draw (-8,-52) -- (-8,-54);
+		\draw (-18,-54) -- (-8,-54);
+		\node at (-13,-51.2)[below] {NULL};
+
+
+
+
+		\draw (-5,-52) -- (5,-52);
+		\draw (-5,-52) -- (-5,-54);
+		\draw (5,-52) -- (5,-54);
+		\draw (-5,-54) -- (5,-54);
+		\node at (0,-51.2)[below] {NULL};
+
+
+
+
+		\draw (10,-52) -- (20,-52);
+		\draw (20,-52) -- (20,-54);
+		\draw (10,-52) -- (10,-54);
+		\draw (10,-54) -- (20,-54);
+		\node at (15,-51.2)[below] {NULL};
+
+
+
+		\draw (-12,-37) -- (-2,-37);
+		\draw (-12,-37) -- (-12,-39);
+		\draw (-2,-37) -- (-2,-39);
+		\draw (-12,-39) -- (-2,-39);
+		\node at (-7,-36.2)[below] {NULL};
+
+
+
+
+		\draw (15,-37) -- (25,-37);
+		\draw (15,-37) -- (15,-39);
+		\draw (25,-37) -- (25,-39);
+		\draw (15,-39) -- (25,-39);
+		\node at (20,-36.2)[below] {NULL};
+	\end{tikzpicture}
+\end{frame}
+
+
+
+% nothing to do from here on
+\end{document}
