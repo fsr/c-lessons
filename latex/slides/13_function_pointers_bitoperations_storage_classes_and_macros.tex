@@ -1,0 +1,105 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Bitoperations, storage classes, macros and function pointers
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Bitoperations}
+\subsection{}
+
+\begin{frame}{About 0 and 1}
+	As you know, your computer stores data in 0s and 1s.\\
+	With C beeing a very low level language, we can manipulate data on bit layer.\\\ \\
+	
+	C offers the following bitoperations:\\\ \\
+	
+	\begin{tabular}{|l|c|l|}
+																						  	  \hline
+		\textbf{Operation} 	& \textbf{Syntax} 	& \textbf{Example} 							\\\hline
+		Or 					& $|$ 				& $4\ |\ 1 = 0100\ |\ 0001 = 0101 = 5$ 		\\\hline
+		And 				& $\&$ 				& $6\ \&\ 2 = 0110\ \&\ 0010 = 0010 = 2$ 	\\\hline
+		Shift-Left 			& $<<$ 				& $5 << 2 = 00101 << 2 = 10100 = 20$ 		\\\hline
+		Shift-Right 		& $>>$ 				& $10 >> 2 = 1010 >> 2 = 0010 = 2$ 			\\\hline
+	\end{tabular}
+\end{frame}
+
+\section{Storage classes}
+\subsection{}
+
+\begin{frame}{ToDo}
+
+\end{frame}
+
+\section{Macros}
+\subsection{}
+
+\begin{frame}{ToDo}
+
+\end{frame}
+
+\section{Pointers to functions}
+\subsection{}
+
+\begin{frame}{Passing functions to functions}
+	It is possible to pass a function as an argument of another function.\\
+	Doing so, you have a function that can call different other functions.\\
+	To be a parameter, there have to be information about the return type and the parameter list.\\
+	\ \\
+	Actually you do not pass a function but a pointer to that function.
+\end{frame}
+
+\begin{frame}[fragile]{Syntax}
+	\begin{lstlisting}
+#include <stdio.h>
+
+int add(int a, int b) {
+	return a + b;
+}
+
+int sub(int a, int b) {
+	return a - b;
+}
+
+void printFunc(int (*f)(int, int), int a, int b) {
+	 printf("%d\n",f(a, b));
+}
+
+int main(void) {
+	printFunc(add, 1, 2);
+	printFunc(sub, 1, 2);
+	return 0;
+}
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}{Mapping}
+	Pointers to functions are often used for mapping. If you want to iterate through a list and call a function for every list item, you could do this with a new loop each time, but you also could write a function that takes a list and a function.\\
+	\ \\
+	If only we had an example to try this out...\\
+	Oh wait... we do: The Dungeon.\\\ \\
+	\begin{itemize}
+		\item Write a mapping function that takes a list of monsters and a function.
+		\item Edit the print\_monster\_list function to a print\_entity function.
+		\item Now you can print the monsters list by calling the mapping function passing the list and the print\_entity function.
+	\end{itemize}
+\end{frame}
+
+% nothing to do from here on
+\end{document}

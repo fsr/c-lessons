@@ -1,0 +1,41 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Pretty output} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Medium} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Man, standard library} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{Get used to man} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+To solve the following tasks, you need to use some functions that may be new to you. \\
+No explanation is given on them, use \textit{man} to find out how they work. \\
+\begin{itemize}
+	\item Write a program that outputs a function table like the following:
+	\begin{itemize}
+		\item In the first row, print all values $x$ from 1 to 10.
+		\item In the second row, print $1/x$ from 1 to 10.
+	\end{itemize}
+	\item Play around with the format string of \textit{printf()} to create a nice table-like output.
+	\item \textbf{Experts}: Print a multiplication table instead (from $1*1$ to $10*10$)
+\end{itemize}
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+
+\end{document}

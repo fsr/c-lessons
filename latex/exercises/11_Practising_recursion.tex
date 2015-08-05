@@ -1,0 +1,42 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Practising recursion} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Hard} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Functions, recursion} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{Functions} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+\begin{itemize}
+	\item Write a function that calculates the factorial of a given number \textit{n!} recursively.
+	\item \textbf{Experts:} The function shall calculate \textit{fib(n)} instead of \textit{n!}.
+\end{itemize}	
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\ \\\ \\\ \\\ \\\ \\
+\section*{Hints}
+	\begin{itemize}
+		\item For which n is the result of \textit{n!} clear?
+		\item Check for such \textit{n} at the start of the function!
+		\item For all other \textit{n}, you need a recursive call.
+		\item \textbf{Experts:} In one statement, you can call a function multiple times
+	\end{itemize}
+ 
+\end{document}

@@ -1,0 +1,36 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Circles} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Hard} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Structs} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{Working with structs} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+A \textit{point} in 2D consists of two coordinates: x and y (both \textit{float}). \\
+A \textit{circle} consists of a centre (\textit{point}), a radius, a circumference and an area (all \textit{float}).
+\begin{itemize}
+	\item Write a program that reads two coordinates and a radius from the command line and stores them in the \textit{struct circle} described above.
+	\\Then the circumference and area are calculated and stored as well.
+	\\ Afterwards the updated \textit{struct circle} is printed.
+	\item \textbf{Experts:} Write a function that takes two \textit{circle}s as arguments and returns a \textit{circle} that is goes through their \textit{centre}s.
+\end{itemize}
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\end{document}

@@ -1,0 +1,41 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Complex numbers} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Medium} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Complex data types} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{Working with structs} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+
+A \textit{complex number} $a + b\mathrm{i}$ can be handled as a composite of two real numbers (real part $a$ and imaginary part $b$).
+\begin{itemize}
+	\item Write a program that is able to read and print \textit{complex number}s and stores them in an appropriate data structure.
+	\\ The output should be in the form $a + b\mathrm{i}$, but you can ask to input $a$ and $b$ seperately.
+	\item \textbf{Experts:} write a function that takes a \textit{complex number} as an argument and returns its absolute value.
+\end{itemize}	
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\ \\\ \\\ \\\ \\\ \\
+\section*{Hints}
+	\begin{itemize}
+		\item \textbf{Experts:} You have to pass a \textit{complex number}, but the return value is a real number.
+	\end{itemize}
+ 
+\end{document}

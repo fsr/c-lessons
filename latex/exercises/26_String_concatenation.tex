@@ -1,0 +1,46 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{String concatenation} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Hard} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Dynamic storage, strings} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{allocate memory} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+
+\textit{strncat()} concatenates two strings. Have a closer look at it:
+\begin{lstlisting}[numbers=none]
+$ man 3 strncat
+\end{lstlisting}
+\begin{itemize}
+	\item Write a program that reads a series of strings from the user input and concatenates them.
+	\item Each string is put at the front so that the result is in reversed order.
+	\item \textbf{Experts}: At the end, let the user enter one last string. Check, if that one occures in the string you have put together.
+\end{itemize}		
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\ \\\ \\\ \\\ \\\ \\
+\section*{Hints}
+	\begin{itemize}
+		\item End the input phase when a '\textbackslash n' is read (empty line).
+		\item Always check if your buffer is large enough and resize it, if needed.
+		\item \textbf{Experts:} \textit{strstr()} may be an option.
+	\end{itemize}
+ 
+\end{document}

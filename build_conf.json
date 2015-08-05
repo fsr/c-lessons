@@ -5,10 +5,16 @@
             "target_dir": "build/pdf",
             "command": "pdflatex",
             "files": [
-                "c_advanced_info.tex",
-                "c_info.tex",
-                "c_introduction_info.tex",
-                "development environment.tex"
+                "01_basic_program_structure.tex",
+                "02_variables.tex",
+                "03_operators.tex",
+                "04_control_structures.tex",
+                "05_functions.tex",
+                "06_standard_library.tex",
+                "07_arrays.tex",
+                "08_complex_data_types.tex",
+                "09_pointers.tex",
+                "10_dynamic_storage.tex"
             ]
         },
         "html": {
@@ -16,10 +22,16 @@
             "target_dir": "build/html",
             "command": "hevea",
             "files": [
-                "c_advanced_info.tex",
-                "c_info.tex",
-                "c_introduction_info.tex",
-                "development environment.tex"
+                "01_basic_program_structure.tex",
+                "02_variables.tex",
+                "03_operators.tex",
+                "04_control_structures.tex",
+                "05_functions.tex",
+                "06_standard_library.tex",
+                "07_arrays.tex",
+                "08_complex_data_types.tex",
+                "09_pointers.tex",
+                "10_dynamic_storage.tex"
             ]
         }
     }

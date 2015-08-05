@@ -1,0 +1,49 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Hangman} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Very Hard} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{All you learned in C-Introduction} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{Apply your knowledge} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+
+Write a simple hangman game! Everytime the player is wrong,
+add a new part to the gallows / the hanging man and print it to the terminal:
+\begin{lstlisting}[numbers=none]
+       -----    
+       |/  o 
+       |  ^W^
+       |  / \		word: game o_e_
+       |     		wrong: hfnwitc
+     -----   
+    /     \
+   /       \
+===============
+\end{lstlisting}
+\textbf{Experts}: Have a list of possible words in the source code and let the program randomly choose one at the start.
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\ \\\ \\\ \\\ \\\ \\
+\section*{Hints}
+	\begin{itemize}
+		\item \textit{strncmp()} compares two strings.	
+	\end{itemize}
+ 
+\end{document}

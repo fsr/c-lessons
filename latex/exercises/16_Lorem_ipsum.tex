@@ -1,0 +1,45 @@
+
+% den vorgegebenen header einbinden
+\input{Header}
+\usepackage{hyperref}
+% ein paar Voreinstellungen,
+% bitte entsprechend anpassen
+\title{Lorem ipsum} % Name der Aufgabe
+\author{} % Falls gewünscht, kann man sich als Author eintragen
+\renewcommand{\difficulty}{Medium} % Schwierigkeitsgrad der Aufgabe
+\renewcommand{\requirements}{Arrays, C-Strings} % Benötigte Voraussetzungen für die Aufgabe
+\renewcommand{\aims}{Iterating through an array} % Lernziele der Aufgabe
+
+\begin{document}
+% Hier gibt es nichts zu tun
+ \maketitle
+ \taskinfos
+% Ab hier kann man nach Belieben schalten und walten
+% Teilaufgaben können mit sections, subsections und subsubsections abgetrennt werden.
+% die Numerierung erfolgt automatisch
+
+% \subsection{Ein Teilschritt}
+% \subsubsection{Ganz genaue Anweisungen}
+\ \\\ \\
+\begin{itemize}
+	\item Write a program that prints the following text by iterating through an array.
+	\begin{lstlisting}[numbers=none]
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero
+eos et accusam et justo duo dolores et ea rebum.
+\end{lstlisting}
+\end{itemize}	
+ 
+% und so geht Quelltext:
+% Actung: Tabulatoren und Leerzeichen werden 1:1 übernommen
+ 
+% Das sollte nicht fehlen:
+\ \\\ \\\ \\\ \\\ \\
+\section*{Hints}
+	\begin{itemize}
+		\item You can copy the text from \url{http://loremipsum.de}
+		\item You'll need a bunch of \textit{'} and \textit{,}
+	\end{itemize}
+ 
+\end{document}
