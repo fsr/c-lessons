@@ -34,14 +34,14 @@
 	There is another strategie to handle this Problem.
 \end{frame}
 
-\begin{frame}[fragile]{Yay, Pointers}
+\begin{frame}[fragile]{Yay, pointers}
 	For better handling of datastructures, we define \textit{structs} with additional pointers to itself:\\\ \\
 	\begin{columns}[c]
 		\column{.5\textwidth}
 		\begin{lstlisting}[numbers=none]
 struct listElement {
 	int value;
-	sctruct listElement *next;
+	struct listElement *next;
 }
 \end{lstlisting}
 		\column{.5\textwidth}
