@@ -20,6 +20,83 @@
 	\tableofcontents
 \end{frame}
 
+\section{Filedescriptors}
+\subsection{}
+
+\begin{frame}[fragile]{Describing a file}
+	The first way to handle files in C is to code very low level by using \textbf{filedescriptors}.\\
+	Those are Integer numbers that represent a file.\\
+	To open a file and get a descriptor there is the system call function \textit{open()}:\\\ \\
+
+	\begin{lstlisting}
+int myfile = open("savestate", O_RDWR);
+\end{lstlisting}
+
+	\begin{itemize}
+		\item See \textit{man 2 open} for further information and library includes concerning this function.
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Write and read}
+	For actually putting data into a file, C offers the function \textit{write()}, that takes a file descriptor, the input and the amount of Bytes that should be written:\\\ \\
+	
+	\begin{lstlisting}
+int myfile = open("savestate", O_WRONLY | O_CREAT, 0644);
+char* mytext = "foo";
+write(myfile, mytext, 4);
+\end{lstlisting}\ \\\ \\
+
+	To read data from a file, you have to prepare a variable to put it in:\\\ \\
+	
+	\begin{lstlisting}
+int myfile = open("savestate", O_RDONLY);
+char* mytext[256] = {0};
+read(myfile, &mytext, 255);
+\end{lstlisting}
+	
+\end{frame}
+
+\begin{frame}[fragile]{Close}
+	After finishing your file operations, you have to tell your OS that you have finished by closing the filedescriptor:\\\ \\
+	
+	\begin{lstlisting}
+int myfile = open("savestate", O_WRONLY | O_CREAT, 0644);
+char* mytext = "foo";
+write(myfile, mytext, 4);
+close(myfile);
+\end{lstlisting}
+\end{frame}
+
+\section{Filepointers}
+\subsection{}
+
+\begin{frame}[fragile]{Returning to standard}
+	The C standard library contains a special datastructure for handling files: a so called \textbf{filepointer} \textit{FILE*}:\\\ \\
+	
+	\begin{lstlisting}
+FILE* myfile = fopen("savestate", "r+");
+char* content[256] = {0};
+fgets(&content, 255, myfile);
+fputs("foo", myfile);
+fclose(myfile);
+\end{lstlisting}
+
+	\begin{itemize}
+		\item See the man page for further information.
+	\end{itemize}
+\end{frame}
+
+\section{Dungeon}
+\subsection{}
+\begin{frame}{Savestates}
+	Now that you are common with file management, implement a savestate functionality into the dungeon.\\\ \\
+	\begin{itemize}
+		\item When the game quits (by pressing \textit{x}) the game data should be written into a savestate.
+		\item If there is a savestate, the game should load it on start.
+		\item There also should be an opportunity to exit the game without saving.
+	\end{itemize}
+\end{frame}
 
 % nothing to do from here on
 \end{document}
