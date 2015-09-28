@@ -48,7 +48,7 @@
 \end{lstlisting}\ \\\ \\
 	\begin{itemize}
 		\item Note that we use \textbf{"\ldots"} for own includes instead of $\boldsymbol{<\ldots>}$.
-		\item The quotaion marks contain the relative path to the header file.
+		\item The quotation marks contain the relative path to the header file.
 	\end{itemize}
 \end{frame}
 
@@ -70,9 +70,9 @@
 
 \begin{frame}[fragile]{Global variables}
 	Since the source files all are accessing the global variables, we move them into another header file \textit{globals.h}.\\\ \\
-	Finally We seperate the function \textit{out\_of\_bounds} and the global variable \textit{next\_coords} into \textit{board.c}.\\
+	Finally we outsource the function \textit{out\_of\_bounds} and the global variable \textit{next\_coords} into \textit{board.c}.\\
 	\begin{itemize}
-		\item Try to find the remainung includes by yourself.
+		\item Try to find the remaining includes by yourself.
 	\end{itemize}\ \\\ \\
 	To avoid multiple includes of one header file we can, and should, do as follows:
 	\begin{lstlisting}
@@ -88,13 +88,13 @@
 \section{Make}
 \subsection{}
 \begin{frame}[fragile]{Compiling}
-	To Compile a project from multiple files you have to pass all the source files to the gcc command:\\\ \\
+	To compile a project from multiple files you have to pass all the source files to the gcc command:\\\ \\
 	\begin{lstlisting}[numbers=none]
 $ gcc -Wall -o main datastructures.c io.c board.c main.c
 \end{lstlisting}\ \\\ \\
 	\begin{itemize}
 		\item Note that you do not have to add the header files.
-		\item They do not need to be compiled.
+		\item They do not need to be compiled separately.
 	\end{itemize}
 \end{frame}
 
@@ -155,11 +155,11 @@ $ make debug
 	\end{tabular}\ \\\ \\
 	\flushleft
 	\normalsize
-	We would like to split the compilation process and keep the unlinked *.o files to link new build *.o files with existing ones.
+	We would like to split the compilation process and keep the unlinked *.o files to link newly build *.o files with existing ones.
 \end{frame}
 
 \begin{frame}[fragile]{Dependecies}
-	Gcc compiles without linking when the \textit{-c} flag is set.\\
+	gcc compiles without linking when the \textit{-c} flag is set.\\
 	You can add a dependency to your makefile by writing it behind the rule identifier. Dependencies on other rules are allowed:\\\ \\
 	\begin{lstlisting}[language=make,basicstyle=\scriptsize,numbers=none]
 all: firstfile.o secondfile.o 
