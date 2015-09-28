@@ -25,8 +25,8 @@
 \begin{frame}{It's not a bug...}
 	There are different kinds of errors.
 	\begin{itemize}
-		\item Compilitime errors
-		\item Runtime errors (\textit{Bugs})
+		\item Compiletime errors
+		\item Runtime errors (\textit{bugs})
 	\end{itemize}\ \\\ \\
 	\textit{Compiletime errors} are easily handable since the compiler shows you where to fix them.\\\ \\
 	\textit{Bugs} on the other hand are harder to find because you have no idea where to look for them.
@@ -35,7 +35,7 @@
 	Bugs can appear due to different reasons
 	\begin{itemize}
 		\item Variable overflow
-		\item Division by Zero
+		\item Division by zero
 		\item Infinite loops / recursions
 		\item Range excess
 		\item Segmentation fault
@@ -50,7 +50,7 @@
 		\item Look at the code and try to understand what should happen.
 		\item If you find mistakes, please leave them. We'll fix them later.
 		\\\ 
-		\item Compile it (with \textit{-std=c99})
+		\item Compile it (with \textit{-std=c99}).
 		\\\ 
 		\item And now run it.
 	\end{itemize}
@@ -64,7 +64,7 @@
 	\begin{tabular}{|l|l|}\hline
 		\textit{-Wall} & enables a bunch of compiler warnings\\\hline
 		\textit{-Wextra} & enables further compiler warnings\\\hline
-		\textit{-Werror} & warnings are interpreted as errors (compiling doesn't succeed)\\\hline
+		\textit{-Werror} & warnings are interpreted as errors (compiling won't succeed)\\\hline
 	\end{tabular}
 	\ \\\ \\\ \\
 	\begin{itemize}
@@ -76,7 +76,7 @@
 	\begin{itemize}
 		\item Compile the dungeon with \textit{-Wall} and \textit{-Wextra}
 		\begin{itemize}		
-			\item There are 3 Warnings. The 3rd one matters.
+			\item There are 3 warnings. The 3rd one matters.
 			\item There is a variable that's set but not used.
 		\end{itemize}
 		\item You may find a bug there. Fix it.
@@ -86,7 +86,7 @@
 \subsection{}
 \begin{frame}[fragile]{The \textbf{G}NU \textbf{D}e\textbf{B}ugger}
 	There are tools helping with bugs, called debuggers. GDB is one of them.
-	To Use it
+	To use it
 	\begin{itemize}
 		\item You have to install the package \textit{gdb}\\
 		On Windows, hope your cygwin installation came with it
@@ -104,7 +104,7 @@ $ gdb a.out
 	\begin{itemize}
 		\item If you started gdb without a file you can load it with \textbf{file} \textit{file\_name}.
 		\item Use \textbf{r[un]} to execute the program with gdb.\\
-		You should begin with it. It will give you further information about the crash.
+		You should begin with that. It will give you further information about the crash.
 		\item You can set an arbitrary amount of breakpoints with \textbf{b[reak]} \textit{line\_number} or \textbf{b[reak]} \textit{function\_name}.\\
 		Begin with a breakpoint at the point the program crashes.
 		\item Print values with \textbf{p[rint]} \textit{identifier}.
@@ -122,7 +122,7 @@ $ gdb a.out
 		\item By only hitting the \textit{return key}, you repeat the last entered  command.
 	\end{itemize}
 	\ \\\ \\
-	GDB is much more mighty than this few commands, but that should be sufficient to solv your final quest.
+	GDB is much more mighty than this few commands, but that should be sufficient to solve your final quest.
 \end{frame}
 \begin{frame}{Now it's up to you}
 	\begin{itemize}
