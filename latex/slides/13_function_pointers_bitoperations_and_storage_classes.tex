@@ -23,48 +23,171 @@
 \section{Bitoperations}
 \subsection{}
 
-\begin{frame}{About 0 and 1}
-	As you know, your computer stores data in 0s and 1s.\\
-	With C beeing a very low level language, we can manipulate data on bit layer.\\\ \\
+\begin{frame}{A little bit of logic}
+	As you know, all data is stored as \textit{binary numbers} - sequences of 0 and 1.\\
+	In C, you can operate on this bit layer by using the following \textit{logical bit} and \textit{shift} operators:\bigskip
 	
-	C offers the following bitoperations:\\\ \\
-	
-	\begin{tabular}{|l|c|l|}
+	\begin{tabular}{|c|c|l|}
 																						  	  \hline
-		\textbf{Operation} 	& \textbf{Syntax} 	& \textbf{Example} 							\\\hline
-		Or 					& $|$ 				& $4\ |\ 1 = 0100\ |\ 0001 = 0101 = 5$ 		\\\hline
-		And 				& $\&$ 				& $6\ \&\ 2 = 0110\ \&\ 0010 = 0010 = 2$ 	\\\hline
-		Shift-Left 			& $<<$ 				& $5 << 2 = 00101 << 2 = 10100 = 20$ 		\\\hline
-		Shift-Right 		& $>>$ 				& $10 >> 2 = 1010 >> 2 = 0010 = 2$ 			\\\hline
+		\textbf{Symbol} 	& \textbf{Operation} 	& \textbf{Example} 							\\\hline
+		$|$					& logical or				& $0110\ |\ 0101 == 0111$ 		\\\hline
+		$\&$ 				& logical and 				& $0110\ \&\ 0101 == 0100$ 	\\\hline
+		$\exp$ 				& logical xor 				& $0110\ \exp\ 0101 == 0011$ 	\\\hline
+		$\thicksim$			& logical negation 			& $\thicksim 0110 == 1001$	\\\hline
+		$<<$ 			& shift to the left 			& $0110\ <<\ 2 == 011000$ 	\\\hline
+		$>>$ 		& shift to the right 				& $0110\ >>\ 2 == 0001$ 			\\\hline
 	\end{tabular}
+	
+\end{frame}
+
+\begin{frame}[fragile]{Computational arithmetics}
+	With bit operations, some mathematical tasks can be solved more efficiently:
+	\begin{itemize}
+		\item Multiplying/dividing by $2^n$ is equivalent to a shift by $n$ bits
+		\begin{lstlisting}
+5 * 8 == 5 << 3;
+60 / 4 == 60 >> 2;
+\end{lstlisting}
+		\item Instead of $\%\ 2^n$ you can use $\&\ 2^{n-1}$ 
+		\begin{lstlisting}
+22 % 2 == 22 & 1;
+24 % 16 == 24 & 15;
+\end{lstlisting}
+	\end{itemize}\bigskip
+	Be aware of the fact that the readability of your code will suffer from that. Most of these optimisations are done by the compiler anyway.
+\end{frame}
+\begin{frame}[fragile]{Masking}
+	$x\ |\ mask$ sets all bits in $x$ that are $1$ in $mask$.\\
+	\begin{lstlisting}
+'A' | 32;	/* Make a capital letter be small */
+\end{lstlisting}\bigskip
+	$x\ \&\ mask$ deletes all bits in $x$ that are $0$ in $mask$.\\
+	\begin{lstlisting}
+'a' & ~32;	/* Make a small letter be capital */
+\end{lstlisting}\bigskip
+	$x\ \exp\ mask$ inverts all bits in $x$ that are $1$ in $mask$.\\
+	\begin{lstlisting}
+'a' ^ 32;	/* "Toggle" a letter */
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Bit fields}
+	Although it may seem efficient to use each bit of a number to store information in it, it will become nasty to access all the values by:\\
+	$x\ \&\ 1$, $x\ \&\ 2$, $x\ \&\ 4$, \dots all the way up to $2^{INT\_MAX - 1}$\\
+	\bigskip
+	For this particular reason, C offers \textit{bit fields} like the following:
+	\begin{lstlisting}
+struct traffic_light {
+	int red		: 1;
+	int yellow	: 1;
+	int green	: 1;
+	int			: 5;	/* not in use */
+};
+\end{lstlisting}
+	The members of bit fields can be accessed as if they were members of ordinary \textit{struct}s.
+
 \end{frame}
 
 \section{Storage classes}
 \subsection{}
 
-\begin{frame}{ToDo}
+\begin{frame}{Back to scopes}
+	By introducing programs consisting of multiple files, we must differantiate between three cases to determine a variable's scope:
+	\begin{enumerate}
+		\item \textit{local}: only available in the block of its declaration
+		\item \textit{global wrt. a file}: available to all functions in the file of its declaration
+		\item \textit{global wrt. the program}: available to all functions in the program
+	\end{enumerate}\bigskip
+	While local variables get destroyed each time the program leaves their scope, all other variables are alive during the whole program execution.\\ \bigskip
+	To modify this behaviour, C allows variable declarations with one of the following keywords: \textit{extern}, \textit{static}, \textit{register} and \textit{auto}.
+\end{frame}
+
+\begin{frame}[fragile]{\textit{extern}}
+	In order to access a variable that has been defined outside the current file, you have to tell the compiler to look for it in another file.\\
+	This is done by prefixing the variable declaration with the keyword \textit{extern}.\\
+	\bigskip
+	File io.c:
+	\begin{lstlisting}
+char line_buffer[512];
+/* Some basic i/o functions */
+\end{lstlisting}
+	File parse.c:
+	\begin{lstlisting}
+extern char line_buffer[];
+int parse_line(void) {
+	/* Read from line_buffer in here */
+}
+\end{lstlisting}
 
 \end{frame}
 
-\section{Macros}
-\subsection{}
+\begin{frame}{\textit{static}}
+	\textit{Static} variables are placed on the data segment as if they were global.\\
+	Their scope, however, depends on where they are declared:\\
+	\bigskip
+	\textit{Outside} any function
+	\begin{itemize}
+		\item They are global in the current file and cannot be accessed from anywhere else
+		\item Thus you can have "private" variables and variables with the same names in different files 
+	\end{itemize}
+	\textit{Inside} a block
+	\begin{itemize}
+		\item They are local, but do not get destroyed when the block is left
+		\item Thus you get functions with a "memory"
+	\end{itemize}
+\end{frame}
 
-\begin{frame}{ToDo}
+\begin{frame}[fragile]{\textit{register} and \textit{auto}}
+	Variables that should be accessed fast can be put in \textit{register}s instead of the memory. However,
+	\begin{itemize}
+		\item They must not be larger than a word in your architecture
+		\item You must not take addresses of such variables
+		\item There is only a limited amount of registers, so the compiler may put the variables on the stack ignoring the \textit{register} keyword
+	\end{itemize}
+	\begin{lstlisting}
+for (register i; i < 4096; ++i);	/* int is default */
+\end{lstlisting}
+	The compiler would do this during optimisation anyway.\\
+	\bigskip
+	All variables declared inside functions without any special keyword are \textit{auto}matically put on the stack $-$ no need to explicitely use \textit{auto}.
+\end{frame}
 
+\begin{frame}[fragile]{Storage classes of functions}
+	By default, functions are global and available in the whole program.\\
+	\bigskip
+	You could declare them \textit{extern} in every file you want to call them, but it is better practice to include a header containing the function declaration.\\
+	\bigskip
+	Just like variables, \textit{static} functions have a "private" character and can be used to forbid calls from other files and avoid name clashes.
+	\begin{lstlisting}
+static void puts(char *str) {
+	printf("\n%s\n", str);
+}
+\end{lstlisting}
+	\bigskip
+	It should be obvious that functions cannot be put into registers.	
 \end{frame}
 
 \section{Pointers to functions}
 \subsection{}
 
-\begin{frame}{Passing functions to functions}
+\begin{frame}[fragile]{Higher order functions}
 	It is possible to pass a function as an argument of another function.\\
-	Doing so, you have a function that can call different other functions.\\
-	To be a parameter, there have to be information about the return type and the parameter list.\\
-	\ \\
-	Actually you do not pass a function but a pointer to that function.
+	Doing so, you get a function that can call different other functions.\\
+	\bigskip
+	Since functions are placed in the text segment of you program, you simply pass the address of the function as a so called function pointer:\\
+	\begin{lstlisting}
+<return type> (*<function name>)(<parameter list>);
+\end{lstlisting}
+	\bigskip
+	Example:
+	\begin{lstlisting}
+int (*op)(int a, int b) = add; /* Defined somewhere else */
+int (*print)(const char *) = puts;	/* From stdlib */
+\end{lstlisting}
+	Note that the $\&$ operator can be omitted.
 \end{frame}
 
-\begin{frame}[fragile]{Syntax}
+\begin{frame}[fragile]{Example}
 	\begin{lstlisting}
 #include <stdio.h>
 
