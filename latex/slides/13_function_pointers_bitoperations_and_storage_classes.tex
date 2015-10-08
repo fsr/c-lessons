@@ -32,8 +32,8 @@
 		\textbf{Symbol} 	& \textbf{Operation} 	& \textbf{Example} 							\\\hline
 		$|$					& logical or				& $0110\ |\ 0101 == 0111$ 		\\\hline
 		$\&$ 				& logical and 				& $0110\ \&\ 0101 == 0100$ 	\\\hline
-		$\exp$ 				& logical xor 				& $0110\ \exp\ 0101 == 0011$ 	\\\hline
-		$\thicksim$			& logical negation 			& $\thicksim 0110 == 1001$	\\\hline
+		\textasciicircum				& logical xor 				& $0110\ $\textasciicircum\ $0101 == 0011$ 	\\\hline
+		\textasciitilde			& logical negation 			& \textasciitilde $0110 == 1001$	\\\hline
 		$<<$ 			& shift to the left 			& $0110\ <<\ 2 == 011000$ 	\\\hline
 		$>>$ 		& shift to the right 				& $0110\ >>\ 2 == 0001$ 			\\\hline
 	\end{tabular}
@@ -65,7 +65,7 @@
 	\begin{lstlisting}
 'a' & ~32;	/* Make a small letter be capital */
 \end{lstlisting}\bigskip
-	$x\ \exp\ mask$ inverts all bits in $x$ that are $1$ in $mask$.\\
+	$x\ $\textasciicircum\ $mask$ inverts all bits in $x$ that are $1$ in $mask$.\\
 	\begin{lstlisting}
 'a' ^ 32;	/* "Toggle" a letter */
 \end{lstlisting}
