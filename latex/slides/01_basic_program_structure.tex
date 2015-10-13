@@ -45,16 +45,8 @@
 		\centering
 		\only<1-3>{\includegraphics[scale=.15]{../img/iOS.JPG}\\}
 		\only<4->{\includegraphics[scale=.15]{../img/iOSX.JPG}\\}
-		\begin{tikzpicture}
-			\node at (0,0) {Mac OS};
-			\begin{uncoverenv}<1-3>
-				\node at (.88,0) {X};
-			\end{uncoverenv}
-			\begin{uncoverenv}<4->
-				\draw[thick,red] (-.6,.13) -- (.6,-.13);
-				\draw[thick,red] (-.6,-.13) -- (.6,.13);
-			\end{uncoverenv}
-		\end{tikzpicture}
+		Mac OS\\
+		\uncover<4->{\textcolor{orange}{supported}}
 	\end{columns}
 \end{frame}
 \begin{frame}[fragile]{Installing gcc on Linux}
@@ -87,6 +79,9 @@ $ sudo pacman -S gcc
 		\end{itemize}
 		\item Use cygwin-console like a linux terminal
 	\end{itemize}
+\end{frame}
+\begin{frame}{Mac OS}
+	Install Xcode and you are done. 
 \end{frame}
 \section{Hello World!}
 \subsection{}
