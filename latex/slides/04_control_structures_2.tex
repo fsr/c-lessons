@@ -1,0 +1,209 @@
+\input{slides_template}	% nothing to do here
+\input{c_introduction_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Control structures 2
+}
+\usepackage{tikz}
+\definecolor{orange}{RGB}{255,127,0}
+\lstset{
+  moredelim=**[is][\textit{ }]{§}{§},
+}
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Motivation}
+\subsection{}
+\begin{frame}
+	\centerline{\includegraphics[scale=.32]{../img/friendship.jpg}}
+	\bigskip
+	Take a look at the right part. It is executed up to seven times.
+\end{frame}
+
+\section{Loops}
+\subsection{}
+\begin{frame}[fragile]{Loops}
+	To repeat statements as long as a certain condition is met, C offers 3 different loops.
+	\begin{lstlisting}[numbers=none,basicstyle=\itshape\footnotesize]
+while (condition)
+	statement;
+\end{lstlisting}
+	\begin{lstlisting}[numbers=none,basicstyle=\itshape\footnotesize]
+do
+	statement;
+while (condition);
+\end{lstlisting}
+	\begin{lstlisting}[numbers=none,basicstyle=\itshape\footnotesize]
+for (initialization; condition; statement)
+	statement;
+\end{lstlisting}
+	For multiple statements again, use braces.
+\end{frame}
+\begin{frame}[fragile]{while}
+	The execution of a loop is a continuous alternation between checking if the condition is still met and executing the statement(s).
+	\begin{lstlisting}
+int i = 2;
+while (i > 0)
+	--i;
+printf("done\n");
+\end{lstlisting}
+	\begin{enumerate}[<+(1)->]
+		\item Check (i $>$ 0) $\rightarrow$ \textbf{true} $\rightarrow$ go to line 3
+		\item Decrement i $\rightarrow$ i now is \textbf{1}, go back to line 2
+		\item Check (i $>$ 0) $\rightarrow$ \textbf{true} $\rightarrow$ go to line 3
+		\item Decrement i $\rightarrow$ i now is \textbf{0}, go back to line 2
+		\item Check (i $>$ 0) $\rightarrow$ \textbf{false} $\rightarrow$ go to line 4
+		\item Print \textbf{done}
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{do...while}
+	The difference between \textit{do...while} and \textit{while} is the order of executing the statement(s) and checking the condition.\\
+	\bigskip
+	The \textit{while} loop begins with checking, while the \textit{do...while} loop begins witch executing the statement(s).
+	\begin{lstlisting}[numbers=none]
+int i = 3;
+do
+	--i;
+while (i < 1);
+\end{lstlisting}
+	\bigskip
+	The Statement(s) in a \textit{do ... while} loop are executed at least once.
+\end{frame}
+\begin{frame}[fragile]{for}
+	The For-Loop is comfortable for iterating. It takes three arguments.
+	\begin{itemize}
+		\item Initialization
+		\item Condition
+		\item Iteration statement
+	\end{itemize}
+	\bigskip
+	For illustration, consider a program printing the numbers 1 to 10:
+	\begin{lstlisting}[numbers=none]
+int i;
+for (i = 1; i <= 10; ++i)
+	printf("%d\n", i);
+\end{lstlisting}
+	\begin{itemize}
+		\item \textit{i} is called an \textit{index} iterating from the given start to a given end value
+		\item \textit{i, j, k} are commonly used identifiers for the index
+	\end{itemize}
+\end{frame}
+
+\section{Miscellaneous}
+\subsection{}
+\begin{frame}[fragile]{Meanwhile...}
+	Be careful, this
+	\begin{lstlisting}[numbers=none]
+while (1 > 0)
+	printf("Did you miss me?\n");
+\end{lstlisting}
+runs till the end of all days.\\
+\ \\$\infty$ loops are common mistakes, and you will experience many of them.\\
+Check for conditions that are always true.
+\end{frame}
+
+\begin{frame}[fragile]{for ever}
+	The arguments for the \textit{for loop} are optional. E.g. if you already have defined your iterating variable:
+	\begin{lstlisting}[numbers=none]
+int i = 1;
+for (; i <= 10; ++i)
+	printf("%d\n", i);
+\end{lstlisting}
+	Or if you have the iteration statement in your loop body:
+	\begin{lstlisting}[numbers=none]
+for (i = 1; i <= 10;)
+	printf("%d\n", ++i);	/* seems more like a while loop */
+\end{lstlisting}
+	And if you're not passing anything, it runs \textbf{for}ever:
+	\begin{lstlisting}[numbers=none]
+for (;;)
+	printf("I'm still here\n");
+\end{lstlisting}
+Note: the semicolons are still there.
+\end{frame}
+
+\begin{frame}{Cancelling loops}
+	\textit{break}
+	\begin{itemize}
+		\item Ends loop execution
+		\item Moves forward to first statement after loop
+	\end{itemize}\ \\\ \\
+	\textit{continue}
+	\begin{itemize}
+		\item Ends current loop iteration
+		\item Moves forward to next step of loop iteration
+		\begin{itemize}
+			\item\textit{while:} Jumps to condition
+			\item\textit{for:} Jumps to iteration statement
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Saving code lines}
+	You can define variables inside the initialization part of a for loop.
+	\begin{lstlisting}[numbers=none]
+for (int i = 1; i <= 10; ++i)
+	printf("%d\n", i);
+\end{lstlisting}
+	\ \\\ \\In that case, the variable is only available inside the for loop (as if it was declared in the body).\\
+	\begin{lstlisting}
+int guess = 0;
+int solution = 42;
+for (int i = 1; guess != solution; ++i)
+	scanf("%d", &guess);
+printf("Tries: %d\n", i);	/* invalid! */
+\end{lstlisting}
+	This feature was added in the C99 standard.
+\end{frame}
+
+\begin{frame}[fragile]{Compiler options}
+	When calling \textit{gcc}, you can pass several options to it:\\
+	\bigskip
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{option} & \textbf{description} \\\hline
+		-std=c99 & Use C99 as the standard \\\hline
+		-o $<$name$>$ & output file is \textit{name} instead of \textit{a.out} \\\hline
+		-Wall & Enable all compiler warnings \\\hline
+		-Wextra & Enable even more compiler warnings \\\hline
+		-Werror & Treat warnings as errors \\\hline
+	\end{tabular}\\
+	\bigskip
+	Example:
+	\begin{lstlisting}[numbers=none]
+$ gcc -std=c99 -o main main.c
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{A few words on style}
+	\begin{itemize}
+		\item Again, only use braces when there's more than one statement
+		\item If you skip the loop body
+		\begin{itemize}
+			\item Leave a comment in your code
+			\item Use an extra line for the empty statement
+		\end{itemize}
+	\end{itemize}
+		\begin{lstlisting}[numbers=none]
+for (i = 1; i < 9; printf("%d\n", ++i));	/* confusing */
+
+for (i = 1; i < 9; printf("%d\n", ++i))		/* clear */
+	;	/* do nothing */
+\end{lstlisting}
+\end{frame}
+
+% nothing to do from here on
+\end{document}
