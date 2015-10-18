@@ -7,8 +7,8 @@
             "files": [
                 "01_basic_program_structure.tex",
                 "02_variables.tex",
-                "03_operators.tex",
-                "04_control_structures.tex",
+                "03_control_structures_1.tex",
+                "04_control_structures_2.tex",
                 "05_functions.tex",
                 "06_standard_library.tex",
                 "07_arrays.tex",
@@ -24,8 +24,8 @@
             "files": [
                 "01_basic_program_structure.tex",
                 "02_variables.tex",
-                "03_operators.tex",
-                "04_control_structures.tex",
+                "03_control_structures_1.tex",
+                "04_control_structures_2.tex",
                 "05_functions.tex",
                 "06_standard_library.tex",
                 "07_arrays.tex",
