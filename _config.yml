@@ -2,7 +2,7 @@
 title: C Lesson Exercises
 email: programmierung@ifsr.de
 description: >
-  Rendered exercise descriptions for the python lessons
+  Rendered exercise descriptions for the c lessons
 baseurl: "/c-lessons" # the subpath of your site, e.g. /blog/
 url: "http://fsr.github.io/" # the base hostname & protocol for your site
 # twitter_username: jekyllrb
