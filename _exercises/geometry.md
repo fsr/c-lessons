@@ -4,7 +4,7 @@ number: 4
 status: reviewed
 difficulty: easy
 requirements: input/output, all kinds of operators
-authors: manuel, richard
+authors: [manuel, richard]
 lesson: 3
 ---
 Write a program that asks for a radius and calculates the area of the corresponding circle. (Let's assume pi == 3.14).
