@@ -5,7 +5,7 @@ status: reviewed
 difficulty: easy
 requirements: variables, input/output
 authors: manuel, richard
-lesson: 1
+lesson: 2
 ---
 Write a program that prints the String "Hello World!" on the command line, using only placeholders in the format string.
 
