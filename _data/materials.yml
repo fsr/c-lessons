@@ -10,11 +10,11 @@ slides:
   -
     number: 3
     name: Control structures I
-    url: https://ifsr.de/kurs-materialien/c/03_controll_structures_1.pdf
+    url: https://ifsr.de/kurs-materialien/c/03_control_structures_1.pdf
   -
     number: 4
     name: Control structures II
-    url: https://ifsr.de/kurs-materialien/c/04_controll_structures_2.pdf
+    url: https://ifsr.de/kurs-materialien/c/04_control_structures_2.pdf
   -
     number: 5
     name: Functions
