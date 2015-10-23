@@ -4,7 +4,7 @@ number: 2
 status: reviewed
 difficulty: easy
 requirements: variables, input/output
-authors: manuel, richard
+authors: [manuel, richard]
 lesson: 2
 ---
 Write a program that asks to input a character and prints its ASCII code number.

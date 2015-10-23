@@ -1,14 +1,11 @@
 targets:
-    - sqlite / peewee
-    - os.path / os / pathlib
-    - functools
-    - urllib.request
-    - http / cgi / ssl / hashlib
-    - descriptors
-    - collections
-    - importlib / sys.path
-    - list/dict/generator comprehension
-    - file descriptors
-    - subprocess
-    - threading / multiprocessing
-    - decorators
+    - understanding the structure of a C script
+    - compiling a program
+    - Input/Output of strings and variables
+    - control structures
+    - defining functions
+    - using standard libraries
+    - Arrays
+    - complex data types
+    - Pointers and Pointer logic
+    - dynamic storage
