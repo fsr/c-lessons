@@ -7,7 +7,7 @@ requirements: variables, input/output, conditions
 authors: [manuel, richard]
 lesson: 3
 ---
-Write a Program, that takes a *character* as input and prints, whether was a
+Write a Program, that takes a *character* as input and prints whether it was a
 letter, a number or a special character.
 
 **Experts:** If the input is a small letter, also print the capital equivalent
