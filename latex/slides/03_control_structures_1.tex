@@ -99,7 +99,7 @@ int a, b;
 !(a && b);	/* NAND */
 !(a || b);	/* NOR */
 a != b;		/* XOR */
-(a == a) != (b == b);	/* safe XOR */
+(a == 0) != (b == 0);	/* safe XOR */
 \end{lstlisting}
 	\end{uncoverenv}
 \end{frame}
