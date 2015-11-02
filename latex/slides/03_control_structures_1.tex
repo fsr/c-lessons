@@ -158,6 +158,18 @@ else
 \end{lstlisting}
 	\end{columns}
 \end{frame}
+\begin{frame}{Caution}
+	Conditions will only be evaluated until it's result is final.
+	\begin{itemize}
+		\item \&\& will only be evaluated until one expression evaluates to false.
+		\item $||$ will only be evalutated until one expression evaluates to true.
+	\end{itemize}
+	\begin{lstlisting}[numbers=none]
+int a = 10;
+int c;
+if( a == 10 || ( c = a)	 // a == 10 evaluates to true
+	printf("%d", c); //No error, but: C is undefined!
+\end{lstlisting}
 \begin{frame}[fragile]{switch}
 	If you have to check one variable for many constant values, \textit{switch case} is your friend:
 	\begin{lstlisting}[numbers=none,basicstyle=\itshape\footnotesize]
