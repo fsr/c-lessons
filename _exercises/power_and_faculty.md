@@ -8,7 +8,7 @@ authors: [manuel, richard]
 lesson: 3
 ---
 
-Write a program that takes two numbers $a, b$ from the user and calculates a^b and b^a
+Write a program that takes two numbers *a, b* from the user and calculates *a^b* and *b^a*
 
 **Experts:** Write a program that calculates the factorial of the user input.
 
