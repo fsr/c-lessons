@@ -17,7 +17,7 @@ add a new part to the gallows / the hanging man and print it to the terminal:
        |  / \       word: game o_e_
        |            wrong: hfnwitc
      -----   
-    /     \ 
+    /     \\
    /       \
 ==============
 
