@@ -17,9 +17,9 @@ add a new part to the gallows / the hanging man and print it to the terminal:
        |  / \       word: game o_e_
        |            wrong: hfnwitc
      -----   
-    /     \
+    /     \134
 
-   /       \
+   /       \134
 ==============
 
 **Experts:** Have a list of possible words in the source code and let the program randomly choose one at the start.
