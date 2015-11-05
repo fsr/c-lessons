@@ -18,7 +18,7 @@ Write a program, that lets the user decide how often *"Knock, knock, knock - Pen
 **Experts:** You should use a different index for the inner loop
 
 
-####Solution####
+##Solution##
 
     
     #include <stdio.h>

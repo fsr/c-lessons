@@ -5,7 +5,7 @@ status: reviewed
 difficulty: medium
 requirements: variables, input/output, loops
 authors: [manuel, richard]
-lesson: 3
+lesson: 4
 ---
 
 Write a program that takes two numbers *a, b* from the user and calculates *a^b* and *b^a*
@@ -16,7 +16,7 @@ Write a program that takes two numbers *a, b* from the user and calculates *a^b*
 
 **Experts:** The factor changes in each step.
 
-####Solution####
+##Solution##
 
 
     #include <stdio.h>
