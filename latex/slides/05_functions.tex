@@ -29,52 +29,18 @@
     \tableofcontents
 \end{frame}
 
-\section{Motivation}
+\section{Using functions}
 \subsection{}
-\begin{frame}[fragile]{More rabbits}
-	\begin{itemize}
-		\item Write a programm that prints the 3rd, 5th, 11th and 5th Fibonacci number.
-		\item<2-> It looks like a multiple repetition of
-		\begin{lstlisting}
-for (i = 0, fib1 = 0, fib2 = 1; i < n; i++) {
-	int buffer = fib1;
-	fib1 = fib2;
-	fib2 = fib2 + buffer;
+
+\begin{frame}[fragile]{Remember the main \textit{function}?}
+	\begin{lstlisting}
+int main(void) {
+	/* code happens */
+	return 0;
 }
-printf("fib(%d) = %d\n", i, fib1);
 \end{lstlisting}
-	\end{itemize}
 \end{frame}
-\begin{frame}{There must be a better way}
-	Everytime you type an exact copy of a line of code, you should \textit{take a break} and rethink what you're doing. \\ \ \\
-	Functions are a powerful tool to structure your code and avoid repetitions. \\ \ \\
-	Functions serve the \textit{divide and conquer} programming paradigma - breaking down a problem into sub-problems easier to solve.
-\end{frame}
-\begin{frame}[fragile]{Theory crafting}
-	Since we need \textit{fib(5)} twice, we can imagine a function:
-	\begin{lstlisting}[numbers=none]
-Function fib_5:
-	// calculate fib(5) here and print it
-\end{lstlisting}
-	\begin{uncoverenv}<2->
-	As we want to seperate calculation from output, consider the function \textit{returning} its result to the main function, where it is printed:
-	\begin{lstlisting}[numbers=none]
-Function fib_5:
-	// calculate fib(5) here
-	return result;
-\end{lstlisting}
-	\end{uncoverenv}
-	\begin{uncoverenv}<3->
-	Since the calculation of certain Fibonacci numbers only differs in the \textit{parameter} n, we might want to pass it to our function:
-	\begin{lstlisting}[numbers=none]
-Function fib(int n):
-	// calculate fib(n) here
-	return result;
-\end{lstlisting}
-	\end{uncoverenv}
-\end{frame}
-\section{Functions in C}
-\subsection{}
+
 \begin{frame}[fragile]{Defining functions}
 	\begin{columns}[T]
 		\column{.33\textwidth}<2->
@@ -82,7 +48,7 @@ Function fib(int n):
 		\column{.33\textwidth}<3->
 		unique name to refer the function, same rules as for variable identifiers
 		\column{.34\textwidth}<4->
-		parameter declarations, seperated by commas (e.g. \textit{int a, char b})
+		parameter declarations, seperated by commas or \textit{void}, if there are none
 	\end{columns}
 	\begin{textblock}{7}(1.5,3.5)
 		\begin{tikzpicture}[x=1.2cm,y=.5cm]
@@ -124,7 +90,7 @@ void fib_5() {
 	int i;
 	int fib1;
 	int fib2;
-	for (i = 0, fib1 = 0, fib2 = 1; i < 5; i++) {
+	for (i = 0, fib1 = 0, fib2 = 1; i < 5; ++i) {
 		int buffer = fib1;
 		fib1 = fib2;
 		fib2 = fib2 + buffer;
@@ -142,7 +108,7 @@ int fib(int n) {
 	int i;
 	int fib1;
 	int fib2;
-	for (i = 0, fib1 = 0, fib2 = 1; i < n; i++) {
+	for (i = 0, fib1 = 0, fib2 = 1; i < n; ++i) {
 		int buffer = fib1;
 		fib1 = fib2;
 		fib2 = fib2 + buffer;
@@ -310,13 +276,6 @@ int power(int base, int exponent) {
 	\begin{itemize}
 		\item $a^{0} = 1 \rightarrow$ \textit{power(a, 0}) just returns \textit{1}
 		\item $a^{b} = a * a^{b-1} \rightarrow$ recursive call of \textit{power(a, b-1)}
-	\end{itemize}
-\end{frame}
-\section{Exercise}
-\subsection{}
-\begin{frame}{Exercises}
-	\begin{itemize}
-		\item You are now able to solve tasks 10 and 11.
 	\end{itemize}
 \end{frame}
 % nothing to do from here on
