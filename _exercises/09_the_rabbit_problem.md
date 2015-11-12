@@ -21,11 +21,6 @@ One variable is not enough to store all the information you need to calculate th
 
 ##Solution##
 
-coming soon.
-
-<!--
-
-
     #include <stdio.h>
 
     int main(void) {
@@ -53,4 +48,3 @@ coming soon.
         return 0;
     }
 
--->
