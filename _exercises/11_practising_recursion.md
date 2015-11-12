@@ -31,6 +31,7 @@ For all other *n*, you need a recursive call.
         int n;
         printf("Gimme numba: ");
         scanf("%d", &n);
+
         printf("fak(%d) = %d\n", n, fak(n));
         return 0;
     }
@@ -38,6 +39,7 @@ For all other *n*, you need a recursive call.
     int fak(int n) {
         if (n == 1)
             return 1;
+
         return n * fak(n - 1);
     }
 
@@ -49,20 +51,20 @@ For all other *n*, you need a recursive call.
     int fib(int n);
 
     int main(void) {
-
         int n;
-
         printf("fib(?): ");
         scanf("%d", &n);
+
+        if (n < 0)
+            printf("Srsly? -.-\n");
 
         printf("fib(%d) = %d\n", n, fib(n));
         return 0;
     }
 
     int fib(int n) {
-        if(n == 0)
-            return 0;
-        if(n == 1)
-            return 1;
+        if (n <= 1)
+            return n;
+
         return fib(n - 1) + fib(n - 2);
     }
