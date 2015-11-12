@@ -23,10 +23,6 @@ For all other *n*, you need a recursive call.
 
 ##Solution##
 
-coming soon.
-
-<!--
-
     #include <stdio.h>
 
     int fak(int n);
@@ -70,4 +66,3 @@ coming soon.
             return 1;
         return fib(n - 1) + fib(n - 2);
     }
--->
