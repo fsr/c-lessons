@@ -33,7 +33,8 @@
 \subsection{}
 
 \begin{frame}[fragile]{Remember the main \textit{function}?}
-	\begin{lstlisting}
+	\bigskip
+	\begin{lstlisting}[numbers=none]
 int main(void) {
 	/* code happens */
 	return 0;
@@ -84,7 +85,7 @@ int main(void) {
 	\end{textblock}
 \end{frame}
 \begin{frame}[fragile]{Example (1)}
-	The function that calculates \textit{fib(5)} and prints it directly:
+	A function that calculates the 5 smallest Fibonacci numbers and prints them directly:
 	\begin{lstlisting}
 void fib_5() {
 	int i;
@@ -92,17 +93,18 @@ void fib_5() {
 	int fib2;
 	for (i = 0, fib1 = 0, fib2 = 1; i < 5; ++i) {
 		int buffer = fib1;
+		printf("fib(%d) = %d\n", i, fib1);
 		fib1 = fib2;
 		fib2 = fib2 + buffer;
 	}
-	printf("fib(%d) = %d\n", i, fib1);
+	/* should be enough for the demo */
 }
 \end{lstlisting}
 	It takes no arguments and returns nothing.
 	Note: the \textit{return} statement at the end can be left out completely in \textit{void} functions.
 \end{frame}
 \begin{frame}[fragile]{Example (2)}
-	The function that calculates \textit{fib(n)} and returns the result:
+	A function that calculates \textit{fib(n)} and returns the result:
 	\begin{lstlisting}
 int fib(int n) {
 	int i;
@@ -152,14 +154,13 @@ int main(void) {
 \end{lstlisting}
 \end{frame}
 \begin{frame}[fragile]{Now it's your turn}
-	Take a look back at our Fibonacci numbers program and apply all the changes we discussed! \ \\ \ \\
+	Take a look back at our Fibonacci numbers program and give it a better structure by introducing functions! \ \\ \ \\
 	\begin{uncoverenv}<2->
 		\begin{lstlisting}
 int main(void) {
 	printf("fib(%d) = %d\n", 3, fib(3);
 	printf("fib(%d) = %d\n", 5, fib(5);
 	printf("fib(%d) = %d\n", 11, fib(11);
-	printf("fib(%d) = %d\n", 3, fib(3);
 	return 0;
 }
 \end{lstlisting} \ \\ \ \\
