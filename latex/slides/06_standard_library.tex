@@ -1,9 +1,24 @@
 \input{slides_template}	% nothing to do here
 \input{c_introduction_info} % TODO modify this if you have not already done so
-
+\usepackage{tikz}
 % meta-information
 \newcommand{\topic}{
 	The C standard library
+}
+\newcommand{\tikzcompiling}[2]{
+\begin{tikzpicture}[scale=#1,font=#2]
+	\node (main) [rectangle,draw,inner sep=1em] at (0,0){main.c};
+	\node (libc) [rectangle,draw,inner sep=1em] at (5,-3){libc.so};
+	\node (stdio) [rectangle,draw,inner sep=1em] at (5,0){stdio.h};
+	\node (maino) [rectangle,draw,inner sep=1em] at (0,-3){main.o};
+	\node (aout) [rectangle,draw,inner sep=1em] at (2.5,-6){a.out};
+	\node at (aout) [above=1.5em] {linking};
+	\draw[->] (main) -- (maino) node [left,align=right,midway,text width=5em] {compiling, assembling};
+	\draw[->,dotted] (main) -- (stdio) node [above,midway] {includes};
+	\draw[->,dotted] (stdio) -- (libc) node [right,midway] {implementation};
+	\draw[->] (libc) -- (aout);
+	\draw[->] (maino) -- (aout);
+\end{tikzpicture}
 }
 
 % nothing to do here
