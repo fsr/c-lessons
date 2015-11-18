@@ -5,13 +5,13 @@
 \newcommand{\topic}{
 	The C standard library
 }
-\newcommand{\tikzcompiling}[2]{
+\newcommand{\tikzgraphic}[2]{
 \begin{tikzpicture}[scale=#1,font=#2]
 	\node (main) [rectangle,draw,inner sep=1em] at (0,0){main.c};
 	\node (libc) [rectangle,draw,inner sep=1em] at (5,-3){libc.so};
 	\node (stdio) [rectangle,draw,inner sep=1em] at (5,0){stdio.h};
 	\node (maino) [rectangle,draw,inner sep=1em] at (0,-3){main.o};
-	\node (aout) [rectangle,draw,inner sep=1em] at (2.5,-6){a.out};
+	\node (aout) [rectangle,draw,inner sep=1em] at (2.5,-5){a.out};
 	\node at (aout) [above=1.5em] {linking};
 	\draw[->] (main) -- (maino) node [left,align=right,midway,text width=5em] {compiling, assembling};
 	\draw[->,dotted] (main) -- (stdio) node [above,midway] {includes};
@@ -55,6 +55,12 @@
 	This statement includes the \textit{header} file \textbf{stdio.h}.\\
 	After compilation, \textit{gcc} will link your program with the C library.\\
 \end{frame}
+
+\begin{frame}{Linking happens}
+	\centering
+	\tikzgraphic{.9}{\footnotesize}
+\end{frame}
+
 \section{Useful headers}
 \subsection{}
 \begin{frame}[fragile]{assert.h}
