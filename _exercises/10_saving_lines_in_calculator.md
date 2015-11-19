@@ -22,4 +22,75 @@ You can pass any expression as a parameter.
 
 ##Solution##
 
-coming soon.
+
+    #include <stdio.h>
+
+    void add(float a, float b);
+    void multiply(float a, float b);
+    void remainder(float a, float b);
+
+    int main(void) {
+        float a = 0;
+        float b = 0;
+        char o = 0;
+
+        printf("Enter first number:");
+        scanf("%f", &a);
+
+        printf("Enter 2nd number:");
+        scanf("%f", &b);
+
+        printf("Enter operand:");
+        scanf("\n%c", &o);
+
+        switch (o) {
+            case 'a':
+            case 'A':
+            case '+':
+                printAdd(a, b);
+                break;
+            case 's':
+            case 'S':
+            case '-':
+                printAdd(a, -b);
+                break;
+            case 'm':
+            case 'M':
+            case '*':
+                printMultiply(a, b);
+                break;
+            case 'd':
+            case 'D':
+            case '/':
+                if (b == 0)
+                    printf("Error: Division by zero.\n");
+                else
+                    printMultiply(a, (1/b));
+                break;
+            case 'r':
+            case 'R':
+            case '%':
+                printRemainder((int)a, (int)b);
+                break;
+            default:
+                printf("Error: wrong operator.");
+        }
+
+        return 0;
+    }
+
+    void printAdd(float a, float b) {
+        printf("%f\n", a + b);
+    }
+
+    void printMultiply(float a, float b) {
+        printf("%f\n", a * b);
+    }
+
+    void printRemainder(int a, int b) {
+        if (b == 0) {
+            printf("Error: Division by zero.\n");
+            return;
+        }
+        printf("%d\n", a % b);
+    }
