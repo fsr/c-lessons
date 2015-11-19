@@ -29,23 +29,23 @@ Write a program that takes two numbers *a, b* from the user and calculates *a^b*
         scanf("%d %d", &a, &b);
         sol = 1;
         /* a^b */
-        for (int i = b; i > 0; i--)
+        for (int i = b; i > 0; --i)
             sol *= a;
         printf("a^b:\t%d\n", sol);
 
         /* b^a */
         sol = 1;
-        for (int i = a; i > 0; i--)
+        for (int i = a; i > 0; --i)
             sol *= b;
         printf("b^a:\t%d\n", sol);
 
         /* a! */
-        for(sol = 1; a > 1; a--)
+        for(sol = 1; a > 1; --a)
             sol *= a;
         printf("a!:\t%d\n", sol);
 
         /* b! */
-        for(sol = 1; b > 1; b--)
+        for(sol = 1; b > 1; --b)
             sol *= b;
         printf("b!:\t%d\n", sol);
 

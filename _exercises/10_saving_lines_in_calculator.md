@@ -25,9 +25,9 @@ You can pass any expression as a parameter.
 
     #include <stdio.h>
 
-    void add(float a, float b);
-    void multiply(float a, float b);
-    void remainder(float a, float b);
+    void printAdd(float a, float b);
+    void printMultiply(float a, float b);
+    void printRemainder(float a, float b);
 
     int main(void) {
         float a = 0;
