@@ -1,5 +1,5 @@
 ---
-title: Aleia iacta est
+title: Alea iacta est
 number: 14
 status: reviewed
 difficulty: Hard
