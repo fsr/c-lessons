@@ -23,9 +23,3 @@ This actually is not about arrays.
 ##Solution##
 
 coming soon.
-
-<!--
-
-
-
--->

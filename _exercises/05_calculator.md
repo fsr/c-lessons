@@ -19,8 +19,7 @@ Write a Program, that takes two numbers and an operator (+, -, /, *, %) as input
 
 ###Solution###
 
-
-#include <stdio.h>
+    #include <stdio.h>
 
     int main(void) {
         float a = 0;
