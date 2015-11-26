@@ -6,3 +6,6 @@
 *.pdf
 *.vrb
 *.dvi
+_site/
+.sass-cache/
+.jekyll-metadata
