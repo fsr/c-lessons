@@ -23,74 +23,76 @@ You can pass any expression as a parameter.
 ##Solution##
 
 
-    #include <stdio.h>
+{% highlight C %}
+#include <stdio.h>
 
-    void printAdd(float a, float b);
-    void printMultiply(float a, float b);
-    void printRemainder(float a, float b);
+void printAdd(float a, float b);
+void printMultiply(float a, float b);
+void printRemainder(float a, float b);
 
-    int main(void) {
-        float a = 0;
-        float b = 0;
-        char o = 0;
+int main(void) {
+    float a = 0;
+    float b = 0;
+    char o = 0;
 
-        printf("Enter first number:");
-        scanf("%f", &a);
+    printf("Enter first number:");
+    scanf("%f", &a);
 
-        printf("Enter 2nd number:");
-        scanf("%f", &b);
+    printf("Enter 2nd number:");
+    scanf("%f", &b);
 
-        printf("Enter operand:");
-        scanf("\n%c", &o);
+    printf("Enter operand:");
+    scanf("\n%c", &o);
 
-        switch (o) {
-            case 'a':
-            case 'A':
-            case '+':
-                printAdd(a, b);
-                break;
-            case 's':
-            case 'S':
-            case '-':
-                printAdd(a, -b);
-                break;
-            case 'm':
-            case 'M':
-            case '*':
-                printMultiply(a, b);
-                break;
-            case 'd':
-            case 'D':
-            case '/':
-                if (b == 0)
-                    printf("Error: Division by zero.\n");
-                else
-                    printMultiply(a, (1/b));
-                break;
-            case 'r':
-            case 'R':
-            case '%':
-                printRemainder((int)a, (int)b);
-                break;
-            default:
-                printf("Error: wrong operator.");
-        }
-
-        return 0;
+    switch (o) {
+        case 'a':
+        case 'A':
+        case '+':
+            printAdd(a, b);
+            break;
+        case 's':
+        case 'S':
+        case '-':
+            printAdd(a, -b);
+            break;
+        case 'm':
+        case 'M':
+        case '*':
+            printMultiply(a, b);
+            break;
+        case 'd':
+        case 'D':
+        case '/':
+            if (b == 0)
+                printf("Error: Division by zero.\n");
+            else
+                printMultiply(a, (1/b));
+            break;
+        case 'r':
+        case 'R':
+        case '%':
+            printRemainder((int)a, (int)b);
+            break;
+        default:
+            printf("Error: wrong operator.");
     }
 
-    void printAdd(float a, float b) {
-        printf("%f\n", a + b);
-    }
+    return 0;
+}
 
-    void printMultiply(float a, float b) {
-        printf("%f\n", a * b);
-    }
+void printAdd(float a, float b) {
+    printf("%f\n", a + b);
+}
 
-    void printRemainder(int a, int b) {
-        if (b == 0) {
-            printf("Error: Division by zero.\n");
-            return;
-        }
-        printf("%d\n", a % b);
+void printMultiply(float a, float b) {
+    printf("%f\n", a * b);
+}
+
+void printRemainder(int a, int b) {
+    if (b == 0) {
+        printf("Error: Division by zero.\n");
+        return;
     }
+    printf("%d\n", a % b);
+}
+{% endhighlight %}

@@ -23,53 +23,50 @@ Play around with the format string of *printf()* to create a nice table-like out
 
 ##Solution##
 
-coming soon.
+{% highlight C %}
+#include <stdio.h>
 
-<!--
+int main(void) {
+    printf("x   |");
 
-    #include <stdio.h>
+    for (int i = 1; i <= 10; i++)
+        printf("%5d    |", i);
 
-    int main(void) {
-        printf("x   |");
+    printf("\n");
+    printf("---------------------------------------------------------------------------------------------------------\n");
+    printf("1/x |");
 
-        for (int i = 1; i <= 10; i++)
-            printf("%5d    |", i);
+    for (int i = 1; i <= 10; i++)
+        printf(" %5.2f   |", 1.0 / i);
 
-        printf("\n");
-        printf("---------------------------------------------------------------------------------------------------------\n");
-        printf("1/x |");
+    printf("\n");
 
-        for (int i = 1; i <= 10; i++)
-            printf(" %5.2f   |", 1.0 / i);
-
-        printf("\n");
-
-        return 0;
-    }
+    return 0;
+}
+{% endhighlight %}
 
 **Experts:**
 
 
-    #include <stdio.h>
+{% highlight C %}
+#include <stdio.h>
 
-    int main(void) {
+int main(void) {
 
-        printf("%4c  |", ' ');
+    printf("%4c  |", ' ');
 
-        for (int i = 1; i <= 10; i++)
-            printf("%4d  |", i);
+    for (int i = 1; i <= 10; i++)
+        printf("%4d  |", i);
 
-        printf("\n-----------------------------------------------------------------------------\n");
+    printf("\n-----------------------------------------------------------------------------\n");
 
-        for (int i = 1; i <= 10; i++) {
-            printf("%4d  |", i);
-            for(int j = 1; j <= 10; j++)
-                printf("%4d  |", i * j);
-            printf("\n");
-        }
-
-        return 0;
+    for (int i = 1; i <= 10; i++) {
+        printf("%4d  |", i);
+        for(int j = 1; j <= 10; j++)
+            printf("%4d  |", i * j);
+        printf("\n");
     }
 
-
--->
+    return 0;
+}
+{% endhighlight %}

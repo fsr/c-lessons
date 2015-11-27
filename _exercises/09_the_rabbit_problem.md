@@ -21,30 +21,32 @@ One variable is not enough to store all the information you need to calculate th
 
 ##Solution##
 
-    #include <stdio.h>
+{% highlight C %}
+#include <stdio.h>
 
-    int main(void) {
-        int n;
-        int a = 0;
-        int b = 1;
-        int sum = 1;
-        printf("Which fibonacci number should I calculate for you? ");
-        scanf("%d", &n);
+int main(void) {
+    int n;
+    int a = 0;
+    int b = 1;
+    int sum = 1;
+    printf("Which fibonacci number should I calculate for you? ");
+    scanf("%d", &n);
 
-        if(n < 1) {
-            printf("Seriously?\n");
-            return 0;
-        }
-        if(n == 1)
-            b = 0;
-        while(--n > 1) {
-            int tmp = a + b;
-            a = b;
-            b = tmp;
-            sum += b;
-        }
-        printf("The fibonacci number is %d.\n", b);
-        printf("The sum is %d.\n", sum);
+    if(n < 1) {
+        printf("Seriously?\n");
         return 0;
     }
+    if(n == 1)
+        b = 0;
+    while(--n > 1) {
+        int tmp = a + b;
+        a = b;
+        b = tmp;
+        sum += b;
+    }
+    printf("The fibonacci number is %d.\n", b);
+    printf("The sum is %d.\n", sum);
+    return 0;
+}
 
+{% endhighlight %}

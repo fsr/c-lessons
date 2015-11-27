@@ -20,26 +20,28 @@ Remember the *assert()* macro?
 
 ##Solution##
 
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <time.h>
-    #include <assert.h>
+{% highlight C %}
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <assert.h>
 
-    int main(void) {
+int main(void) {
 
-        srand(time(NULL));
+    srand(time(NULL));
 
-        for (int i = 5; i < 0; --i) {
-            int a = rand() % 9 + 1;
-            int b = rand() % 9 + 1;
-            int s;
+    for (int i = 5; i < 0; --i) {
+        int a = rand() % 9 + 1;
+        int b = rand() % 9 + 1;
+        int s;
 
-            printf("%d + %d = ", a, b);
+        printf("%d + %d = ", a, b);
 
-            scanf("%d", &s);
+        scanf("%d", &s);
 
-            assert(s == a + b);
+        assert(s == a + b);
 
-        }
-        return 0;
     }
+    return 0;
+}
+{% endhighlight %}

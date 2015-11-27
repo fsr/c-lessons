@@ -20,30 +20,31 @@ Write a program, that lets the user decide how often *"Knock, knock, knock - Pen
 
 ##Solution##
 
-    
-    #include <stdio.h>
+{% highlight C %}
+#include <stdio.h>
 
-    int main(void) {
-        int count;
-        int knock;
+int main(void) {
+    int count;
+    int knock;
 
-        printf("How often shall sheldon try to knock? ");
-        scanf("%d", &count);
-        printf("And how often shall he knock each time? ");
-        scanf("%d", &knock);
+    printf("How often shall sheldon try to knock? ");
+    scanf("%d", &count);
+    printf("And how often shall he knock each time? ");
+    scanf("%d", &knock);
 
-        while (count-- > 0) {
-            int i;
-            for (i = 0; i < knock; ++i)
-                if (i == 0)
-                    printf("Knock");
-                else
-                    printf(", knock");
+    while (count-- > 0) {
+        int i;
+        for (i = 0; i < knock; ++i)
+            if (i == 0)
+                printf("Knock");
+            else
+                printf(", knock");
 
-            if (knock > 0)
-                printf(" - ");
+        if (knock > 0)
+            printf(" - ");
 
-            printf("Penny?\n");
-        }
-        return 0;
+        printf("Penny?\n");
     }
+    return 0;
+}
+{% endhighlight %}

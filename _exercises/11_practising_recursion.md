@@ -23,48 +23,52 @@ For all other *n*, you need a recursive call.
 
 ##Solution##
 
-    #include <stdio.h>
+{% highlight C %}
+#include <stdio.h>
 
-    int fak(int n);
+int fak(int n);
 
-    int main(void) {
-        int n;
-        printf("Gimme numba: ");
-        scanf("%d", &n);
+int main(void) {
+    int n;
+    printf("Gimme numba: ");
+    scanf("%d", &n);
 
-        printf("fak(%d) = %d\n", n, fak(n));
-        return 0;
-    }
+    printf("fak(%d) = %d\n", n, fak(n));
+    return 0;
+}
 
-    int fak(int n) {
-        if (n == 1)
-            return 1;
+int fak(int n) {
+    if (n == 1)
+        return 1;
 
-        return n * fak(n - 1);
-    }
+    return n * fak(n - 1);
+}
 
+{% endhighlight %}
 **Experts:**
 
 
-    #include <stdio.h>
+{% highlight C %}
+#include <stdio.h>
 
-    int fib(int n);
+int fib(int n);
 
-    int main(void) {
-        int n;
-        printf("fib(?): ");
-        scanf("%d", &n);
+int main(void) {
+    int n;
+    printf("fib(?): ");
+    scanf("%d", &n);
 
-        if (n < 0)
-            printf("Srsly? -.-\n");
+    if (n < 0)
+        printf("Srsly? -.-\n");
 
-        printf("fib(%d) = %d\n", n, fib(n));
-        return 0;
-    }
+    printf("fib(%d) = %d\n", n, fib(n));
+    return 0;
+}
 
-    int fib(int n) {
-        if (n <= 1)
-            return n;
+int fib(int n) {
+    if (n <= 1)
+        return n;
 
-        return fib(n - 1) + fib(n - 2);
-    }
+    return fib(n - 1) + fib(n - 2);
+}
+{% endhighlight %}
