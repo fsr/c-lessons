@@ -24,30 +24,26 @@
 	\tableofcontents
 \end{frame}
 
-\section{Motivation}
+\section{Memory allocation}
 \subsection{}
-\begin{frame}{Runtime conditions}
-	Static C arrays are great if you already know at \textit{compile time} how many elements you will need later at \textit{runtime}. \\ \ \\
-	Seriously, how often is this the case? \\ \ \\
-	\begin{uncoverenv}<2->
-		\textit{Never}. Unless your program does not take \textit{any} user input, you cannot determine how much data you will have to store. \\ \ \\
-		This is where dynamic memory management comes into play.
-	\end{uncoverenv}
-\end{frame}
-\begin{frame}{Explicit allocation}
-	All the variables and arrays you have used so far were placed in memory automatically. 
-	In dynamic memory management, you have to \textit{allocate} parts memory to identifiers on your own. \\ \ \\
-	There are four functions in the standard library that do almost all the work for you:
+\begin{frame}[fragile]{Runtime conditions}
+	Maybe you already have encountered the this problem:
+	\begin{lstlisting}[numbers=none]
+scanf("%d", &size);	/* size is some integer */
+int array[size];	/* will not compile */
+\end{lstlisting}
+	Until now, we have let the compiler decide how to place the variables and arrays in memory.\\
+	Now we need to allocate memory \textbf{explicitely} and \textbf{dynamically}.\\
+	\bigskip
+	There are four handy functions declared in \textit{stdlib.h}:
 	\begin{itemize}
 		\item \textit{malloc()}: Allocate a block of memory
 		\item \textit{calloc()}: Allocate a block of memory and initialize it
 		\item \textit{realloc()}: Alter the size of a block of memory
 		\item \textit{free()}: Release a block of memory
 	\end{itemize}
-	They are declared in \textit{stdlib.h}.
 \end{frame}
-\section{Memory allocation}
-\subsection{}
+
 \begin{frame}[fragile]{A closer look at memory}
 	\begin{tikzpicture}[y=2cm, font=\footnotesize]
 		\node[above, font=\small] at (1.5,0) {Stack};
@@ -205,13 +201,13 @@ int *block = malloc(sizeof *block); /* gold standard */
 	\centering
 	Confused? \\
 	\ \\
-	\only<2->{\large Do not typecast the result of malloc() \& Co.}
+	\only<2->{\large Do not typecast the result of malloc() \& co.}
 \end{frame}
 \begin{frame}[fragile]{Tidying up}
 	Unlike normally declared variables, dynamically allocated storage is not automatically released when the function returns.
 	\begin{lstlisting}
-void foo() {
-	int *bar = malloc(sizeof(int));
+void foo(void) {
+	int *bar = malloc(sizeof *bar);
 }
 \end{lstlisting}
 	With the pointer \textit{bar} being removed from the stack, we havo no reference on its allocated memory and those four bytes are blocked forever! \\
@@ -233,7 +229,7 @@ free(void *ptr);
 	\ \\
 	\textit{int} array with 42 elements:
 	\begin{lstlisting}[numbers=none]
-int *field = malloc(42 * sizeof(*field));
+int *field = malloc(42 * sizeof *field);
 \end{lstlisting}\ \\
 	\ \\
 	Since the size of your dynamically allocated array is unknown at compile time, you cannot use \textit{sizeof} to get its length. Save it in its own variable!\\
@@ -252,14 +248,14 @@ void *calloc(size_t nmemb, size_t size);
 	\ \\
 	\begin{lstlisting}[numbers=none]
 int field_length = 42;
-int *field = malloc(field_length * sizeof(*field));
+int *field = malloc(field_length * sizeof *field);
 for (int i = 0; i < field_length; i++)
 	field[i] = 0;
 \end{lstlisting}
 	\center	$\downarrow$ Feel the difference $\downarrow$
 	\begin{lstlisting}[numbers=none]
 int field_length = 42;
-int *field = calloc(field_length, sizeof(*field));
+int *field = calloc(field_length, sizeof *field);
 \end{lstlisting}
 \end{frame}
 
@@ -307,7 +303,7 @@ struct int_array {
 	\begin{lstlisting}[numbers=none]
 char conststr[] = "Hello";			   /* not of much use */
 int bufsize = strlen(conststr) + 1;	   /* add '\0' char */
-char *str = calloc(bufsize, sizeof(*str));
+char *str = calloc(bufsize, sizeof *str);
 str = strncpy(str, conststr, bufsize); /* ready to go */
 \end{lstlisting}\ \\
 	\ \\
@@ -316,13 +312,6 @@ str = strncpy(str, conststr, bufsize); /* ready to go */
 $ man string.h
 \end{lstlisting}
 \end{frame}
-\section{Exercise}
-\subsection{}
-\begin{frame}{Exercises}
-	\begin{itemize}
-		\item You are now able to solve tasks 26, 27 and 28.
-		\item You additionally are now able to visit the advanced C course.
-	\end{itemize}
-\end{frame}
+
 % nothing to do from here on
 \end{document}
