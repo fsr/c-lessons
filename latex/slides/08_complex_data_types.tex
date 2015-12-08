@@ -20,22 +20,9 @@
 	\tableofcontents
 \end{frame}
 
-\section{Introduction}
+\section{Composite data types}
 \subsection{}
-\begin{frame}[fragile]{Motivation}
-	Think of a data type that can store all data belonging to a person:
-	\begin{lstlisting}[numbers=none]
-char name[32];
-int age, id;
-\end{lstlisting}
-	However, there seems to be no way to put those different types together.\\ \ \\
-	Think of a data type that can store the state (current color) of traffic lights:
-	\begin{lstlisting}[numbers=none]
-int color;
-/* 0 = red, 1 = yellow, 2 = green */
-\end{lstlisting}
-	How to avoid someone assigning a different value to \textit{color}?
-\end{frame}
+
 \begin{frame}{Limits of primitive data types}
 	Primitive data types are fine as long as you want to
 	\begin{itemize}
@@ -54,8 +41,6 @@ int color;
 	\end{itemize}
 \end{frame}
 
-\section{Composite data types}
-\subsection{}
 \begin{frame}[fragile]{Data records}
 	Composite data types are derived from primitive data types. You can store any number of primitive variables in one composite variable.
 	\begin{itemize}
@@ -210,14 +195,6 @@ typedef struct foo {
 		\end{itemize}
 	\end{uncoverenv}
 	\footnotetext[1]{Seriously, never use \textit{typedef}.}
-\end{frame}
-
-\section{Exercise}
-\subsection{}
-\begin{frame}{Exercises}
-	\begin{itemize}
-		\item You are now able to solve tasks 20 and 21.
-	\end{itemize}
 \end{frame}
 
 % nothing to do from here on
