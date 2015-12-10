@@ -1,5 +1,5 @@
 ---
-title: Calculating circles
+title: Printing Strings
 number: 25
 status: reviewed
 difficulty: Hard
