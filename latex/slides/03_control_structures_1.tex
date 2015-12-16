@@ -167,7 +167,7 @@ else
 	\begin{lstlisting}[numbers=none]
 int a = 10;
 int c;
-if(a == 10 || (a = c)){ //evaluates to true, but c is undefined
+if (a == 10 || (a == c)) { //evaluates to true, even if c is undefined
 	...	
 }
 \end{lstlisting} 
