@@ -323,6 +323,14 @@ int* a, b;	/* pointer and int */
 	Some people prefer \textit{int* a} over \textit{int *a}. This is fine, but avoid declarations as the one above. \only<3->{And keep it consistent.}
 \end{frame}
 
+\begin{frame}{Segmentation Fault}
+	\centerline{\includegraphics[scale=.4]{../img/compiler_complaint.png}
+		\let\thefootnote\relax\footnote{\tiny "Compiler Complaint" by Randall Munroe. Licensed under \textit{Creative Commons Attribution-NonCommercial 2.5 License}}} \ \\[.5cm]
+	A segmentation fault is very common when working with pointers. It means you were trying to
+	write on memory your program didn't own. \\
+	Try to avoid those errors, backtracing is hard!
+\end{frame}
+
 % TODO from here on: build your own content
 
 
