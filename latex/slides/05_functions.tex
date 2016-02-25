@@ -84,89 +84,32 @@ int main(void) {
 		\end{tikzpicture}
 	\end{textblock}
 \end{frame}
-\begin{frame}[fragile]{Example (1)}
-	A function that calculates the 5 smallest Fibonacci numbers and prints them directly:
-	\begin{lstlisting}
-void fib_5() {
-	int i;
-	int fib1;
-	int fib2;
-	for (i = 0, fib1 = 0, fib2 = 1; i < 5; ++i) {
-		int buffer = fib1;
-		printf("fib(%d) = %d\n", i, fib1);
-		fib1 = fib2;
-		fib2 = fib2 + buffer;
-	}
-	/* should be enough for the demo */
-}
-\end{lstlisting}
-	It takes no arguments and returns nothing.
-	Note: the \textit{return} statement at the end can be left out completely in \textit{void} functions.
-\end{frame}
-\begin{frame}[fragile]{Example (2)}
-	A function that calculates \textit{fib(n)} and returns the result:
-	\begin{lstlisting}
-int fib(int n) {
-	int i;
-	int fib1;
-	int fib2;
-	for (i = 0, fib1 = 0, fib2 = 1; i < n; ++i) {
-		int buffer = fib1;
-		fib1 = fib2;
-		fib2 = fib2 + buffer;
-	}
-	return fib1;
-}
-\end{lstlisting}
-		It takes an \textit{int} argument and returns an \textit{int} value.\\\ 
-\end{frame}
-\begin{frame}[fragile]{Call of functions}
-	You can call a function in a statement by typing its name followed by \textit{()}:
-	\begin{lstlisting}[numbers=none]
-fib_5();
-\end{lstlisting} \ \\ \ \\
-	Arguments must be written inside the parentheses, separated by commas:
-	\begin{lstlisting}[numbers=none]
-fib(5);
-\end{lstlisting} \ \\ \ \\
-	The return value can be used as a part of a statement or assigned to a variable of the same type:
-	\begin{lstlisting}[numbers=none]
-printf("fib(%d) = %d\n", 5, fib(5));
-int result = fib(5);
-\end{lstlisting}
-\end{frame}
+
 \begin{frame}[fragile]{Passing arguments}
-	You must pass as many arguments as declared in the function definition. Each value is assigned to the parameter at the same position in the argument list (and therefore must have the same type): \ \\ \ \\
-	\begin{lstlisting}
-void foo(int value, char dec1, char dec2) {
-	/* things happen */
+	\begin{itemize}
+		\item Each value is assigned to the parameter at the same position in the argument list (and therefore must have the same type)
+	\end{itemize}		
+	\begin{lstlisting}[basicstyle=\scriptsize]
+#include <stdio.h>	
+	
+void shift_character(char character, unsigned offset) {
+	printf("%c\n", (character + offset) % 255);
 }
 
-...
+int random_number(void) {
+	return 4;	// chosen by fair dice roll.
+				// guaranteed to be random.
+}
 
 int main(void) {
-	int number = 42;
-	char dec1 = '4';
-	char dec2 = '2';
-	foo(number, dec1, dec2);
+	int offset = 10;
+	shift_character('c', offset);
+	printf("%d\n", random_number());
 	return 0;
 }
 \end{lstlisting}
 \end{frame}
-\begin{frame}[fragile]{Now it's your turn}
-	Take a look back at our Fibonacci numbers program and give it a better structure by introducing functions! \ \\ \ \\
-	\begin{uncoverenv}<2->
-		\begin{lstlisting}
-int main(void) {
-	printf("fib(%d) = %d\n", 3, fib(3);
-	printf("fib(%d) = %d\n", 5, fib(5);
-	printf("fib(%d) = %d\n", 11, fib(11);
-	return 0;
-}
-\end{lstlisting} \ \\ \ \\
-		Feels a lot cleaner, doesn't it?
-	\end{uncoverenv}
-\end{frame}
+
 \section{More on scopes}
 \subsection{}
 \begin{frame}[fragile]{Global variables}

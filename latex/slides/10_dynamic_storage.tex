@@ -27,13 +27,10 @@
 \section{Memory allocation}
 \subsection{}
 \begin{frame}[fragile]{Runtime conditions}
-	Maybe you already have encountered the this problem:
-	\begin{lstlisting}[numbers=none]
-scanf("%d", &size);	/* size is some integer */
-int array[size];	/* will not compile */
-\end{lstlisting}
-	Until now, we have let the compiler decide how to place the variables and arrays in memory.\\
-	Now we need to allocate memory \textbf{explicitely} and \textbf{dynamically}.\\
+	Think about a helper function that initializes a large portion of memory (e.g. for an array).\\
+	\bigskip
+	Until now, we have let the compiler decide how to place the variables and arrays in memory. In many cases, this is not sufficient.\\
+	Now we want to allocate memory \textbf{explicitely} and \textbf{dynamically}.\\
 	\bigskip
 	There are four handy functions declared in \textit{stdlib.h}:
 	\begin{itemize}
