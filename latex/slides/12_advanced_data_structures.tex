@@ -21,19 +21,9 @@
 \begin{frame}{Contents}
 	\tableofcontents
 \end{frame}
-\section{Overview}
-\subsection{}
-\begin{frame}{Taking dynamic datastructures to a new level}
-	To store a lot of similar variables, you use \textit{Arrays}.\\
-	To store a lot of different variables in one context, you use \textit{structs}.\\
-	What about storing a lot of similar \textit{structs}?\\
-	\ \\
-	It is possible to create \textit{arrays} of \textit{structs} but that can become confusing:\\
-	\textit{Arrays} of \textit{structs} containing \textit{Arrays} of \textit{structs} containing \textit{Arrays}...\\
-	\ \\
-	There is another strategie to handle this Problem.
-\end{frame}
 
+\section{Lists and Binary trees}
+\subsection{}
 \begin{frame}[fragile]{Yay, pointers}
 	For better handling of datastructures, we define \textit{structs} with additional pointers to themselves:\\\ \\
 	\begin{columns}[c]
@@ -71,8 +61,6 @@ struct listElement {
 	\end{columns}
 \end{frame}
 
-\section{Lists and Binary trees}
-\subsection{}
 \begin{frame}{Single-chained lists}
 
 	\begin{tikzpicture}[scale=.73,font=\scriptsize]
@@ -773,6 +761,62 @@ struct listElement {
 
 \end{frame}
 
+\section{Pointers to functions}
+\subsection{}
+
+\begin{frame}[fragile]{Higher order functions}
+	It is possible to pass a function as an argument of another function.\\
+	Doing so, you get a function that can call different other functions.\\
+	\bigskip
+	Since functions are placed in the text segment of you program, you simply pass the address of the function as a so called function pointer:\\
+	\begin{lstlisting}
+<return type> (*<function name>)(<parameter list>);
+\end{lstlisting}
+	\bigskip
+	Example:
+	\begin{lstlisting}
+int (*op)(int a, int b) = add; /* Defined somewhere else */
+int (*print)(const char *) = puts;	/* From stdlib */
+\end{lstlisting}
+	Note that the $\&$ operator can be omitted.
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+	\begin{lstlisting}
+#include <stdio.h>
+
+int add(int a, int b) {
+	return a + b;
+}
+
+int sub(int a, int b) {
+	return a - b;
+}
+
+void printFunc(int (*f)(int, int), int a, int b) {
+	 printf("%d\n",f(a, b));
+}
+
+int main(void) {
+	printFunc(add, 1, 2);
+	printFunc(sub, 1, 2);
+	return 0;
+}
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}{Mapping}
+	Pointers to functions are often used for mapping. If you want to iterate through a list and call a function for every list item, you could do this with a new loop each time, but you also could write a function that takes a list and a function.\\
+	\ \\
+	If only we had an example to try this out...\\
+	Oh wait... we do: The Dungeon.\\\ \\
+	\begin{itemize}
+		\item Write a mapping function that takes a list of monsters and a function.
+		\item Edit the print\_monster\_list function to a print\_entity function.
+		\item Now you can print the monsters list by calling the mapping function passing the list and the print\_entity function.
+	\end{itemize}
+\end{frame}
 
 % nothing to do from here on
 \end{document}

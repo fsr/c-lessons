@@ -1,0 +1,102 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Storage classes
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+\section{Storage classes}
+\subsection{}
+
+\begin{frame}{Back to scopes}
+	By introducing programs consisting of multiple files, we must differantiate between three cases to determine a variable's scope:
+	\begin{enumerate}
+		\item \textit{local}: only available in the block of its declaration
+		\item \textit{global wrt. a file}: available to all functions in the file of its declaration
+		\item \textit{global wrt. the program}: available to all functions in the program
+	\end{enumerate}\bigskip
+	While local variables get destroyed each time the program leaves their scope, all other variables are alive during the whole program execution.\\ \bigskip
+	To modify this behaviour, C allows variable declarations with one of the following keywords: \textit{extern}, \textit{static}, \textit{register} and \textit{auto}.
+\end{frame}
+
+\begin{frame}[fragile]{\textit{extern}}
+	In order to access a variable that has been defined outside the current file, you have to tell the compiler to look for it in another file.\\
+	This is done by prefixing the variable declaration with the keyword \textit{extern}.\\
+	\bigskip
+	File io.c:
+	\begin{lstlisting}
+char line_buffer[512];
+/* Some basic i/o functions */
+\end{lstlisting}
+	File parse.c:
+	\begin{lstlisting}
+extern char line_buffer[];
+int parse_line(void) {
+	/* Read from line_buffer in here */
+}
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}{\textit{static}}
+	\textit{Static} variables are placed on the data segment as if they were global.\\
+	Their scope, however, depends on where they are declared:\\
+	\bigskip
+	\textit{Outside} any function
+	\begin{itemize}
+		\item They are global in the current file and cannot be accessed from anywhere else
+		\item Thus you can have "private" variables and variables with the same names in different files 
+	\end{itemize}
+	\textit{Inside} a block
+	\begin{itemize}
+		\item They are local, but do not get destroyed when the block is left
+		\item Thus you get functions with a "memory"
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\textit{register} and \textit{auto}}
+	Variables that should be accessed fast can be put in \textit{register}s instead of the memory. However,
+	\begin{itemize}
+		\item They must not be larger than a word in your architecture
+		\item You must not take addresses of such variables
+		\item There is only a limited amount of registers, so the compiler may put the variables on the stack ignoring the \textit{register} keyword
+	\end{itemize}
+	\begin{lstlisting}
+for (register i; i < 4096; ++i);	/* int is default */
+\end{lstlisting}
+	The compiler would do this during optimisation anyway.\\
+	\bigskip
+	All variables declared inside functions without any special keyword are \textit{auto}matically put on the stack $-$ no need to explicitely use \textit{auto}.
+\end{frame}
+
+\begin{frame}[fragile]{Storage classes of functions}
+	By default, functions are global and available in the whole program.\\
+	\bigskip
+	You could declare them \textit{extern} in every file you want to call them, but it is better practice to include a header containing the function declaration.\\
+	\bigskip
+	Just like variables, \textit{static} functions have a "private" character and can be used to forbid calls from other files and avoid name clashes.
+	\begin{lstlisting}
+static void puts(char *str) {
+	printf("\n%s\n", str);
+}
+\end{lstlisting}
+	\bigskip
+	It should be obvious that functions cannot be put into registers.	
+\end{frame}
+
+% nothing to do from here on
+\end{document}

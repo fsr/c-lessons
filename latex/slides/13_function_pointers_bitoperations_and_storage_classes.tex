@@ -3,7 +3,7 @@
 
 % meta-information
 \newcommand{\topic}{
-	Bitoperations, storage classes, macros and function pointers
+	Bit operations
 }
 
 % nothing to do here
@@ -20,7 +20,7 @@
 	\tableofcontents
 \end{frame}
 
-\section{Bitoperations}
+\section{Bit operations}
 \subsection{}
 
 \begin{frame}{A little bit of logic}
@@ -59,11 +59,11 @@
 \begin{frame}[fragile]{Masking}
 	$x\ |\ mask$ sets all bits in $x$ that are $1$ in $mask$.\\
 	\begin{lstlisting}
-'A' | 32;	/* Make a capital letter be small */
+'A' | 32;	/* Let a capital letter be small */
 \end{lstlisting}\bigskip
 	$x\ \&\ mask$ deletes all bits in $x$ that are $0$ in $mask$.\\
 	\begin{lstlisting}
-'a' & ~32;	/* Make a small letter be capital */
+'a' & ~32;	/* Let a small letter be capital */
 \end{lstlisting}\bigskip
 	$x\ $\textasciicircum\ $mask$ inverts all bits in $x$ that are $1$ in $mask$.\\
 	\begin{lstlisting}
@@ -73,7 +73,7 @@
 
 \begin{frame}[fragile]{Bit fields}
 	Although it may seem efficient to use each bit of a number to store information in it, it will become nasty to access all the values by:\\
-	$x\ \&\ 1$, $x\ \&\ 2$, $x\ \&\ 4$, \dots all the way up to $2^{INT\_MAX - 1}$\\
+	$x\ \&\ 1$, $x\ \&\ 2$, $x\ \&\ 4$, \dots all the way up to $2^{sizeof\ int - 1}$\\
 	\bigskip
 	For this particular reason, C offers \textit{bit fields} like the following:
 	\begin{lstlisting}
@@ -86,142 +86,6 @@ struct traffic_light {
 \end{lstlisting}
 	The members of bit fields can be accessed as if they were members of ordinary \textit{struct}s.
 
-\end{frame}
-
-\section{Storage classes}
-\subsection{}
-
-\begin{frame}{Back to scopes}
-	By introducing programs consisting of multiple files, we must differantiate between three cases to determine a variable's scope:
-	\begin{enumerate}
-		\item \textit{local}: only available in the block of its declaration
-		\item \textit{global wrt. a file}: available to all functions in the file of its declaration
-		\item \textit{global wrt. the program}: available to all functions in the program
-	\end{enumerate}\bigskip
-	While local variables get destroyed each time the program leaves their scope, all other variables are alive during the whole program execution.\\ \bigskip
-	To modify this behaviour, C allows variable declarations with one of the following keywords: \textit{extern}, \textit{static}, \textit{register} and \textit{auto}.
-\end{frame}
-
-\begin{frame}[fragile]{\textit{extern}}
-	In order to access a variable that has been defined outside the current file, you have to tell the compiler to look for it in another file.\\
-	This is done by prefixing the variable declaration with the keyword \textit{extern}.\\
-	\bigskip
-	File io.c:
-	\begin{lstlisting}
-char line_buffer[512];
-/* Some basic i/o functions */
-\end{lstlisting}
-	File parse.c:
-	\begin{lstlisting}
-extern char line_buffer[];
-int parse_line(void) {
-	/* Read from line_buffer in here */
-}
-\end{lstlisting}
-
-\end{frame}
-
-\begin{frame}{\textit{static}}
-	\textit{Static} variables are placed on the data segment as if they were global.\\
-	Their scope, however, depends on where they are declared:\\
-	\bigskip
-	\textit{Outside} any function
-	\begin{itemize}
-		\item They are global in the current file and cannot be accessed from anywhere else
-		\item Thus you can have "private" variables and variables with the same names in different files 
-	\end{itemize}
-	\textit{Inside} a block
-	\begin{itemize}
-		\item They are local, but do not get destroyed when the block is left
-		\item Thus you get functions with a "memory"
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{\textit{register} and \textit{auto}}
-	Variables that should be accessed fast can be put in \textit{register}s instead of the memory. However,
-	\begin{itemize}
-		\item They must not be larger than a word in your architecture
-		\item You must not take addresses of such variables
-		\item There is only a limited amount of registers, so the compiler may put the variables on the stack ignoring the \textit{register} keyword
-	\end{itemize}
-	\begin{lstlisting}
-for (register i; i < 4096; ++i);	/* int is default */
-\end{lstlisting}
-	The compiler would do this during optimisation anyway.\\
-	\bigskip
-	All variables declared inside functions without any special keyword are \textit{auto}matically put on the stack $-$ no need to explicitely use \textit{auto}.
-\end{frame}
-
-\begin{frame}[fragile]{Storage classes of functions}
-	By default, functions are global and available in the whole program.\\
-	\bigskip
-	You could declare them \textit{extern} in every file you want to call them, but it is better practice to include a header containing the function declaration.\\
-	\bigskip
-	Just like variables, \textit{static} functions have a "private" character and can be used to forbid calls from other files and avoid name clashes.
-	\begin{lstlisting}
-static void puts(char *str) {
-	printf("\n%s\n", str);
-}
-\end{lstlisting}
-	\bigskip
-	It should be obvious that functions cannot be put into registers.	
-\end{frame}
-
-\section{Pointers to functions}
-\subsection{}
-
-\begin{frame}[fragile]{Higher order functions}
-	It is possible to pass a function as an argument of another function.\\
-	Doing so, you get a function that can call different other functions.\\
-	\bigskip
-	Since functions are placed in the text segment of you program, you simply pass the address of the function as a so called function pointer:\\
-	\begin{lstlisting}
-<return type> (*<function name>)(<parameter list>);
-\end{lstlisting}
-	\bigskip
-	Example:
-	\begin{lstlisting}
-int (*op)(int a, int b) = add; /* Defined somewhere else */
-int (*print)(const char *) = puts;	/* From stdlib */
-\end{lstlisting}
-	Note that the $\&$ operator can be omitted.
-\end{frame}
-
-\begin{frame}[fragile]{Example}
-	\begin{lstlisting}
-#include <stdio.h>
-
-int add(int a, int b) {
-	return a + b;
-}
-
-int sub(int a, int b) {
-	return a - b;
-}
-
-void printFunc(int (*f)(int, int), int a, int b) {
-	 printf("%d\n",f(a, b));
-}
-
-int main(void) {
-	printFunc(add, 1, 2);
-	printFunc(sub, 1, 2);
-	return 0;
-}
-\end{lstlisting}
-
-\end{frame}
-
-\begin{frame}{Mapping}
-	Pointers to functions are often used for mapping. If you want to iterate through a list and call a function for every list item, you could do this with a new loop each time, but you also could write a function that takes a list and a function.\\
-	\ \\
-	If only we had an example to try this out...\\
-	Oh wait... we do: The Dungeon.\\\ \\
-	\begin{itemize}
-		\item Write a mapping function that takes a list of monsters and a function.
-		\item Edit the print\_monster\_list function to a print\_entity function.
-		\item Now you can print the monsters list by calling the mapping function passing the list and the print\_entity function.
-	\end{itemize}
 \end{frame}
 
 % nothing to do from here on
