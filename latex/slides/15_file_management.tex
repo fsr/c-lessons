@@ -71,7 +71,7 @@ close(myfile);
 \end{frame}
 
 \begin{frame}[fragile]{Special file descriptors}
-	By default, each process three file descriptors $-$ $0$, $1$ and $2$ $-$ referring to the standard input, output and error.\\
+	By default, each process has the three file descriptors \textit{0, 1 and 2} referring to the standard input, output and error.\\
 	You could read user input and write output by using the \textit{read()} and \textit{write()} functions along with these files as well:\bigskip
 	\begin{lstlisting}
 char message[32] = "Hello ";
