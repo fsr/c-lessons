@@ -6,6 +6,12 @@
 	Debugging
 }
 
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue,
+}
+
 % nothing to do here
 \title{\topic}
 \supertitle{\course}
@@ -18,6 +24,20 @@
 
 \begin{frame}{Contents}
 	\tableofcontents
+\end{frame}
+
+\begin{frame}{Getting started}
+	The slides are at \href{https://fsr.github.io/c-lessons/materials.html}{fsr.github.io/c-lessons/materials.html}\\
+	\bigskip
+	There will be tasks! You can find them at \href{http://fsr.github.io/c-lessons/}{fsr.github.io/c-lessons}\\
+	\bigskip
+	If you have questions, use the auditorium group: \href{https://auditorium.inf.tu-dresden.de/de/groups/110804109}{https://auditorium.inf.tu-dresden.de/de/groups/110804109}\\
+	\bigskip
+	In case of big trouble, write an e-mail to your tutor.\\
+	\bigskip
+	\bigskip
+	*** new only for a limited time ***\\
+	Hackerspace every foo from bar to foobar in room biz.
 \end{frame}
 
 \section{Bugs}
@@ -53,43 +73,19 @@
 		\item Compile it (with \textit{-std=c99}).
 		\\\ 
 		\item And now run it.
-	\end{itemize}
-	
-\end{frame}
-\section{Warnings}
-\subsection{}
-\begin{frame}{\textit{gcc} flags}
-	You can instruct \textit{gcc} to display different warning levels and even abort compiling when warnings appear.
-	These instructions are called flags.\\\ \\\ \\
-	\begin{tabular}{|l|l|}\hline
-		\textit{-Wall} & enables a bunch of compiler warnings\\\hline
-		\textit{-Wextra} & enables further compiler warnings\\\hline
-		\textit{-Werror} & warnings are interpreted as errors (compiling won't succeed)\\\hline
-	\end{tabular}
-	\ \\\ \\\ \\
-	\begin{itemize}
-		\item You can pass an arbitrary amount of flags
-		\item Seperate them with whitespaces
+		\pause
+		\item Try to fix all the mistakes using compiler flags.
 	\end{itemize}
 \end{frame}
-\begin{frame}{Debugging light}
-	\begin{itemize}
-		\item Compile the dungeon with \textit{-Wall} and \textit{-Wextra}
-		\begin{itemize}		
-			\item There are 3 warnings. The 3rd one matters.
-			\item There is a variable that's set but not used.
-		\end{itemize}
-		\item You may find a bug there. Fix it.
-	\end{itemize}
-\end{frame}
+
 \section{GDB}
 \subsection{}
 \begin{frame}[fragile]{The \textbf{G}NU \textbf{D}e\textbf{B}ugger}
-	There are tools helping with bugs, called debuggers. GDB is one of them.
+	There are tools helping with bugs, called debuggers. GDB is one of them.\\
+	\bigskip
 	To use it
 	\begin{itemize}
 		\item You have to install the package \textit{gdb}\\
-		On Windows, hope your cygwin installation came with it
 		\item You have to compile your program with the \textit{-g} flag
 		\begin{lstlisting}[numbers=none]
 $ gcc -g main.c
@@ -116,7 +112,7 @@ $ gdb a.out
 		\item Use \textbf{n[ext]} to execute the next program line only.
 		\item \textbf{s[tep]} executes the next instruction.
 		\item You can jump to the next breakpoint with \textbf{c[ontinue]}.
-		\item To see How you have come to this point in the program flow, type \textbf{backtrace} or \textbf{bt}.\\
+		\item To see how you have come to this point in the program flow, type \textbf{backtrace} or \textbf{bt}.\\
 		This shows you all functions you called to come there.
 		\\\ \\
 		\item By only hitting the \textit{return key}, you repeat the last entered  command.
