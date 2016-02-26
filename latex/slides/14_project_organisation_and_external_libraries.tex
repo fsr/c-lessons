@@ -98,17 +98,8 @@ $ gcc -Wall -o main datastructures.c io.c board.c main.c
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Again and again}
-	Consider a project that needs to be linked against the standard math library and a graphical one. Consider it having more than just one error flag and more than 10 source files:\\\ \\
-	\begin{lstlisting}[numbers=none]
-$ gcc -Wall -Wextra -Werror -Wmissing-declarations -g -O3 -o main firstfile.c sencondfile.c thirdfile.c fourthfile.c fifthfile.c sixthfile.c seventhfile.c eighthfile.c ninthfile.c tenthfile.c main.c -lm -lSDL -lSDL2
-\end{lstlisting}\ \\\ \\
-	It is a mess to type this command everytime you want to compile your program.\\
-	If only...
-\end{frame}
-
 \begin{frame}[fragile]{Makefiles}
-	There is a package called \textbf{make} that allows you to write the compile order into a file and start compiling with a more simple command:\\\ \\
+	There is a package called \textit{make} that allows you to write the compile order into a file and start compiling with a more simple command:\\\ \\
 	\begin{lstlisting}[numbers=none]
 $ make
 \end{lstlisting}\ \\\ \\
