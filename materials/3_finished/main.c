@@ -47,7 +47,7 @@ void move_player(enum direction dir) {
         player->pos.x + next_coords[dir].x,
         player->pos.y + next_coords[dir].y
     };
-    if (!out_of_bounds(new_pos))
+    if (!out_of_bounds(new_pos) && !position_covered(new_pos))
         player->pos = new_pos;
 }
 

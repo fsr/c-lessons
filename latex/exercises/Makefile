@@ -1,8 +1,11 @@
 TARGET =main
-SOURCES =datastructures.c io.c main.c
+SOURCES =$(wildcard *.c)
 OBJECTS =$(SOURCES:.c=.o)
 DEPS =$(SOURCES:.c=.d)
 CFLAGS =-Wall -Wextra -Werror -Wmissing-declarations -O3 -std=c99
+LDFLAGS =-lncurses
+
+.PHONY : clean all debug
 
 all: $(TARGET)
 
@@ -10,13 +13,15 @@ debug: CFLAGS += -g
 debug: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-%.o: %.c Makefile
-	$(CC) -MMD -c $(CFLAGS) -o $@ $<
+-include $(DEPS)
 
-.PHONY : clean all debug
+%.d: %.c Makefile
+	$(CC) -MM $(CFLAGS) $*.c > $*.d
+
 clean:
 	rm -f $(TARGET) $(OBJECTS) $(DEPS)
 
--include $(DEPS)
+debug: CFLAGS += -g
+debug: $(TARGET)
