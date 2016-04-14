@@ -10,6 +10,7 @@ static char *line;
 
 int load_game_state(void) {
     save = fopen("save", "r");
+    if (!save) return 0;
     size_t size = 0;
     if (getline(&line, &size, save) == EOF) {
         fclose(save);

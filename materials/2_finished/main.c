@@ -49,7 +49,6 @@ struct monster_list *init_monster_list();
 void free_monster_list(struct monster_list *list);
 int add_monster(struct monster_list *list, struct entity *monster);
 void monster_list_map(struct monster_list *list, void (*func)(struct entity *monster));
-int monster_list_map_and_check(struct monster_list *list, int (*func)(struct entity *monster, struct coord pos), struct coord pos);
 int position_covered(struct coord pos);
 int has_position(struct entity *ent, struct coord pos);
 void print_entity(struct entity *ent);
@@ -94,7 +93,7 @@ void move_player(enum direction dir) {
         player->pos.x + next_coords[dir].x,
         player->pos.y + next_coords[dir].y
     };
-    if (!out_of_bounds(new_pos))
+    if (!out_of_bounds(new_pos) && !position_covered(new_pos))
         player->pos = new_pos;
 }
 
@@ -186,20 +185,19 @@ void move(int y, int x) {
 }
 
 int position_covered(struct coord pos) {
-    return player != NULL && has_position(player, pos) || monsters != NULL && monster_list_map_and_check(monsters, has_position, pos);
+    if (player != NULL && has_position(player, pos))
+        return 1;
+    if (monsters == NULL)
+        return 0;
+    for (struct entity *current = monsters->first; current != NULL;
+            current = current->next) {
+        if (has_position(current, pos))
+            return 1;
+    }
+    return 0;
 }
 
 int has_position(struct entity *ent, struct coord pos) {
     assert(ent != NULL);
     return ent->pos.x == pos.x && ent->pos.y == pos.y;
-}
-
-int monster_list_map_and_check(struct monster_list *list, int (*func)(struct entity *monster, struct coord pos), struct coord pos) {
-    assert(list != NULL);
-    for (struct entity *current = list->first; current != NULL;
-            current = current->next) {
-        if (func(current, pos) == 1)
-            return 1;
-    }
-    return 0;
 }

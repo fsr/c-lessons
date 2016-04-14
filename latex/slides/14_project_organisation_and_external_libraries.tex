@@ -33,7 +33,7 @@
 		\item 14 functions and its prototypes
 		\item And the main function
 	\end{itemize}\ \\\ \\
-	We now will organize the Project in multiple files.
+	We now will organize the project in multiple files.
 \end{frame}
 
 \begin{frame}[fragile]{Header files}
@@ -60,7 +60,6 @@
 		\item free\_monster\_list
 		\item add\_monster
 		\item monster\_list\_map
-		\item monster\_list\_map\_and\_check
 		\item position\_covered
 		\item has\_position
 	\end{itemize}\ \\\ \\
@@ -85,10 +84,35 @@
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Where to put these files?}
+Now we have a mess of \textbf{.h} and \textbf{.c} files hanging around in a single directory.\\
+Best practice is to:
+\begin{itemize}
+	\item Put all header files into an \textit{inc} or \textit{include} directory
+	\item Put all source files into a \textit{src} or \textit{source} directory
+\end{itemize}
+\pause
+\bigskip
+But wait! Now we have to write awful relative paths into every file:
+\begin{lstlisting}
+#include "../include/foo.h"
+\end{lstlisting}
+\pause
+\bigskip
+You can pass additional include paths to gcc with the \textbf{-I} flag:
+\begin{lstlisting}
+#include <foo.h>
+\end{lstlisting}
+\begin{lstlisting}[language=bash]
+$ gcc src/foo.c -I./include
+\end{lstlisting}
+
+\end{frame}
+
 \section{Make}
 \subsection{}
 \begin{frame}[fragile]{Compiling}
-	To compile a project from multiple files you have to pass all the source files to the gcc command:\\\ \\
+	To compile a project from multiple files you have to pass all source files to gcc:\\\ \\
 	\begin{lstlisting}[numbers=none]
 $ gcc -Wall -o main datastructures.c io.c board.c main.c
 \end{lstlisting}\ \\\ \\
@@ -117,7 +141,7 @@ all:
 debug:
 	gcc -Wall -Werror -Wextra -g -o main main.c
 \end{lstlisting}
-	Now you can Build your project with:
+	Now you can build your project with:
 	\begin{lstlisting}[basicstyle=\scriptsize,numbers=none]
 $ make all
 \end{lstlisting}
@@ -127,7 +151,7 @@ $ make debug
 \end{lstlisting}
 	if you want to have errors and debug information.
 	\begin{itemize}
-		\item Note that if you are calling make without a rule, the first one is executed.
+		\item Note: if you are calling make without a target, the first one is built.
 	\end{itemize}
 \end{frame}
 
