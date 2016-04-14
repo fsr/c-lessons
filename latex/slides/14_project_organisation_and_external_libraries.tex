@@ -1,0 +1,244 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Project organisation and external libraries
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Header files}
+\subsection{}
+\begin{frame}{It is a mess}
+	The current version of our Dungeon is \textit{2\_finished/main.c}. In this file, there are:
+	\begin{itemize}
+		\item 205 lines of code
+		\item 4 includes
+		\item 2 custom enums
+		\item 3 custom data type definitions
+		\item 4 global variables
+		\item 14 functions and its prototypes
+		\item And the main function
+	\end{itemize}\ \\\ \\
+	We now will organize the Project in multiple files.
+\end{frame}
+
+\begin{frame}[fragile]{Header files}
+	The first thing we do is to seperate the I/O part into a file called \textit{io.c}:\\
+	\begin{itemize}
+		\item \textit{handle\_input, draw\_board, print\_entity}
+	\end{itemize}
+	Since we are calling the I/O functions in our \textit{main.c} file, the prototypes have to stay accessible from there.\\
+	This is why we are creating our own \textbf{header file} \textit{io.h}, containing the prototypes, and we include it in our \textit{main.c} and \textit{io.c}:\\\ \\
+	\begin{lstlisting}
+#include "io.h"
+\end{lstlisting}\ \\\ \\
+	\begin{itemize}
+		\item Note that we use \textbf{"\ldots"} for own includes instead of $\boldsymbol{<\ldots>}$.
+		\item The quotation marks contain the relative path to the header file.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Data structures}
+	The next step is to seperate all functions concerning the custom data structures to \textit{datastructures.c}:
+	\begin{itemize}
+		\item init\_entity
+		\item init\_monster\_list
+		\item free\_monster\_list
+		\item add\_monster
+		\item monster\_list\_map
+		\item monster\_list\_map\_and\_check
+		\item position\_covered
+		\item has\_position
+	\end{itemize}\ \\\ \\
+	We put the type definition of our structs with the prototypes into the header file \textit{datastructures.h}.
+
+\end{frame}
+
+\begin{frame}[fragile]{Global variables}
+	Since the source files all are accessing the global variables, we move them into another header file \textit{globals.h}.\\\ \\
+	Finally we outsource the function \textit{out\_of\_bounds} and the global variable \textit{next\_coords} into \textit{board.c}.\\
+	\begin{itemize}
+		\item Try to find the remaining includes by yourself.
+	\end{itemize}\ \\\ \\
+	To avoid multiple includes of one header file we can, and should, do as follows:
+	\begin{lstlisting}
+#ifndef BOARD_H
+#define BOARD_H
+
+/* header file content here */
+
+#endif /* BOARD_H */
+\end{lstlisting}
+\end{frame}
+
+\section{Make}
+\subsection{}
+\begin{frame}[fragile]{Compiling}
+	To compile a project from multiple files you have to pass all the source files to the gcc command:\\\ \\
+	\begin{lstlisting}[numbers=none]
+$ gcc -Wall -o main datastructures.c io.c board.c main.c
+\end{lstlisting}\ \\\ \\
+	\begin{itemize}
+		\item Note that you do not have to add the header files.
+		\item They do not need to be compiled separately.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Makefiles}
+	There is a package called \textit{make} that allows you to write the compile order into a file and start compiling with a more simple command:\\\ \\
+	\begin{lstlisting}[numbers=none]
+$ make
+\end{lstlisting}\ \\\ \\
+	To use it, you have to install the package and create a file named \textit{Makefile} in your project directory.\\
+	\begin{itemize}
+		\item Note that the \textbf{make} package is much more mighty than that.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Make rulez!}
+	You can define rules in your makefile:
+	\begin{lstlisting}[language=make,basicstyle=\scriptsize,numbers=none]
+all:
+	gcc -o main main.c
+debug:
+	gcc -Wall -Werror -Wextra -g -o main main.c
+\end{lstlisting}
+	Now you can Build your project with:
+	\begin{lstlisting}[basicstyle=\scriptsize,numbers=none]
+$ make all
+\end{lstlisting}
+	or with
+	\begin{lstlisting}[basicstyle=\scriptsize,numbers=none]
+$ make debug
+\end{lstlisting}
+	if you want to have errors and debug information.
+	\begin{itemize}
+		\item Note that if you are calling make without a rule, the first one is executed.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{About compiling}
+	With many source files, we do not want to recompile the whole project if we changed a tiny piece of code.\\
+	Make offers the opportunity to compile only if dependencies have changed. But first a little theory about compiling:\\\ \\
+	\scriptsize
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+	\hline
+	\textbf{process}	&	\textbf{input}	&	\textbf{output}										&	\textbf{notes}				\\\hline
+	preprocessor		&	\textit{*.c}	&	source code with substitutions \textit{*.i}			&								\\\hline
+	compiling			&	\textit{*.i}	&	assembler mnemonics \textit{*.s}					&	debug information is added	\\\hline
+	assembling			&	\textit{*.s}	&	byte code \textit{*.o}								&	not executable yet			\\\hline
+	linking				&	\textit{*.o}	&	executable byte code \textit{*} / \textit{*.exe}	&								\\\hline				
+	\end{tabular}\ \\\ \\
+	\flushleft
+	\normalsize
+	We would like to split the compilation process and keep the unlinked *.o files to link newly build *.o files with existing ones.
+\end{frame}
+
+\begin{frame}[fragile]{Dependencies}
+	gcc compiles without linking when the \textit{-c} flag is set.\\
+	You can add a dependency to your makefile by writing it behind the rule identifier. Dependencies on other rules are allowed:\\\ \\
+	\begin{lstlisting}[language=make,basicstyle=\scriptsize,numbers=none]
+all: firstfile.o secondfile.o 
+	gcc -o main firstfile.o secondfile.o
+
+firstfile.o: firstfile.c secondfile.h
+	gcc -c firstfile.c
+	
+secondfile.o: secondfile.c secondfile.h
+	gcc -c secondfile.c
+\end{lstlisting}
+	\begin{itemize}
+		\item Note that both source files have the same header file as a dependency here.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{A few tutorials later}
+	\begin{lstlisting}[language=make,basicstyle=\tiny,escapeinside=§]
+TARGET =main
+SOURCES =datastructures.c io.c main.c
+OBJECTS =$(SOURCES:.c=.o)
+DEPS =$(SOURCES:.c=.d)
+CFLAGS =-Wall -Wextra -Werror -Wmissing-declarations -O3 -std=c99
+
+all: $(TARGET)
+
+debug: CFLAGS += -g
+debug: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CC) -o $§@§ $^
+
+%.o: %.c Makefile
+	$(CC) -MMD -c $(CFLAGS) -o $§@§ $<
+
+.PHONY : clean all debug
+clean:
+	rm -f $(TARGET) $(OBJECTS) $(DEPS)
+
+-include $(DEPS)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Other build tools}
+	make is a very low-level tool, not restricted to C/C++,
+	\begin{itemize}
+	  \item which is great, because it can be used for anything where certain commands have to be used to generate files,
+	  \item which is bad, because make does not know anything about C/C++ and offers only a rudimentary framework to execute commands.
+	\end{itemize}
+
+	Other options
+	\begin{itemize}
+	  \item Autotools
+	  \item CMake
+	  \item Scons
+	  \item …
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{CMake}
+	CMake stands for cross-platform make and offers a more high-level, declarative approach to building.
+
+	CMake does not build projects itself, instead it generates the necessary project files for other tools such as Make, Visual Studio or XCode.
+
+	\begin{lstlisting}[escapeinside=§]
+cmake_minimum_required (VERSION 2.8.0)
+project (MyProject)
+set(CMAKE_BUILD_TYPE "Release")
+list(APPEND CMAKE_C_FLAGS "-std=c11 -Wall -Werror")
+target_include_directories (${CMAKE_CURRENT_SOURCE_DIR})
+add_library (mylib lib.c)
+add_executable (myprogram main.c foo.c)
+target_link_libraries (myprogram mylib)
+\end{lstlisting}
+\end{frame}
+
+\section{ncurses}
+\subsection{}
+
+\begin{frame}{An external library}
+	The next step to build an awesome ASCII Dungeon is to get rid of the "enter mashing" after entering the direction.\\\ \\
+	There is no way to do this cross platform with the standard library. That is why we will use an external one: \textbf{ncurses}.\\\ \\
+	We prepared this for you in \textit{3\_finished/io.c}. If you want, you can try to understand the content of that file.
+	\begin{itemize}
+		\item Have a closer look at \url{https://de.wikibooks.org/wiki/Ncurses}
+	\end{itemize}
+
+\end{frame}
+
+% nothing to do from here on
+\end{document}

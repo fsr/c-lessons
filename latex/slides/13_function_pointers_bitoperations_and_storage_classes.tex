@@ -1,0 +1,92 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Bit operations
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Bit operations}
+\subsection{}
+
+\begin{frame}{A little bit of logic}
+	As you know, all data is stored as \textit{binary numbers} - sequences of 0 and 1.\\
+	In C, you can operate on this bit layer by using the following \textit{logical bit} and \textit{shift} operators:\bigskip
+	
+	\begin{tabular}{|c|c|l|}
+																						  	  \hline
+		\textbf{Symbol} 	& \textbf{Operation} 	& \textbf{Example} 							\\\hline
+		$|$					& logical or				& $0110\ |\ 0101 == 0111$ 		\\\hline
+		$\&$ 				& logical and 				& $0110\ \&\ 0101 == 0100$ 	\\\hline
+		\textasciicircum				& logical xor 				& $0110\ $\textasciicircum\ $0101 == 0011$ 	\\\hline
+		\textasciitilde			& logical negation 			& \textasciitilde $0110 == 1001$	\\\hline
+		$<<$ 			& shift to the left 			& $0110\ <<\ 2 == 011000$ 	\\\hline
+		$>>$ 		& shift to the right 				& $0110\ >>\ 2 == 0001$ 			\\\hline
+	\end{tabular}
+	
+\end{frame}
+
+\begin{frame}[fragile]{Computational arithmetics}
+	With bit operations, some mathematical tasks can be solved more efficiently:
+	\begin{itemize}
+		\item Multiplying/dividing by $2^n$ is equivalent to a shift by $n$ bits
+		\begin{lstlisting}
+5 * 8 == 5 << 3;
+60 / 4 == 60 >> 2;
+\end{lstlisting}
+		\item Instead of $\%\ 2^n$ you can use $\&\ 2^{n-1}$ 
+		\begin{lstlisting}
+22 % 2 == 22 & 1;
+24 % 16 == 24 & 15;
+\end{lstlisting}
+	\end{itemize}\bigskip
+	Be aware of the fact that the readability of your code will suffer from that. Most of these optimisations are done by the compiler anyway.
+\end{frame}
+\begin{frame}[fragile]{Masking}
+	$x\ |\ mask$ sets all bits in $x$ that are $1$ in $mask$.\\
+	\begin{lstlisting}
+'A' | 32;	/* Let a capital letter be small */
+\end{lstlisting}\bigskip
+	$x\ \&\ mask$ deletes all bits in $x$ that are $0$ in $mask$.\\
+	\begin{lstlisting}
+'a' & ~32;	/* Let a small letter be capital */
+\end{lstlisting}\bigskip
+	$x\ $\textasciicircum\ $mask$ inverts all bits in $x$ that are $1$ in $mask$.\\
+	\begin{lstlisting}
+'a' ^ 32;	/* "Toggle" a letter */
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Bit fields}
+	Although it may seem efficient to use each bit of a number to store information in it, it will become nasty to access all the values by:\\
+	$x\ \&\ 1$, $x\ \&\ 2$, $x\ \&\ 4$, \dots all the way up to $2^{sizeof\ int - 1}$\\
+	\bigskip
+	For this particular reason, C offers \textit{bit fields} like the following:
+	\begin{lstlisting}
+struct traffic_light {
+	int red		: 1;
+	int yellow	: 1;
+	int green	: 1;
+	int			: 5;	/* not in use */
+};
+\end{lstlisting}
+	The members of bit fields can be accessed as if they were members of ordinary \textit{struct}s.
+
+\end{frame}
+
+% nothing to do from here on
+\end{document}

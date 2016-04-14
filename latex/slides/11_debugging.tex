@@ -1,0 +1,158 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info}
+
+% meta-information
+\newcommand{\topic}{
+	Debugging
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue,
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\begin{frame}{Getting started}
+	The slides are at \href{https://fsr.github.io/c-lessons/materials.html}{fsr.github.io/c-lessons/materials.html}\\
+	\bigskip
+	There will be tasks! You can find them at \href{http://fsr.github.io/c-lessons/}{fsr.github.io/c-lessons}\\
+	\bigskip
+	If you have questions, use the auditorium group: \href{https://auditorium.inf.tu-dresden.de/de/groups/110804109}{https://auditorium.inf.tu-dresden.de/de/groups/110804109}\\
+	\bigskip
+	In case of big trouble, write an e-mail to your tutor.\\
+	\bigskip
+	\bigskip
+	*** new only for a limited time ***\\
+	Hackerspace every foo from bar to foobar in room biz.
+\end{frame}
+
+\section{Bugs}
+\subsection{}
+\begin{frame}{It's not a bug...}
+	There are different kinds of errors.
+	\begin{itemize}
+		\item Compiletime errors
+		\item Runtime errors (\textit{bugs})
+	\end{itemize}\ \\\ \\
+	\textit{Compiletime errors} are easily handable since the compiler shows you where to fix them.\\\ \\
+	\textit{Bugs} on the other hand are harder to find because you have no idea where to look for them.
+\end{frame}
+\begin{frame}{... it's a feature.}
+	Bugs can appear due to different reasons
+	\begin{itemize}
+		\item Variable overflow
+		\item Division by zero
+		\item Infinite loops / recursions
+		\item Range excess
+		\item Segmentation fault
+		\item Dereferencing \textit{NULL pointers}
+		\item ...
+	\end{itemize}
+\end{frame}
+\begin{frame}{The dungeon}
+	We prepared a little ASCII dungeon.\\
+	You can find it in the repository (\url{https://github.com/fsr/c-slides}) in folder \textit{materials/1\_before/}\\
+	\begin{itemize}
+		\item Look at the code and try to understand what should happen.
+		\item If you find mistakes, please leave them. We'll fix them later.
+		\\\ 
+		\item Compile it (with \textit{-std=c99}).
+		\\\ 
+		\item And now run it.
+		\pause
+		\item Try to fix all the mistakes using compiler flags.
+	\end{itemize}
+\end{frame}
+
+\section{GDB}
+\subsection{}
+\begin{frame}[fragile]{The \textbf{G}NU \textbf{D}e\textbf{B}ugger}
+	There are tools helping with bugs, called debuggers. GDB is one of them.\\
+	\bigskip
+	To use it
+	\begin{itemize}
+		\item You have to install the package \textit{gdb}\\
+		\item You have to compile your program with the \textit{-g} flag
+		\begin{lstlisting}[numbers=none]
+$ gcc -g main.c
+\end{lstlisting}
+		\item After that you can start your program with gdb:
+		\begin{lstlisting}[numbers=none]
+$ gdb a.out
+\end{lstlisting}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Commands}
+	\begin{itemize}
+		\item If you started gdb without a file you can load it with \textbf{file} \textit{file\_name}.
+		\item Use \textbf{r[un]} to execute the program with gdb.\\
+		You should begin with that. It will give you further information about the crash.
+		\item You can set an arbitrary amount of breakpoints with \textbf{b[reak]} \textit{line\_number} or \textbf{b[reak]} \textit{function\_name}.\\
+		Begin with a breakpoint at the point the program crashes.
+		\item Print values with \textbf{p[rint]} \textit{identifier}.
+		\item Use \textbf{w[atch]} \textit{identifier} to break and print a variable when it's changed.
+	\end{itemize}
+\end{frame}
+\begin{frame}{Once you're at a breakpoint}
+	\begin{itemize}
+		\item Use \textbf{n[ext]} to execute the next program line only.
+		\item \textbf{s[tep]} executes the next instruction.
+		\item You can jump to the next breakpoint with \textbf{c[ontinue]}.
+		\item To see how you have come to this point in the program flow, type \textbf{backtrace} or \textbf{bt}.\\
+		This shows you all functions you called to come there.
+		\\\ \\
+		\item By only hitting the \textit{return key}, you repeat the last entered  command.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}[fragile]{Conditional breakpoints}
+After setting a breakpoint, GDB assigns an ID to it. You can use this ID to extend the functionality of that Breakpoint.\bigskip
+	\begin{itemize}
+		\item \textbf{con[dition]} \textit{breakpoint\_ID expression} adds a condition to your Breakpoint:
+		\begin{lstlisting}[numbers=none,language=bash]
+(gdb) br 52
+Breakpoint 1 at 0xbada55: file main.c, line 42.
+(gdb) condition 1 i@=@@=@3
+\end{lstlisting}\bigskip
+		\item For string comparison, set the string before comparing with \textbf{strcmp}:
+		\begin{lstlisting}
+(gdb) br main.c:42
+Breakpoint 13 at 0xdeadbeef: file main.c, line 42.
+(gdb) set $string_to_compare = "lolwut"
+(gdb) cond 13 strcmp ( $stringtocompare, c ) @=@@=@ 0
+\end{lstlisting}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Now it's up to you}
+	\begin{itemize}
+		\item Find and fix all Bugs in the dungeon.\\\ \\
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{file} & load program\\\hline
+			\textbf{r[un]} & execute program\\\hline
+			\textbf{b[reak]} & set breakpoint\\\hline
+			\textbf{p[rint]} & print variable\\\hline
+			\textbf{w[atch]} & break and print variable when it changes\\\hline
+			\textbf{n[ext]} & execute next line and break\\\hline
+			\textbf{s[tep]} & execute next instruction and break\\\hline
+			\textbf{c[ontinue]} & execute until next breakpoint\\\hline
+			\textbf{backtrace} / \textbf{bt} & How did I end up here?\\\hline
+		\end{tabular}
+	\end{itemize}
+\end{frame}
+% nothing to do from here on
+\end{document}

@@ -1,0 +1,134 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	File management
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{File descriptors}
+\subsection{}
+
+\begin{frame}[fragile]{Describing a file}
+	The basic way to handle files in C is to use the interface with your operating system on a very low level.\\
+	Each process has its own set of \textbf{file descriptors} - arbitrary integer numbers that represent a file.\\ \bigskip
+	To open a file and get a descriptor use the system call function \textit{open()}:\\
+
+	\begin{lstlisting}
+int myfile = open("savestate", O_RDWR);
+\end{lstlisting}
+
+	\begin{itemize}
+		\item See \textit{man 2 open} for further information and library includes concerning this function.
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Write and read}
+	For actually putting data into a file, there is the function \textit{write()}.\\
+	It takes a file descriptor, the input string and the amount of bytes to be written:\bigskip
+	
+	\begin{lstlisting}
+int myfile = open("savestate", O_WRONLY | O_CREAT, 0644);
+char *mytext = "foo";
+write(myfile, mytext, 4);
+\end{lstlisting}\ \\\ \\
+
+	To read data from a file, you have to prepare a variable to put it in:\\\ \\
+	
+	\begin{lstlisting}
+int myfile = open("savestate", O_RDONLY);
+char mytext[256] = {0};
+read(myfile, mytext, sizeof mytext - 1);
+\end{lstlisting}
+	
+\end{frame}
+
+\begin{frame}[fragile]{Close}
+	After finishing your file operations, you have to tell your OS that you have do not need the file any more by closing the file descriptor:\\\ \\
+	
+	\begin{lstlisting}
+int myfile = open("savestate", O_WRONLY | O_CREAT, 0644);
+char *mytext = "foo";
+write(myfile, mytext, 4);
+close(myfile);
+\end{lstlisting}\bigskip
+	Note that there is a maximum number of files a process can have opened at a time!
+\end{frame}
+
+\begin{frame}[fragile]{Special file descriptors}
+	By default, each process has the three file descriptors \textit{0, 1 and 2} referring to the standard input, output and error.\\
+	You could read user input and write output by using the \textit{read()} and \textit{write()} functions along with these files as well:\bigskip
+	\begin{lstlisting}
+char message[32] = "Hello ";
+write(1, "Enter your name:\n", 18);
+read(0, message + 6, 24);
+strcpy(message + strlen(message) - 1, "!\n");
+write(1, message, strlen(message));
+\end{lstlisting}\bigskip
+	
+	To avoid these random numbers in your code, use the constants defined in \textit{unistd.h}: \textit{STDIN\_FILENO}, \textit{STDOUT\_FILENO}, \textit{STDERR\_FILENO}.
+
+\end{frame}
+
+\section{File pointers}
+\subsection{}
+
+\begin{frame}[fragile]{Returning to standard}
+	The C standard library contains a special datastructure for handling files: a so called \textbf{file pointer} \textit{FILE*}:\\\ \\
+	
+	\begin{lstlisting}
+FILE *myfile = fopen("savestate", "r+");
+char content[256] = {0};
+fgets(content, sizeof content - 1, myfile);
+fputs("foo", myfile);
+fclose(myfile);
+\end{lstlisting}\bigskip
+
+	\begin{itemize}
+		\item These and more handy functions are declared in \textit{stdio.h}
+		\item See the man page for further information.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Making life easier}
+	By browsing \textit{stdio.h}, you will find the following function:
+	\begin{lstlisting}
+int fprintf(FILE *restrict, const char *restrict, ...);
+\end{lstlisting}
+	\textit{fprintf()} behaves exactly as \textit{printf()}, except that you can write to any file passed as the first argument.\\ \bigskip
+	There are also special file pointers declared for standard input, output and error:
+	\textit{stdin}, \textit{stdout} and \textit{stderr}.\\ \bigskip
+	In fact, it is good practice to read user input with \textit{fgets()} since you can pass the size of your buffer avoiding dangerous \textbf{buffer overflows}:
+	\begin{lstlisting}
+fgets(buffer, sizeof buffer - 1, stdin);
+\end{lstlisting}
+\end{frame}
+
+\section{Dungeon}
+\subsection{}
+\begin{frame}{Savestates}
+	Now that you are common with file management, implement a savestate functionality into the dungeon.\\\ \\
+	\begin{itemize}
+		\item When the game quits (by pressing \textit{x}) the game data should be written into a savestate.
+		\item If there is a savestate, the game should load it on start.
+		\item There also should be an opportunity to exit the game without saving.
+	\end{itemize}
+\end{frame}
+
+% nothing to do from here on
+\end{document}
