@@ -82,9 +82,9 @@ pers_alice.age++;
 \end{lstlisting}
 \end{frame}
 \begin{frame}[fragile]{\textit{struct}s as \textit{struct} members}
-	An adress is rather complicated:
+	An address is rather complicated:
 	\begin{lstlisting}[numbers=none]
-struct adress {
+struct address {
 	int postcode;
 	/* ... imagine much more members */
 };
@@ -92,7 +92,7 @@ struct adress {
 	Now, let the \textit{person} have one:
 	\begin{lstlisting}[numbers=none]
 struct person {
-	struct adress contact;
+	struct address contact;
 	/* ... and all the other members */
 } pers_alice;
 \end{lstlisting}

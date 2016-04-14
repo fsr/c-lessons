@@ -88,18 +88,30 @@ int b = ++c;	/* evaluates to c + 1, b is 44, c is 44 */
 	\centering
 	! \ $>$ \ \&\& \ $>$ \ $||$ 
 \end{frame}
+
 \begin{frame}[fragile]{Seems logical}
+	Caution: a condition will only be evaluated until its result is definitive.
 	\begin{itemize}
-		\item How do you get NAND, NOR and XOR?
+	\item $a$ \&\& $b$: $b$ will only be evaluated if $a$ is true.
+	\item $a$ $||$ $b$: $b$ will only be evaluated if $a$ is false.
 	\end{itemize}
+	\begin{lstlisting}[numbers=none]
+/* safely check if a is divisible by b */
+if ((b != 0) && (a % b =@\,@= 0)) {
+	...
+}
+\end{lstlisting} 
+	\bigskip
 	\begin{uncoverenv}<2->
+		\begin{itemize}
+			\item How do you get NAND, NOR and XOR?
+		\end{itemize}
+	\end{uncoverenv}
+	\begin{uncoverenv}<3->
 		\begin{lstlisting}[numbers=none]
-int a, b;
-...
-!(a && b);	/* NAND */
-!(a || b);	/* NOR */
-a != b;		/* XOR */
-(a == 0) != (b == 0);	/* safe XOR */
+!(a && b);				/* NAND */
+!(a || b);				/* NOR */
+(a && !b) || (!a && b);	/* XOR */
 \end{lstlisting}
 	\end{uncoverenv}
 \end{frame}
@@ -158,20 +170,7 @@ else
 \end{lstlisting}
 	\end{columns}
 \end{frame}
-\begin{frame}[fragile]{Caution}
-	A condition will only be evaluated until it's result is definitive.
-	\begin{itemize}
-	\item \&\& will only be evaluated until one condition is false.
-	\item $||$ will only be evaluated until one condition is true.
-	\end{itemize}
-	\begin{lstlisting}[numbers=none]
-int a = 10;
-int c;
-if (a == 10 || (a == c)) { //evaluates to true, even if c is undefined
-	...	
-}
-\end{lstlisting} 
-\end{frame}
+
 \begin{frame}[fragile]{switch}
 	If you have to check one variable for many constant values, \textit{switch case} is your friend:
 	\begin{lstlisting}[numbers=none,basicstyle=\itshape\footnotesize]
