@@ -1,0 +1,29 @@
+slides:
+  -
+    number: 1
+    name: Debugging
+    url: https://ifsr.de/kurs-materialien/c/11_debugging.pdf
+  -
+    number: 2
+    name: Advanced Data Structures
+    url: https://ifsr.de/kurs-materialien/c/12_advanced_data_structures.pdf
+  -
+    number: 3
+    name: Bitoperations
+    url: https://ifsr.de/kurs-materialien/c/13_bitoperations.pdf
+  -
+    number: 4
+    name: Project Organisation And External Libraries
+    url: https://ifsr.de/kurs-materialien/c/14_project_organisation_and_external_libraries.pdf
+  -
+    number: 5
+    name: File Management
+    url: https://ifsr.de/kurs-materialien/c/15_file_management.pdf
+  -
+    number: 6
+    name: Parallel Programming
+    url: https://ifsr.de/kurs-materialien/c/16_parallel_programming.pdf
+  -
+    number: 7
+    name: Storage Classes
+    url: https://ifsr.de/kurs-materialien/c/17_storage_classes.pdf
