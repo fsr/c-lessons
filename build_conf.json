@@ -14,7 +14,14 @@
                 "07_arrays.tex",
                 "08_complex_data_types.tex",
                 "09_pointers.tex",
-                "10_dynamic_storage.tex"
+                "10_dynamic_storage.tex",
+                "11_debugging.tex",
+                "12_advanced_data_structures.tex",
+                "13_bitoperations.tex",
+                "14_project_organisation_and_external_libraries.tex",
+                "15_file_management.tex",
+                "16_parallel_programming.tex",
+                "17_storage_classes.tex"
             ]
         },
         "html": {
@@ -31,7 +38,14 @@
                 "07_arrays.tex",
                 "08_complex_data_types.tex",
                 "09_pointers.tex",
-                "10_dynamic_storage.tex"
+                "10_dynamic_storage.tex",
+                "11_debugging.tex",
+                "12_advanced_data_structures.tex",
+                "13_bitoperations.tex",
+                "14_project_organisation_and_external_libraries.tex",
+                "15_file_management.tex",
+                "16_parallel_programming.tex",
+                "17_storage_classes.tex"
             ]
         }
     }
