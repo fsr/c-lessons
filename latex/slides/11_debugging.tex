@@ -117,8 +117,25 @@ $ gdb a.out
 		\\\ \\
 		\item By only hitting the \textit{return key}, you repeat the last entered  command.
 	\end{itemize}
-	\ \\\ \\
-	GDB is much more mighty than this few commands, but that should be sufficient to solve your final quest.
+	
+\end{frame}
+\begin{frame}[fragile]{Conditional breakpoints}
+After setting a breakpoint, GDB assigns an ID to it. You can use this ID to extend the functionality of that Breakpoint.\bigskip
+	\begin{itemize}
+		\item \textbf{con[dition]} \textit{breakpoint\_ID expression} adds a condition to your Breakpoint:
+		\begin{lstlisting}[numbers=none,language=bash]
+(gdb) br 52
+Breakpoint 1 at 0xbada55: file main.c, line 42.
+(gdb) condition 1 i@=@@=@3
+\end{lstlisting}\bigskip
+		\item For string comparison, set the string before comparing with \textbf{strcmp}:
+		\begin{lstlisting}
+(gdb) br main.c:42
+Breakpoint 13 at 0xdeadbeef: file main.c, line 42.
+(gdb) set $string_to_compare = "lolwut"
+(gdb) cond 13 strcmp ( $stringtocompare, c ) @=@@=@ 0
+\end{lstlisting}
+	\end{itemize}
 \end{frame}
 \begin{frame}{Now it's up to you}
 	\begin{itemize}
