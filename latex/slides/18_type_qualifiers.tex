@@ -1,0 +1,154 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Type qualifiers
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+\section{Type qualifiers}
+\subsection{}
+
+\begin{frame}[fragile]{Extended expressiveness}
+To give more information about a variable to the compiler, you can\\
+\textit{qualify} its type. There are three type qualifiers in C:\\
+\begin{itemize}
+	\item \textbf{const}, \textbf{volatile} and \textbf{restrict} (since C99)
+\end{itemize}
+\bigskip
+The syntax is a bit complicated. Normally, a qualifier refers to the type to\\
+its left, but the following is also valid (and more common!):
+\begin{lstlisting}
+const int a;				   /* equal to `int const a` */
+\end{lstlisting}
+Watch complex types:
+\begin{lstlisting}
+const int *foo;		/* mutable pointer, constant integer */
+int const *foo;							/* same as above */
+int * const foo;	/* constant pointer, mutable integer */
+int const * const foo; 			  /* everything constant */
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\textit{const}}
+To prevent all write accesses to a variable, declare its type \textit{const}.\\
+\begin{lstlisting}
+void f(int *a);
+...
+const int i = 42;				  /* initialisation is ok */
+i = 23; 	   /* error: assignment of read-only variable */
+i++;			/* error: increment of read-only variable */
+f(&i); /* warning: [...] discards 'const' qualifier [...] */
+\end{lstlisting}
+The warning above is useful pointer arguments with possible side effects.\\
+\bigskip
+The initialiser must be a constant expression, but:
+\begin{lstlisting}
+const int boardWidth; /* depends on runtime input */
+...
+*(int *) &boardWidth = read_input();
+/* This hack is actually undefined behaviour */
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\textit{volatile}}
+If a variable's value may change between two accesses, we have to\\
+prevent the compiler from optimising away subsequent reads or writes.\\
+\bigskip
+This is mainly used in low-level programming:
+\begin{itemize}
+	\item Hardware access (memory-mapped I/O)
+	\item Threading (another thread modifies a value)
+\end{itemize}
+\bigskip
+Example regarding optimisation:
+\begin{columns}
+\column{.5\textwidth}
+	\begin{lstlisting}
+#include <stdio.h>
+
+int main(void) {
+    int i = 42;
+    printf("%d\n", i);
+}
+\end{lstlisting}
+\column{.5\textwidth}
+	\begin{lstlisting}
+#include <stdio.h>
+
+int main(void) {
+    volatile int i = 42;
+    printf("%d\n", i);
+}
+\end{lstlisting}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{\textit{volatile} ctd.}
+After compilation with \textit{-O3}:
+\begin{columns}
+\column{.5\textwidth}
+	\begin{lstlisting}[escapeinside={(*}{*)}]
+main():
+  sub    $0x8,%rsp
+  mov    $0x2a,%esi
+  mov    $0x400594,%edi
+  xor    %eax,%eax
+  callq  4003c0 <printf(*@*)plt>
+  xor    %eax,%eax
+  add    $0x8,%rsp
+  retq   
+  nopl   0x0(%rax)
+\end{lstlisting}
+\column{.5\textwidth}
+	\begin{lstlisting}[escapeinside={(*}{*)}]
+main():
+  sub    $0x18,%rsp
+  mov    $0x4005a4,%edi
+  xor    %eax,%eax
+  movl   $0x2a,0xc(%rsp) 
+  mov    0xc(%rsp),%esi
+  callq  4003c0 <printf(*@*)plt>
+  xor    %eax,%eax
+  add    $0x18,%rsp
+  retq   
+  nopw   %cs:0x0(%rax,%rax,1)
+  nopl   (%rax)
+\end{lstlisting}
+\end{columns}
+\bigskip
+\pause
+The compiler could not precompute \textit{i} and pass 42 to \textit{printf} directly.
+\end{frame}
+
+\begin{frame}[fragile]{\textit{restrict}}
+If a pointer is \textit{restrict}, the compiler assumes that it is the only reference\\
+to the targeted memory (no aliases). This enables further optimisation.\\
+\bigskip
+The most common appearance are function definitions:
+\begin{lstlisting}[basicstyle=\scriptsize]
+char *strcpy(char * restrict dest, const char * restrict src);
+\end{lstlisting}
+Note: pointers of different types are always assumed to be no aliases.\\
+\bigskip
+The compiler is unable to detect if \textit{restrict} pointers actually refer to different memory locations. This has to be ensured by the caller!\\
+\bigskip
+Non-pointer types cannot be qualified this way.
+\end{frame}
+
+
+% nothing to do from here on
+\end{document}
