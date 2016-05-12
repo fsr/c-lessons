@@ -21,7 +21,8 @@
                 "14_project_organisation_and_external_libraries.tex",
                 "15_file_management.tex",
                 "16_parallel_programming.tex",
-                "17_storage_classes.tex"
+                "17_storage_classes.tex",
+                "18_type_qualifiers.tex"
             ]
         },
         "html": {
@@ -45,7 +46,8 @@
                 "14_project_organisation_and_external_libraries.tex",
                 "15_file_management.tex",
                 "16_parallel_programming.tex",
-                "17_storage_classes.tex"
+                "17_storage_classes.tex",
+                "18_type_qualifiers.tex"
             ]
         }
     }
