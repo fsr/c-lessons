@@ -27,3 +27,7 @@ slides:
     number: 7
     name: Storage Classes
     url: https://ifsr.de/kurs-materialien/c/17_storage_classes.pdf
+  -
+    number: 8
+    name: Type Qualifiers
+    url: https://ifsr.de/kurs-materialien/c/18_type_qualifiers.pdf
