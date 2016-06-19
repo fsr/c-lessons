@@ -20,6 +20,218 @@
 	\tableofcontents
 \end{frame}
 
+\section{Threads}
+\subsection{}
+\begin{frame}{Threads}
+    By calling the \textit{main()} function of your program, the OS creates a thread.
+    It is up to you to create more of them.\\
+    \bigskip
+    There is the system call \textit{fork()} create a new process. From this call on you have two completely independent processes of your program running. In the parent thread it returns the pid of the child process. In the child process it returns zero.
+    
+\end{frame}
+\begin{frame}[fragile]{Use the fork}
+    \begin{lstlisting}
+#include <unistd.h>
+
+int main(void) {
+    pid_t pid = fork();
+
+    if (pid @=@@=@ 0) {
+        /* do stuff in child process */
+    } else if (pid > 0) {
+        /* do stuff in parent process */
+    } else {
+        /* fork failed */
+        return 1;
+    }
+    return 0;
+}
+\end{lstlisting}
+    See the man page for further information.
+\end{frame}
+
+\section{pthreads}
+\subsection{}
+\begin{frame}[fragile]{pthread\_create}
+    The better way to implement threading are the P[osix] threads:
+    \bigskip
+    \begin{lstlisting}[numbers=none]
+int pthread_create(pthread_t *thread,
+                   const pthread_attr_t *attr,
+                   void *(*start_routine) (void *),
+                   void *arg);
+\end{lstlisting}
+    starts a new thread by calling \textit{start\_routine()}.
+\end{frame}
+
+\begin{frame}[fragile]{Hello Threads}
+    \begin{lstlisting}
+#include <pthread.h>
+#include <stdio.h>
+
+void *hello_thread(void *tid);
+
+int main(void) {
+    pthread_t threads[5];
+    for(int i=0; i < 5; ++i) {
+       if (pthread_create(&threads[i], NULL,
+                          hello_thread, (void *)i))
+          return 1;
+    }
+    return 0;
+}
+
+void *hello_thread(void *tid) {
+    printf("Hello, I am thread %d\n", *tid);
+    pthread_exit(NULL);
+}
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{Ways to end a thread:}
+    \begin{itemize}
+        \item \textit{start\_routine} returns
+        \item \textit{pthread\_exit} is called
+        \begin{lstlisting}[numbers=none]
+void pthread_exit(void *retval);
+\end{lstlisting}
+        \item \textit{pthread\_cancel} is called from another thread
+        \begin{lstlisting}[numbers=none]
+int pthread_cancel(pthread_t thread);
+\end{lstlisting}
+        \item \textit{exit} is called from somewhere
+        \bigskip
+        \item no explicit \textit{pthread\_exit} is called and main  finishes before \textit{start\_routine}
+    \end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Waiting for threads}
+    To wait for a thread to finish, there is \textit{pthread\_join}
+    \begin{lstlisting}[numbers=none]
+int pthread_join(pthread_t thread, void **value_ptr);
+\end{lstlisting}
+   
+    \bigskip
+    There is the \textit{pthread\_attr\_t} structure you can pass to \textit{pthread\_create}. You have to initialise the structure first and destroy it later:
+    \begin{lstlisting}[numbers=none]
+int pthread_attr_init(pthread_attr_t *attr);
+int pthread_attr_destroy(pthread_attr_t *attr);
+\end{lstlisting}
+    \bigskip
+    After that you can set and get the detachstate:
+    \begin{lstlisting}[numbers=none]
+int pthread_attr_setdetachstate(pthread_attr_t *attr,
+                                int detachstate);
+int pthread_attr_getdetachstate(const pthread_attr_t *attr,
+                                int *detachstate);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{bigger, better, joinable}
+    \begin{lstlisting}[basicstyle=\scriptsize]
+int main(void) {
+    pthread_t threads[5];
+    pthread_attr_t attr;
+    
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    
+    for(int i=0; i < 5; ++i) {
+       if (pthread_create(&threads[i], &attr,
+                          hello_thread, (void *)i))
+          return 1;
+    }
+    pthread_attr_destroy(&attr);
+
+    void *st;
+    for(int i=0; i < 5; ++i) {
+       if(pthread_join(thread[i], &st))
+           return 1;
+       printf("Thread %d finished with status %d\n", i, *st);
+    }
+    
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\section{Be careful}
+\subsection{}
+\begin{frame}[fragile]{Mutexes}
+    Since we pass a pointer as \textit{arg} to \textit{pthread\_create} the value behind this pointer could be modified by multiple threads. To avoid race conditions, the pthread library provides mutexes.
+    \begin{lstlisting}[numbers=none]
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+int pthread_mutex_init(pthread_mutex_t *restrict mutex,
+                 const pthread_mutexattr_t *restrict attr);
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+\end{lstlisting}
+    \bigskip
+    A Mutex is a datatyp that can be locked before and unlocked after accessing a variable.
+    \begin{lstlisting}[numbers=none]
+int pthread_mutex_lock(pthread_mutex_t *mutex);
+int pthread_mutex_trylock(pthread_mutex_t *mutex);
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Lock me if you can}
+    \begin{lstlisting}[basicstyle=\tiny]
+struct stuff {
+    unsigned a;
+    unsigned b;
+}
+
+struct stuff global = {1, 2};
+pthread_mutex_t mutex;
+
+void *thread_stuff(void *tid);
+unsigned do_stuff(unsigned u);
+
+int main(void) {
+    pthread_t threads[5];
+    pthread_mutex_init(&mutex, NULL);
+    for (int i = 0; i < 5; ++i) {
+        if (pthread_create(&thread[i], NULL, threadstuff, NULL))
+            return 1;
+    }
+    
+    pthread_mutex_destroy(&mutex)
+    return 0;
+}
+
+void *thread_stuff(void *tid) {
+    pthread_mutex_lock(mutex);
+    unsigned a = do_stuff(global.a);
+    global.b = a;
+    pthread_mutex_unlock(mutex);
+    
+    pthread_exit(NULL);
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deadlocks incoming}
+    Consider the following:
+     \begin{lstlisting}[basicstyle=\scriptsize]
+void *thread_1(void *tid) {
+    pthread_mutex_lock(mutex_1);
+    pthread_mutex_lock(mutex_2);
+    /* stuff */
+    pthread_mutex_unlock(mutex_1);
+    pthread_mutex_unlock(mutex_2);
+    
+    pthread_exit(NULL);
+}
+
+void *thread_2(void *tid) {
+    pthread_mutex_lock(mutex_2);
+    pthread_mutex_lock(mutex_1);
+    /* stuff */
+    pthread_mutex_unlock(mutex_2);
+    pthread_mutex_unlock(mutex_1);
+    
+    pthread_exit(NULL);
+}
+\end{lstlisting}
+\end{frame}
 
 % nothing to do from here on
 \end{document}
