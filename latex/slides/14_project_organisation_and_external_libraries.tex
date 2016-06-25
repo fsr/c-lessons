@@ -137,9 +137,9 @@ $ make
 	You can define rules in your makefile:
 	\begin{lstlisting}[language=make,basicstyle=\scriptsize,numbers=none]
 all:
-	gcc -o main main.c
+	gcc -o main datastructures.c io.c board.c main.c
 debug:
-	gcc -Wall -Werror -Wextra -g -o main main.c
+	gcc -Wall -g -o main datastructures.c io.c board.c main.c
 \end{lstlisting}
 	Now you can build your project with:
 	\begin{lstlisting}[basicstyle=\scriptsize,numbers=none]
@@ -192,30 +192,52 @@ secondfile.o: secondfile.c secondfile.h
 \end{frame}
 
 \begin{frame}[fragile]{A few tutorials later}
+	\begin{columns}
+	\column{.5\textwidth}
 	\begin{lstlisting}[language=make,basicstyle=\tiny,escapeinside=§]
-TARGET =main
-SOURCES =datastructures.c io.c main.c
-OBJECTS =$(SOURCES:.c=.o)
-DEPS =$(SOURCES:.c=.d)
-CFLAGS =-Wall -Wextra -Werror -Wmissing-declarations -O3 -std=c99
+CC		=gcc
+SRCDIR 	=src
+OBJDIR	=build
+INCDIR	=inc
+EXE		=spaceinvaders
+SRC 	=$(wildcard src/*.c)
+DEP		=$(SRC:%.c=%.d)
+OBJ		=$(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+INC		=-I./$(INCDIR)/
+CFLAGS	=-std=c99 ${INC} -Wall -Wextra -Wpedantic -Werror
+LDFLAGS	=-lncurses
+VPATH 	=$(SRCDIR)
 
-all: $(TARGET)
+.PHONY: all clean debug
+
+all: $(OBJ) $(EXE)
 
 debug: CFLAGS += -g
-debug: $(TARGET)
-
-$(TARGET): $(OBJECTS)
-	$(CC) -o $§@§ $^
-
-%.o: %.c Makefile
-	$(CC) -MMD -c $(CFLAGS) -o $§@§ $<
-
-.PHONY : clean all debug
-clean:
-	rm -f $(TARGET) $(OBJECTS) $(DEPS)
-
--include $(DEPS)
+debug: $(EXE)
 \end{lstlisting}
+	\column{.5\textwidth}
+	\begin{lstlisting}[language=make,basicstyle=\tiny,escapeinside=§,firstnumber=20]
+$(OBJ): | $(OBJDIR)
+$(EXE): $(OBJ)
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+-include $(DEP)
+
+%.d: %.c
+	$(CC) -MM ${INC} $*.c > $*.d
+	sed -i -e 's|.*:|$(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$*).o:|' $*.d
+
+build/%.o: %.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+clean:
+	rm -f $(EXE) $(OBJ) $(DEP)
+	rm -rf $(OBJDIR)
+
+$(OBJDIR):
+	mkdir $@
+\end{lstlisting}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Other build tools}
