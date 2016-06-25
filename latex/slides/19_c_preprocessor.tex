@@ -1,0 +1,219 @@
+\input{slides_template}	% nothing to do here
+\input{c_advanced_info} % TODO modify this if you have not already done so
+
+% meta-information
+\newcommand{\topic}{
+	Type qualifiers
+}
+
+% nothing to do here
+\title{\topic}
+\supertitle{\course}
+\date{}
+
+% the actual document
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+
+\section{Why preprocessing?}
+\subsection{}
+
+\begin{frame}{Limits of a language}
+	The C language is mainly used for low-level applications working directly\\
+	with the operating system or even hardware.\\
+	\bigskip
+	Due to that, C programs must be able to:
+	\begin{itemize}
+		\item use different system calls based on the operating system
+		\item link against different libraries based on the target system
+		\item compile to different machine instructions based on the instruction set\\
+			  of the target machine
+		\item be compiled by different compilers, etc.
+	\end{itemize}
+	\bigskip
+	As these requirements are not expressible in C, a preprocessor is needed.\\
+	Note that it is not a part of the C language and has developed independently of it.
+\end{frame}
+
+\begin{frame}[fragile]{How it's done}
+	Every C compiler has a preprocesser facility that processes a source file\\
+	in four phases:\\
+	\begin{enumerate}
+		\item Replace all trigraph sequences with the actual characters
+		\begin{itemize}
+			\item e.g., \textit{??(} becomes \textit{[}
+		\end{itemize}
+		\item Reconnect lines that were spliced by a \textit{\textbackslash} at the end
+		\item Tokenize the input and replace comments with whitespace
+		\item Handle preprocessor directives and expand macros
+	\end{enumerate}
+	\bigskip
+	To view the result of preprocessing, pass the \textit{-E} switch to your compiler:
+	\begin{lstlisting}[numbers=none]
+$ gcc -E <source_file>
+\end{lstlisting}
+\end{frame}
+
+\section{Preprocessor directives}
+\subsection{}
+
+\begin{frame}[fragile]{Inclusion of other files}
+	The well-known \textit{\#include} directive tells the preprocessor to insert
+	another file in the current source file.\\
+	\bigskip
+	You can use angle brackets or quotes to determine where to look for a file:
+	\begin{lstlisting}[numbers=none]
+#include <stdio.h>	/* search the include path */
+#include "util.h"	/* search the local directory first */
+	   /* (falls back to the global include on failure) */
+\end{lstlisting}
+	It is better practice to always use the angle brackets and pass your local
+	headers as additional include paths to the compiler:
+	\begin{lstlisting}[numbers=none]
+$ gcc src/main.c -I./include
+\end{lstlisting}
+	\bigskip
+	You can include files of all types and names, but the \textit{.h} extension
+	is the usual convention in C.
+\end{frame}
+
+\begin{frame}[fragile]{Macros without parameters}
+	The \textit{\#define} directive is used to replace a token with any text.
+	\begin{lstlisting}[numbers=none]
+#define M_PI 3.14159265358979323846	/* found in math.h */
+\end{lstlisting}
+	\bigskip
+	Macros are useful as a layer of abstraction, e.g. to define constants in system headers.
+	The standard also introduces some predefined macros:
+	\begin{itemize}
+		\item \_\_FILE\_\_ and \_\_LINE\_\_: file name and current line number
+		\item \_\_DATE\_\_ and \_\_TIME\_\_: current date and time
+		\item \_\_STDC\_\_: 1, if the compiler conforms to standard C
+		\item \_\_STDC\_VERSION\_\_: version of the C standard in use
+	\end{itemize}
+	\bigskip
+	Macros allow all sorts of nasty obfuscation, like \textit{for ever} loops:
+	\begin{lstlisting}[numbers=none]
+#define ever (;;)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Macros with parameters}
+	Macros can take any number of arguments, as if they were functions.
+	\begin{lstlisting}[numbers=none]
+#define DEGREES(angle_rad) (angle_rad * 180 / M_PI)
+\end{lstlisting}
+	\bigskip
+	C99 introduced variadic macros for an unknown number of arguments.
+	\begin{lstlisting}[numbers=none]
+#define DEBUG(format, ...) \
+	fprintf(stderr, "[%s:%s] " format, \
+			__FILE__, __LINE__, __VA_ARGS__)
+\end{lstlisting}
+	\bigskip
+	Note that you must use a \textit{\textbackslash} before each line split in a directive.\\
+	\bigskip
+	The C standard forbids to have preprocessor directives in the parameter list
+	of macros, but the GNU C preprocessor (\textit{cpp}) allows it.
+\end{frame}
+
+\begin{frame}[fragile]{Operators in directives}
+	Token stringification (\textit{\#}) converts tokens to C strings.
+	\begin{lstlisting}[numbers=none]
+#define STR(str) #str
+const char *foo_str = str(foo);	/* becomes "foo" */
+\end{lstlisting}
+	\bigskip
+	Token concatenation (\textit{\#\#}) combines two tokens.
+\begin{lstlisting}[numbers=none]
+#define CONCAT(a, b) a##b
+int num = CONCAT(12, 34);	/* becomes 1234 */
+\end{lstlisting}
+	\bigskip
+	These mechanisms can be combined to create powerful abbreviations.\\
+	\bigskip
+	You can let the preprocessor generate large amounts of code for you,
+	an example use case are X-Macros.
+\end{frame}
+
+\begin{frame}[fragile]{Conclusion on macros}
+	To remove a macro, simply \textit{\#undef} it. Macros also can be re-\textit{\#defined}.\\
+	\bigskip
+	Macros have a huge amount of pitfalls:
+	\begin{itemize}
+		\item Precedence issues when not using parentheses around arguments
+		\item Possible side effects when they reference variables, use semicolons
+			  or you pass increment/decrement expressions
+		\item Completely surprising behaviour when they are nested
+		\item Error messages become from macro expansions quite cryptic
+	\end{itemize}
+	\bigskip
+	$\rightarrow$ use macros as rarely as possible and name them in capital letters.\\
+	\bigskip
+	However, some libraries intentionally make macros look like functions to have a transparent
+	interface (e.g., the Lua API).
+\end{frame}
+
+\begin{frame}[fragile]{Conditional compilation}
+	The preprocessor knows the conditional \textit{\#if}, \textit{\#elif}, \textit{\#else}
+	and \textit{\#endif} with the usual semantics. They take expressions which can contain:
+	\begin{itemize}
+		\item Integer and character constants
+		\item The usual arithmetic and logical operators from C
+		\item Macros (expanded before evaluation)
+		\item The \textit{\#defined} operator
+		\item Identifiers (evaluated as 0 if they are not a macro)
+	\end{itemize}
+	\bigskip
+	If an \textit{\#if} expression evaluates to 0, all code controlled by it is skipped.
+	\begin{lstlisting}[numbers=none]
+#if 0
+const char *this_code = "doesn't matter";
+#endif
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Conditional compilation ctd.}
+	The special operator \textit{\#defined} takes a macro and evaluates to 1, if the macro
+	is currently defined. It has the shortcuts \textit{\#ifdef} and \textit{\#ifndef}.\\
+	\bigskip
+	These statements are commonly used for include guards and target-dependent compilation.
+	\begin{lstlisting}[numbers=none]
+#ifndef MY_HEADER_H
+# define MY_HEADER_H
+# ifdef WIN32
+#  include <windows.h>
+   /* expand macros to Windows API calls */
+# else
+#  include <unistd.h>
+   /* expand macros to Unix system calls */
+# endif
+#endif
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Other directives}
+	The standard describes additional directives, such as
+	\begin{itemize}
+		\item \#error $<$msg$>$: end compilation with output $<$msg$>$
+		\item \#line $<$nr$>$ $[<$file$>]$: manipulate the \_\_LINE\_\_ /\_\_FILE\_\_ macros
+		\item \#pragma: provide additional information to the compiler
+		\begin{itemize}
+			\item once: alternative to include guards, not part of the standard
+			\item omp: instruct the compiler to  use OpenMP features
+			\item the standard defines some pragmas, too
+		\end{itemize}
+	\end{itemize}
+	Compilers may introduce additional directives such as GNU's \textit{\#warning}.\\
+	\bigskip
+	When using pragmas excessively, you gain a lot of additional expressive power, but you
+	bind yourself to a certain compiler. Portable programs avoid them completely.
+\end{frame}
+
+% nothing to do from here on
+\end{document}
