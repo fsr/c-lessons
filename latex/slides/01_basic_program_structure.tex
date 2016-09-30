@@ -62,8 +62,8 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{gcc for your operating system}
-	Ubuntu / Debian: 
+\begin{frame}[fragile]{gcc for Unix and Unix-like operating systems}
+	Ubuntu / Debian:
 	\begin{lstlisting}[numbers=none]
 $ sudo apt-get install gcc
 \end{lstlisting}
@@ -103,7 +103,7 @@ $ cyg-get gcc-core vim
 \subsection{}
 \begin{frame}[fragile]{The first program}
 	\begin{itemize}
-		\item Create a new file named \textbf{main.c}.
+		\item Create a new file named ``\textbf{main.c}''.
 		\item Open it in your text editor of choice.
 		\item Fill it as follows:
 	\end{itemize}
@@ -118,7 +118,7 @@ int main(void) {
 }
 \end{lstlisting}
 \end{frame}
-\begin{frame}[fragile]{From source to bits}
+\begin{frame}[fragile]{From source to binary}
 	\centering
 	Source code\\\ \\
 	$\Downarrow$\\\ \\
@@ -131,12 +131,12 @@ $ gcc main.c
 	Executable program\\\ \\
 	\begin{columns}[T]
 		\column{.3\textwidth}
-		Linux/Mac OS X (\textbf{a.out})
+		GNU/Linux \& \\ Mac OS X (\textbf{a.out})
 		\begin{lstlisting}[numbers=none]
 $ ./a.out
 \end{lstlisting}
 		\column{.3\textwidth}
-		Windows (\textbf{a.exe})
+		Windows \\ (\textbf{a.exe})
 		\begin{lstlisting}[numbers=none]
 $ ./a.exe
 \end{lstlisting}
@@ -165,10 +165,10 @@ int main(void) {
 		\ \\\ \\$\left. \begin{array}{c}\\\\\\\\\\\\\end{array}\right\rbrace $ Main function
 	\end{columns}
 \end{frame}
-\begin{frame}[fragile]{Preprocessor statements}	
+\begin{frame}[fragile]{Preprocessor statements}
 	\begin{itemize}
 		\item Processed before compilation
-		\item Have their own language, start with a \textit{\#}
+		\item Have their own language; start with a \textit{\#}
 	\end{itemize}
 	\begin{lstlisting}
 #include <stdio.h>
@@ -177,13 +177,13 @@ int main(void) {
 		\item Includes the \textit{input/output header} from the \textbf{C standard library}
 		\item Needed to use \textit{printf()}
 	\end{itemize}\ \\ \ \\
-	Preprocessor statements hace way more use cases, but they are very different from the actual C programming language.\\
+	Preprocessor statements have way more use cases, but they also behave very differently than pure C.\\
 	In this course, we will use them for inclusions only.
 \end{frame}
 \begin{frame}[fragile]{The main function}
 	\begin{itemize}
-		\item Basic function of every program
-		\item Exists \textbf{exactly once} per program
+		\item Core function of every program
+		\item Exists \textbf{exactly once} in every program
 		\item Called on program start
 	\end{itemize}
 	\StartLineAt{3}
@@ -208,7 +208,7 @@ int main(void) {
 }
 \end{lstlisting}
 	\begin{itemize}
-		\item Last statement, ends main function (and thus the whole program)
+		\item Last statement; ends main function (and thus the whole program)
 		\item \textit{0} tells the OS that everything went right
 		\item '$\rbrace$' marks the end of the main function scope
 	\end{itemize}
@@ -234,9 +234,10 @@ int main(void) {
 \end{frame}
 \begin{frame}[fragile]{Comments}
 	\begin{itemize}
-		\item Information for the programmer, cut out before compilation
+		\item Information for you and others who use your code
+		\item Cut out before compilation
 	\end{itemize}
-	Single line comments:
+	Single-line comments:
 	\StartLineAt{6}
 	\begin{lstlisting}
 	// Prints "Hello World!" on the command line
@@ -266,7 +267,7 @@ int main(void) {
 	\end{itemize}
 	\ \\
 	\begin{uncoverenv}<2->
-	\begin{lstlisting}[numbers=none]
+	\begin{lstlisting}
 #include <stdio.h>
 int
 main	(        void ){printf("Hello World!\n");
@@ -276,16 +277,16 @@ main	(        void ){printf("Hello World!\n");
 \end{lstlisting}
 	\end{uncoverenv}
 \end{frame}
-\begin{frame}[fragile]{Much more enjoyable}
+\begin{frame}[fragile]{Write enjoyable code}
 	\begin{itemize}
-		\item Put each statement on a single line
+		\item Put each statement onto its own line
 		\item Indent every statement in the main function by one \textit{tab}\\
-		 (you can also use \textit{spaces})
-		\item Use \textit{/* ... */} rather than \textit{// ...}
+		 or a fixed number of \textit{spaces}
+		\item Decide on a commenting style and stick to it
 		\item Leave blank lines between different parts of the program
-		\item Use \textit{spaces} consistently to get clear code:
+		\item Use \textit{spaces} and \textit{newlines} consistently
 	\end{itemize}
-	\begin{lstlisting}[numbers=none,showspaces=true,showtabs=true]
+	\begin{lstlisting}[showspaces=true,showtabs=true]
 int main(void) {
 	printf("Hello World!");
 	/* Prints "Hello World!" */
