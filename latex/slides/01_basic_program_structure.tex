@@ -62,7 +62,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{gcc for Unix and Unix-like operating systems}
+\begin{frame}[fragile]{gcc for Unix-based operating systems}
 	Ubuntu / Debian:
 	\begin{lstlisting}[numbers=none]
 $ sudo apt-get install gcc
@@ -130,13 +130,13 @@ $ gcc main.c
 	$\Downarrow$\\\ \\
 	Executable program\\\ \\
 	\begin{columns}[T]
-		\column{.3\textwidth}
-		GNU/Linux \& \\ Mac OS X (\textbf{a.out})
+		\column{.35\textwidth}
+		Linux/Mac OS X (\textbf{a.out})
 		\begin{lstlisting}[numbers=none]
 $ ./a.out
 \end{lstlisting}
-		\column{.3\textwidth}
-		Windows \\ (\textbf{a.exe})
+		\column{.35\textwidth}
+		Windows (\textbf{a.exe})
 		\begin{lstlisting}[numbers=none]
 $ ./a.exe
 \end{lstlisting}
@@ -177,7 +177,9 @@ int main(void) {
 		\item Includes the \textit{input/output header} from the \textbf{C standard library}
 		\item Needed to use \textit{printf()}
 	\end{itemize}\ \\ \ \\
-	Preprocessor statements have way more use cases, but they also behave very differently than pure C.\\
+	Preprocessor statements have way more use cases,\\
+	but they form their own language which is very different from actual C.\\
+	\bigskip
 	In this course, we will use them for inclusions only.
 \end{frame}
 \begin{frame}[fragile]{The main function}
@@ -282,7 +284,8 @@ main	(        void ){printf("Hello World!\n");
 		\item Put each statement onto its own line
 		\item Indent every statement in the main function by one \textit{tab}\\
 		 or a fixed number of \textit{spaces}
-		\item Decide on a commenting style and stick to it
+		\item Decide on a commenting style and stick to it\\
+		(\textit{/* .. */} recommended)
 		\item Leave blank lines between different parts of the program
 		\item Use \textit{spaces} and \textit{newlines} consistently
 	\end{itemize}
