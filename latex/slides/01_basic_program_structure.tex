@@ -80,7 +80,23 @@ $ brew install gcc
 	... and you're done ;-)
 \end{frame}
 
-\begin{frame}[fragile]{gcc for Windows (using \textbf{cygwin})}
+\begin{frame}{gcc for Windows 10 (using \textit{bash})}
+	For convenience you should use the new Ubuntu-based Linux subsystem.\\
+	\bigskip
+	\begin{itemize}
+		\item In \textit{Settings}, got to \textit{Update \& Security} $>$ \textit{For Developers}
+			and switch to \textit{Developer Mode}
+		\item In the \textit{Control panel}, go to \textit{Programs} $>$ \textit{Turn Windows Features On or Off}
+			and enable the \textit{Windows Subsystem for Linux (Beta)}
+		\item Reboot as you're prompted
+		\item Search for ``bash'' and run the \textit{bash} command
+		\item Follow the installation instructions
+	\end{itemize}
+	\bigskip
+	You may now continue as if you were using Ubuntu ;-)
+\end{frame}
+
+\begin{frame}[fragile]{gcc for older versions of Windows (using \textbf{cygwin})}
 	We highly recommend using the \href{https://chocolatey.org/}{Chocolatey} package manager.\\
 	\begin{itemize}
 		\item Follow the link and the instructions on the website to install it
@@ -97,10 +113,7 @@ $ choco install cyg-get
 $ cyg-get gcc-core vim
 \end{lstlisting}
 	\bigskip
-	Now switch to the cygwin command line
-	\begin{lstlisting}[numbers=none]
-$ cygwin
-\end{lstlisting}
+	Now start \textit{cygwin} to get a command line similar to Unix.
 \end{frame}
 
 \section{Hello World!}
