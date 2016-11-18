@@ -28,7 +28,7 @@ You can pass any expression as a parameter.
 
 void printAdd(float a, float b);
 void printMultiply(float a, float b);
-void printRemainder(float a, float b);
+void printRemainder(int a, int b);
 
 int main(void) {
     float a = 0;
