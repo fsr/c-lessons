@@ -30,7 +30,7 @@ int main(void) {
 
     srand(time(NULL));
 
-    for (int i = 5; i < 0; --i) {
+    for (int i = 5; i > 0; --i) {
         int a = rand() % 9 + 1;
         int b = rand() % 9 + 1;
         int s;
