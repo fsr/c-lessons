@@ -351,28 +351,6 @@ fgets(input, sizeof input, stdin);
 		\item \textit{stdin} is the standard input
 	\end{itemize}
 \end{frame}
-\begin{frame}[fragile]{Array of arrays}
-	\begin{itemize}
-		\item Every sub-array is of same type
-		\item Declaration:
-		\begin{lstlisting}[numbers=none]
-char arr[3][4];
-  /* an array containing 3 arrays containing 4 chars */
-\end{lstlisting}
-		\item Assignment:
-		\begin{lstlisting}[numbers=none]
-arr[0][0] = 'f'; /* first char of first array is 'f' */
-arr[1] = "bar";
-arr[2] = {'b', 'o', 'z', '\0'};
-\end{lstlisting}
-		\item Definition:
-		\begin{lstlisting}[numbers=none]
-char arr[][] = {{'f', 'o', 'o', '\0'},
-				{'b', 'a', 'r', '\0'},
-				{'b', 'o', 'z', '\0'}};
-\end{lstlisting}
-	\end{itemize}
-\end{frame}
 \begin{frame}[fragile]{Passing arrays}
 	An array is passed by its name, no big deal. The real question is, how a function is defined, that takes an array as argument.
 	\begin{lstlisting}[numbers=none]
@@ -385,6 +363,28 @@ int foo(char arr[]) {
 		$\rightarrow$ You may want to pass the size as a 2nd value
 	\end{itemize}
 \end{frame}
-
+%
+\begin{frame}[fragile]{Array of arrays}
+	\begin{itemize}
+		\item Every sub-array is of same type
+		\item All dimensions apart from the first \underline{must} be specified
+		\item Declaration:
+		\begin{lstlisting}[numbers=none]
+char arr[3][4];
+/* an array containing 3 arrays containing 4 chars */
+\end{lstlisting}
+		\item Assignment:
+		\begin{lstlisting}[numbers=none]
+arr[0][0] = 'f'; /* first element of arr[0] is 'f' */
+arr[1] = "bar";  /* first element of arr is "bar" */
+arr[2] = {'b', 'o', 'z', '\0'};
+\end{lstlisting}
+		\item Definition:
+		\begin{lstlisting}[numbers=none]
+char arr[][4] = {{'f', 'o', 'o', '\0'},
+			     {'b', 'a', 'r', '\0'}};
+\end{lstlisting}
+	\end{itemize}
+\end{frame}
 % nothing to do from here on
 \end{document}
