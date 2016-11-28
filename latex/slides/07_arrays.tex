@@ -297,7 +297,7 @@ for(int i = 0; i < (sizeof range / sizeof range[0]); ++i) {
 		\node[blue, below=-.125em] at (6.25,1.3) {'\textbackslash0'};
 	\end{tikzpicture}
 	\begin{itemize}
-		\item Note that '\textbackslash0' is different from the the char '0'
+		\item Note that '\textbackslash0' is different from the the character '0'
 	\end{itemize}
 	\ \\\ \\To represent it in an array, you could do the following:
 	\begin{lstlisting}[numbers=none]
@@ -311,15 +311,18 @@ char hello[] = "Hello World!";
 \end{frame}
 
 \begin{frame}[fragile]{Printing strings}
-	\begin{itemize}
-		\item You can print strings with printf
-		\item The placeholder for strings is \textit{\%s}\\
-		\item It expects an array of chars as an argument:\bigskip
+	You can print strings with printf with the placeholder \textit{\%s}.\\
+	It expects an array of chars as an argument:\bigskip
 	\begin{lstlisting}[numbers=none]
 char hello[] = "Hello World!";
 printf("%s\n", hello);
 \end{lstlisting}
-	\end{itemize}
+	\bigskip
+	If you don't need any formatting, you can also use \textit{puts}, which has a simpler syntax:
+	\begin{lstlisting}[numbers=none]
+char hello[] = "Hello World!";
+puts(hello);
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]{String input}
@@ -343,8 +346,8 @@ int foo(char arr[]) {
 \end{lstlisting}
 	\begin{itemize}
 		\item \textbf{But:} If you want to get the size of the array in this function, you'll get a false value. The reason for this is discussed later.
+		\item Because the size is unknown, you don't know whether an element is safe to access and or already ``out of bounds''
 		\item So you may want to pass the size as a second argument
-		\item This prevents out-of-bounds problems
 	\end{itemize}
 \end{frame}
 %
@@ -374,17 +377,19 @@ char arr[][4] = {{'f', 'o', 'o', '\0'},
 \begin{frame}[fragile]{Passing arrays of arrays}
 	\begin{itemize}
 		\item You can also pass arrays of arrays to functions
-		\item Once again, we need to specify the dimensions in the declaration
-		\item One way to solve this are dimension arguments in \underline{front} of the array
+		\item Once again, we need to specify the dimensions
+		\item Either use fixed values or include dimension arguments in the
+		declaration of the array like shown below:
 		\begin{lstlisting}[numbers=none]
-int foo(int dim2, char arr[][dim2]) {
+int foo(char arr[][42]) {
 	/* code */
 }
-int bar(int dim2, int dim3, char arr[][dim2][dim3] {
+int bar(int dim2, char arr[][dim2]) {
 	/* code */
 }
 \end{lstlisting}
-		\item Passing the first dimension as an argument is not required, but recommended
+	\item The dimension arguments need to be in front of the array or the code
+	will not compile
 	\end{itemize}
 \end{frame}
 % nothing to do from here on
