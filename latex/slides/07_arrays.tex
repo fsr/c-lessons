@@ -352,21 +352,22 @@ fgets(input, sizeof input, stdin);
 	\end{itemize}
 \end{frame}
 \begin{frame}[fragile]{Passing arrays}
-	An array is passed by its name, no big deal. The real question is, how a function is defined, that takes an array as argument.
+	An array is passed by its identifier, no big deal. The real question is, how a function is defined, that takes an array as argument.
 	\begin{lstlisting}[numbers=none]
 int foo(char arr[]) {
 	printf("%d\n", arr[0]);
 }
 \end{lstlisting}
 	\begin{itemize}
-		\item \textbf{But:} If you want to get the size of the array in this function, you'll get a false value. The reason for this is discussed later.\\
-		$\rightarrow$ You may want to pass the size as a 2nd value
+		\item \textbf{But:} If you want to get the size of the array in this function, you'll get a false value. The reason for this is discussed later.
+		\item So you may want to pass the size as a second argument
+		\item This prevents out-of-bounds problems
 	\end{itemize}
 \end{frame}
 %
-\begin{frame}[fragile]{Array of arrays}
+\begin{frame}[fragile]{Arrays of arrays}
 	\begin{itemize}
-		\item Every sub-array is of same type
+		\item Every sub-array is of the same type
 		\item All dimensions apart from the first \underline{must} be specified
 		\item Declaration:
 		\begin{lstlisting}[numbers=none]
@@ -384,6 +385,23 @@ arr[2] = {'b', 'o', 'z', '\0'};
 char arr[][4] = {{'f', 'o', 'o', '\0'},
 			     {'b', 'a', 'r', '\0'}};
 \end{lstlisting}
+	\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{Passing arrays of arrays}
+	\begin{itemize}
+		\item You can also pass arrays of arrays to functions
+		\item Once again, we need to specify the dimensions in the declaration
+		\item One way to solve this are dimension arguments in \underline{front} of the array
+		\begin{lstlisting}[numbers=none]
+int foo(int dim2, char arr[][dim2]) {
+	/* code */
+}
+int bar(int dim2, int dim3, char arr[][dim2][dim3] {
+	/* code */
+}
+\end{lstlisting}
+		\item Passing the first dimension as an argument is not required, but recommended
 	\end{itemize}
 \end{frame}
 % nothing to do from here on
