@@ -26,20 +26,6 @@
 \end{frame}
 
 \section{Arrays}
-\subsection{}
-\begin{frame}[fragile]{Hello World explosion}
-	\begin{itemize}
-		\item Write a program that prints the following text by passing chars to \textit{printf}.
-		\bigskip
-		\begin{lstlisting}[numbers=none]
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero
-eos et accusam et justo duo dolores et ea rebum.
-\end{lstlisting}
-	\end{itemize}
-	\uncover<2->{\bigskip Just kidding}
-\end{frame}
 \begin{frame}{Let's talk about memory}
 	\begin{itemize}
 		\item Consider a program using 4 characters.
@@ -227,20 +213,21 @@ for(int i = 0; i < §4§; ++i)
 \begin{frame}[fragile]{Remember, Remember}
 	Old and busted:
 	\begin{itemize}
-		\item The size of variables may differ on different architectures
+		\item The size of types may differ on different architectures
 		\item The size of a char is \textbf{always} 1 byte
+		\item Keep in mind that 1 byte $\neq$ 8 bits on some machines
 	\end{itemize}
 	New hotness:
 	\begin{itemize}
-		\item You can get the size of a variable with the operator \textit{sizeof}
-		\item You can also get the size of a type with sizeof
-	\end{itemize}\ \\\ \\
+		\item You can get the size (in bytes) of a variable or type with the operator \textit{sizeof}
+	\end{itemize}
 	\begin{lstlisting}[numbers=none]
 char a = 'a';
-int sizeOfA = sizeof a;		 /* 1 */
+int sizeOfA = sizeof a;		 /* defined as 1 */
 int sizeOfInt = sizeof(int); /* depending on architecture */
 \end{lstlisting}
-	\textbf{Note:} You can \textbf{and should} leave the parentheses when passing an identifier but you have to use them in case you pass a type.
+	\textbf{Note:} Parentheses are required when passing types and recommended
+	when passing identifiers.
 \end{frame}
 
 \begin{frame}[fragile]{Sizeof an array}
@@ -310,7 +297,7 @@ for(int i = 0; i < (sizeof range / sizeof range[0]); ++i) {
 		\node[blue, below=-.125em] at (6.25,1.3) {'\textbackslash0'};
 	\end{tikzpicture}
 	\begin{itemize}
-		\item Note that '\textbackslash0' is different from the number '0'.
+		\item Note that '\textbackslash0' is different from the the character '0'
 	\end{itemize}
 	\ \\\ \\To represent it in an array, you could do the following:
 	\begin{lstlisting}[numbers=none]
@@ -324,18 +311,18 @@ char hello[] = "Hello World!";
 \end{frame}
 
 \begin{frame}[fragile]{Printing strings}
-	There is a placeholder for strings in printf: \textit{\%s}\\
-	It expects just the name of the array:
+	You can print strings with printf with the placeholder \textit{\%s}.\\
+	It expects an array of chars as an argument:\bigskip
 	\begin{lstlisting}[numbers=none]
 char hello[] = "Hello World!";
 printf("%s\n", hello);
 \end{lstlisting}
-	\begin{itemize}
-		\item Now, take your Lorem ipsum program and reduce it to 2 lines.
-		\begin{itemize}
-			\item<2-> Hint: For a fancier loremipsum look at \url{http://slipsum.com}
-		\end{itemize}
-	\end{itemize}
+	\bigskip
+	If you don't need any formatting, you can also use \textit{puts}, which has a simpler syntax:
+	\begin{lstlisting}[numbers=none]
+char hello[] = "Hello World!";
+puts(hello);
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]{String input}
@@ -350,40 +337,59 @@ fgets(input, sizeof input, stdin);
 		\item \textit{stdin} is the standard input
 	\end{itemize}
 \end{frame}
-\begin{frame}[fragile]{Array of arrays}
-	\begin{itemize}
-		\item Every sub-array is of same type
-		\item Declaration:
-		\begin{lstlisting}[numbers=none]
-char arr[3][4];
-  /* an array containing 3 arrays containing 4 chars */
-\end{lstlisting}
-		\item Assignment:
-		\begin{lstlisting}[numbers=none]
-arr[0][0] = 'f'; /* first char of first array is 'f' */
-arr[1] = "bar";
-arr[2] = {'b', 'o', 'z', '\0'};
-\end{lstlisting}
-		\item Definition:
-		\begin{lstlisting}[numbers=none]
-char arr[][] = {{'f', 'o', 'o', '\0'},
-				{'b', 'a', 'r', '\0'},
-				{'b', 'o', 'z', '\0'}};
-\end{lstlisting}
-	\end{itemize}
-\end{frame}
 \begin{frame}[fragile]{Passing arrays}
-	An array is passed by its name, no big deal. The real question is, how a function is defined, that takes an array as argument.
+	An array is passed by its identifier, no big deal. The real question is, how a function is defined, that takes an array as argument.
 	\begin{lstlisting}[numbers=none]
 int foo(char arr[]) {
 	printf("%d\n", arr[0]);
 }
 \end{lstlisting}
 	\begin{itemize}
-		\item \textbf{But:} If you want to get the size of the array in this function, you'll get a false value. The reason for this is discussed later.\\
-		$\rightarrow$ You may want to pass the size as a 2nd value
+		\item \textbf{But:} If you want to get the size of the array in this function, you'll get a false value. The reason for this is discussed later.
+		\item Because the size is unknown, you don't know whether an element is safe to access or already ``out of bounds''
+		\item So you may want to pass the size as a second argument
 	\end{itemize}
 \end{frame}
-
+%
+\begin{frame}[fragile]{Arrays of arrays}
+	\begin{itemize}
+		\item Every sub-array is of the same type
+		\item All dimensions apart from the first \underline{must} be specified
+		\item Declaration:
+		\begin{lstlisting}[numbers=none]
+char arr[3][4];
+/* an array containing 3 arrays containing 4 chars */
+\end{lstlisting}
+		\item Assignment:
+		\begin{lstlisting}[numbers=none]
+arr[0][0] = 'f'; /* first element of arr[0] is 'f' */
+arr[1] = "bar";  /* first element of arr is "bar" */
+arr[2] = {'b', 'o', 'z', '\0'};
+\end{lstlisting}
+		\item Definition:
+		\begin{lstlisting}[numbers=none]
+char arr[][4] = {{'f', 'o', 'o', '\0'},
+			     {'b', 'a', 'r', '\0'}};
+\end{lstlisting}
+	\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{Passing arrays of arrays}
+	\begin{itemize}
+		\item You can also pass arrays of arrays to functions
+		\item Once again, we need to specify the dimensions
+		\item Either use fixed values or include dimension arguments in the
+		declaration of the array like shown below:
+		\begin{lstlisting}[numbers=none]
+int foo(char arr[][42]) {
+	/* code */
+}
+int bar(int dim2, char arr[][dim2]) {
+	/* code */
+}
+\end{lstlisting}
+	\item The dimension arguments must be passed before the array itself
+	\end{itemize}
+\end{frame}
 % nothing to do from here on
 \end{document}
