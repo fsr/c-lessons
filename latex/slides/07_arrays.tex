@@ -227,20 +227,21 @@ for(int i = 0; i < §4§; ++i)
 \begin{frame}[fragile]{Remember, Remember}
 	Old and busted:
 	\begin{itemize}
-		\item The size of variables may differ on different architectures
+		\item The size of types may differ on different architectures
 		\item The size of a char is \textbf{always} 1 byte
+		\item Keep in mind that 1 byte $\neq$ 8 bits on some machines
 	\end{itemize}
 	New hotness:
 	\begin{itemize}
-		\item You can get the size of a variable with the operator \textit{sizeof}
-		\item You can also get the size of a type with sizeof
-	\end{itemize}\ \\\ \\
+		\item You can get the size (in bytes) of a variable or type with the operator \textit{sizeof}
+	\end{itemize}
 	\begin{lstlisting}[numbers=none]
 char a = 'a';
-int sizeOfA = sizeof a;		 /* 1 */
+int sizeOfA = sizeof a;		 /* defined as 1 */
 int sizeOfInt = sizeof(int); /* depending on architecture */
 \end{lstlisting}
-	\textbf{Note:} You can \textbf{and should} leave the parentheses when passing an identifier but you have to use them in case you pass a type.
+	\textbf{Note:} Parentheses are required when passing types and recommended
+	when passing identifiers.
 \end{frame}
 
 \begin{frame}[fragile]{Sizeof an array}
