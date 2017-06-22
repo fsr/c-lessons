@@ -42,20 +42,56 @@
 \section{Socket Programming}
 \subsection{}
 
-\begin{frame}{Sockets}
-    % Erklärungsfoo
-    % http://openbook.rheinwerk-verlag.de/c_von_a_bis_z/025_c_netzwerkprogrammierung_001.htm#mj026dcf95963c30f3a232837965a8e774
+\begin{frame}[fragile]{Sockets}
+    Sockets are abstractions for connection endpoints to be used by processes.
+    Both the server and the client process have a socket which they use to
+    send data to each other.\\
+    \bigskip
+    Sockets are platform-dependend, but the system call interface is similar:
+    \begin{description}
+        \item[Unix] file descriptors (\lstinline{int})
+        \item[Windows] handles for kernel objects
+            (\lstinline[morekeywords={*,SOCKET}]{SOCKET})
+    \end{description}
+    \bigskip
+    You will also have to include different headers:
+    \begin{lstlisting}[numbers=none]
+// Unix
+#include <sys/socket.h>
+// Windows
+#include <windows.h>
+\end{lstlisting}
     % Unix: files (int - file descriptor), Windows: objects (SOCKET - handle)
     % und die beiden Header
 \end{frame}
 
-% Dann noch jeweils ein Frame zu folgenden funktionen mit kurzer Erklärung
+% Dann noch jeweils ein Frame zu folgenden Funktionen mit kurzer Erklärung
 % sowie Windows- und Unix-Prototyp
 % Dabei die Argumente und einsetzbaren Konstanten erklären
 % - socket()
 % -- hier evtl. noch ein Frame mit Erklärung der Netzwerkadressrechnung
 % - close[socket]()
-% - connect()
+
+\begin{frame}[fragile]{\texttt{connect()}}
+    Connect a socket to another via the network.
+    \begin{lstlisting}[numbers=none,morekeywords={*,SOCKET,socklen_t,sockaddr}]
+// Unix
+int connect(int socket, const struct sockaddr *address,
+         socklen_t address_len);
+// Windows
+int connect(SOCKET socket, const struct sockaddr *address,
+         int address_len);
+\end{lstlisting}
+    \begin{description}
+        \item[socket] Socket to be connected
+        \item[address] Structure containing target IP address and port
+        \item[address\_len] Size of *address in memory
+        \item[return value] Exit status (0 = success, -1 = failure)
+    \end{description}
+    \bigskip
+    UDP sockets don't establish a connection $\rightarrow$ \texttt{connect()} is
+    optional.
+\end{frame}
 
 \begin{frame}[fragile]{\texttt{bind()}}
     Bind an address to a socket.
@@ -76,7 +112,6 @@ int bind(SOCKET socket, const struct sockaddr *address,
     \bigskip
     Naming a socket is necessary for connections from the outside!
 \end{frame}
-
 
 \begin{frame}[fragile]{\texttt{listen()}}
     Enable listening for connections to a specific socket.
@@ -116,7 +151,7 @@ SOCKET accept(SOCKET socket, struct sockaddr *address,
             descriptor otherwise
     \end{description}
     \bigskip
-    Accept by default blocks if the socket's connection queue is empty!
+    By default, \texttt{accept()} blocks if the socket's connection queue is empty!
 \end{frame}
 
 % - send() / recv() / sendto() / recvfrom()}
