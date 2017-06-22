@@ -23,18 +23,18 @@
 \section{Network Protocols}
 \subsection{}
 
-\begin{frame}[Osi Reference Model]
+\begin{frame}{Osi Reference Model}
     % OSI model, Pfeil auf Layer 4
 \end{frame}
 
-\begin{frame}[Transport Protocols]
+\begin{frame}{Transport Protocols}
     TCP:
     \begin{itemize}
-            % bissl Foo
+        \item bissl Foo
     \end{itemize}
     UDP:
     \begin{itemize}
-            % bissl Bar
+        \item bissl Bar
     \end{itemize}
     % vielleicht auch keine zwei itemize, sondern was schöneres
 \end{frame}
@@ -42,7 +42,7 @@
 \section{Socket Programming}
 \subsection{}
 
-\begin{frame}[Sockets]
+\begin{frame}{Sockets}
     % Erklärungsfoo
     % http://openbook.rheinwerk-verlag.de/c_von_a_bis_z/025_c_netzwerkprogrammierung_001.htm#mj026dcf95963c30f3a232837965a8e774
     % Unix: files (int - file descriptor), Windows: objects (SOCKET - handle)
@@ -56,10 +56,70 @@
 % -- hier evtl. noch ein Frame mit Erklärung der Netzwerkadressrechnung
 % - close[socket]()
 % - connect()
-% - bind()
-% - listen()
-% - accept()
-% - send() / recv() / sendto() / recvfrom()
+
+\begin{frame}[fragile]{\texttt{bind()}}
+    Bind an address to a socket.
+    \begin{lstlisting}[numbers=none,morekeywords={*,SOCKET,socklen_t,sockaddr}]
+// Unix
+int bind(int socket, const struct sockaddr *address,
+         socklen_t address_len);
+// Windows
+int bind(SOCKET socket, const struct sockaddr *address,
+         int address_len);
+\end{lstlisting}
+    \begin{description}
+        \item[socket] Socket to be bound
+        \item[address] Structure containing IP address and port
+        \item[address\_len] Size of *address in memory
+        \item[return value] Exit status (0 = success, -1 = failure)
+    \end{description}
+    \bigskip
+    Naming a socket is necessary for connections from the outside!
+\end{frame}
+
+
+\begin{frame}[fragile]{\texttt{listen()}}
+    Enable listening for connections to a specific socket.
+    \begin{lstlisting}[numbers=none,morekeywords={*,SOCKET}]
+// Unix
+int listen(int socket, int backlog);
+// Windows
+int listen(SOCKET socket, int backlog);
+\end{lstlisting}
+    \begin{description}
+        \item[socket] Socket to put into listening mode
+        \item[backlog] Hint for an upper bound of the number of outstanding
+            connections in the listening queue of the socket
+        \item[return value] Exit status (0 = success, -1 = failure)
+    \end{description}
+    \bigskip
+    Calling \texttt{listen()} on a socket is necessary to accept incoming TCP
+    connections on a server.
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{accept()}}
+    Accept a new connection on a socket.
+    \begin{lstlisting}[numbers=none,morekeywords={*,SOCKET,sockaddr,socklen_t}]
+// Unix
+int accept(int socket, struct sockaddr *restrict address,
+           socklen_t *restrict address_len);
+// Windows
+SOCKET accept(SOCKET socket, struct sockaddr *address,
+              int *address_len);
+\end{lstlisting}
+    \begin{description}
+        \item[socket] Listening socket
+        \item[address] Where to store the address of the
+            connecting socket
+        \item[address\_len] Size of *address in memory
+        \item[return value] Socket for the new connection on success, invalid
+            descriptor otherwise
+    \end{description}
+    \bigskip
+    Accept by default blocks if the socket's connection queue is empty!
+\end{frame}
+
+% - send() / recv() / sendto() / recvfrom()}
 
 % nothing to do from here on
 \end{document}
