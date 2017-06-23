@@ -1,33 +1,41 @@
 slides:
   -
-    number: 1
+    number: 11
     name: Debugging
     url: https://ifsr.de/kurs-materialien/c/11_debugging.pdf
   -
-    number: 2
+    number: 12
     name: Advanced Data Structures
     url: https://ifsr.de/kurs-materialien/c/12_advanced_data_structures.pdf
   -
-    number: 3
+    number: 13
     name: Bitoperations
     url: https://ifsr.de/kurs-materialien/c/13_bitoperations.pdf
   -
-    number: 4
+    number: 14
     name: Project Organisation And External Libraries
     url: https://ifsr.de/kurs-materialien/c/14_project_organisation_and_external_libraries.pdf
   -
-    number: 5
+    number: 15
     name: File Management
     url: https://ifsr.de/kurs-materialien/c/15_file_management.pdf
   -
-    number: 6
+    number: 16
     name: Parallel Programming
     url: https://ifsr.de/kurs-materialien/c/16_parallel_programming.pdf
   -
-    number: 7
+    number: 17
     name: Storage Classes
     url: https://ifsr.de/kurs-materialien/c/17_storage_classes.pdf
   -
-    number: 8
+    number: 18
     name: Type Qualifiers
     url: https://ifsr.de/kurs-materialien/c/18_type_qualifiers.pdf
+  -
+    number: 19
+    name: C Preprocessor
+    url: https://ifsr.de/kurs-materialien/c/19_c_preprocessor.pdf
+  -
+    number: 20
+    name: Network
+    url: https://ifsr.de/kurs-materialien/c/20_network.pdf
