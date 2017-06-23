@@ -22,7 +22,9 @@
                 "15_file_management.tex",
                 "16_parallel_programming.tex",
                 "17_storage_classes.tex",
-                "18_type_qualifiers.tex"
+                "18_type_qualifiers.tex",
+                "19_c_preprocessor.tex",
+                "20_network.tex"
             ]
         },
         "html": {
@@ -47,7 +49,9 @@
                 "15_file_management.tex",
                 "16_parallel_programming.tex",
                 "17_storage_classes.tex",
-                "18_type_qualifiers.tex"
+                "18_type_qualifiers.tex",
+                "19_c_preprocessor.tex",
+                "20_network.tex"
             ]
         }
     }
