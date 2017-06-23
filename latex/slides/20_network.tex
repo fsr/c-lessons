@@ -80,9 +80,9 @@
 
 
         \draw [dashed,<->,thick] (a4) -- node [above,midway]{Transport protocol} (b4);
-        \draw [dashed,<->,thick] (a5) -- node [above,midway]{Application protocol} (b5);
+        \draw [dashed,<->,thick] (a5) -- node [above,midway]{Session protocol} (b5);
         \draw [dashed,<->,thick] (a6) -- node [above,midway]{Presentation protocol} (b6);
-        \draw [dashed,<->,thick] (a7) -- node [above,midway]{Session protocol} (b7);
+        \draw [dashed,<->,thick] (a7) -- node [above,midway]{Application protocol} (b7);
 
         \uncover<2->{
             \draw [magenta, very thick] (-1.6,-2.35) rectangle (9.6,-3.5);
@@ -96,8 +96,9 @@
         \item connection-oriented
         \item three-way-handshake
         \item dialog between two sides
-        \item guaranteed data delivery in same order as sent
+        \item guaranteed data delivery in the same order as sent
     \end{itemize}
+    \bigskip
     UDP:
     \begin{itemize}
         \item connectionless
@@ -108,7 +109,7 @@
 \end{frame}
 
 \section{Socket Programming}
-\subsection*{comparing manpages}
+\subsection{}
 
 \begin{frame}[fragile]{Sockets}
     Sockets are abstractions for connection endpoints to be used by processes.
@@ -131,47 +132,43 @@
 \end{lstlisting}
 \end{frame}
 
-% Dann noch jeweils ein Frame zu folgenden Funktionen mit kurzer Erklärung
-% sowie Windows- und Unix-Prototyp
-% Dabei die Argumente und einsetzbaren Konstanten erklären
-% - socket()
-
 \begin{frame}[fragile]{\texttt{socket()}}
-	Create an endpoint for communication
+	Create an endpoint for communication.
 	\begin{lstlisting}[numbers=none,morekeywords={*,SOCKET,socklen_t,sockaddr}]
 //Unix
 int socket(int domain, int type, int protocol);
 //windows
-SOCKET socket(int af, int type, int protocol);
-	\end{lstlisting}
+SOCKET socket(int domain, int type, int protocol);
+\end{lstlisting}
 	\begin{description}
-		\item [domain] Communication domain to select protocol family
-		\item [af] Adress family specification
-		\item [type] Type specifications for communication semantics and (only for linux) behaviour modifiers
-		\item [protocol] The protocol to be used
-		\item [return value] filedescriptor / socket handle
+		\item [domain] Communication domain for the socket \\
+            {\verb+[AF_INET, AF_INET6, os-specific domains]+}
+		\item [type] Type of the socket \\
+            {\verb+[SOCK_STREAM, SOCK_DGRAM, SOCK_RAW, ...]+}
+		\item [protocol] The protocol to be used \\
+            {\verb+[0, IPPROTO_TCP, IPPROTO_UDP, ...]+}
+		\item [return value] File descriptor / socket handle if successful, -1
+            otherwise
 	\end{description}
-	\bigskip
 \end{frame}
 % -- hier evtl. noch ein Frame mit Erklärung der Netzwerkadressrechnung
 
 
 % - close[socket]()
 \begin{frame}[fragile]{\texttt{close[socket]()}}
-Close an existing socket / filedescriptor
+Close an existing socket / file descriptor.
 	\begin{lstlisting}[numbers=none,morekeywords={*,SOCKET,socklen_t,sockaddr}]
 //Unix
 int close(int fildes);
 //windows
-int closesocket(SOCKET s);
-	\end{lstlisting}
+int closesocket(SOCKET socket);
+\end{lstlisting}
 	\begin{description}
-		\item [fildes] The Filedescriptor to deallocate
-		\item [s] The Socket to close
+		\item [fildes/socket] File descriptor / handle of the socket to close
 		\item [return value] Exit status (0 = success, -1 = failure)
 	\end{description}
 	\bigskip
-	Do not leak Filedescriptors.
+	Do not leak file descriptors!
 \end{frame}
 
 \begin{frame}[fragile]{\texttt{connect()}}
@@ -179,15 +176,15 @@ int closesocket(SOCKET s);
     \begin{lstlisting}[numbers=none,morekeywords={*,SOCKET,socklen_t,sockaddr}]
 // Unix
 int connect(int socket, const struct sockaddr *address,
-         socklen_t address_len);
+            socklen_t address_len);
 // Windows
 int connect(SOCKET socket, const struct sockaddr *address,
-         int address_len);
+            int address_len);
 \end{lstlisting}
     \begin{description}
         \item[socket] Socket to be connected
         \item[address] Structure containing target IP address and port
-        \item[address\_len] Size of *address in memory
+        \item[address\_len] Size of \texttt{*address} in memory
         \item[return value] Exit status (0 = success, -1 = failure)
     \end{description}
     \bigskip
@@ -208,7 +205,7 @@ int bind(SOCKET socket, const struct sockaddr *address,
     \begin{description}
         \item[socket] Socket to be bound
         \item[address] Structure containing IP address and port
-        \item[address\_len] Size of *address in memory
+        \item[address\_len] Size of \texttt{*address} in memory
         \item[return value] Exit status (0 = success, -1 = failure)
     \end{description}
     \bigskip
@@ -248,7 +245,7 @@ SOCKET accept(SOCKET socket, struct sockaddr *address,
         \item[socket] Listening socket
         \item[address] Where to store the address of the
             connecting socket
-        \item[address\_len] Size of *address in memory
+        \item[address\_len] Size of \texttt{*address} in memory
         \item[return value] Socket for the new connection on success, invalid
             descriptor otherwise
     \end{description}
@@ -259,47 +256,49 @@ SOCKET accept(SOCKET socket, struct sockaddr *address,
 % - send()
 \begin{frame}[fragile]{\texttt{send[to]()}}
     Send a message on a socket.
-    \begin{lstlisting}[numbers=none,morekeywords={*,SOCKET,sockaddr,socklen_t}]
+    \begin{lstlisting}[numbers=none,morekeywords={*,SOCKET,sockaddr,socklen_t,size_t}]
 // Unix
 int send[to](int socket, const void *buffer, size_t length,
 		 	 int flags[, const struct sockaddr *dest_addr,
     	 	 socklen_t dest_len]);
 // Windows
-int send[to](SOCKET s, const char *buf, int len, int flags[,
-		     struct sockaddr *to, int tolen]);
+int send[to](SOCKET socket, const char *buffer, int lenght,
+             int flags[, const struct sockaddr *dest_addr,
+             int dest_len]);
 \end{lstlisting}
     \begin{description}
-        \item[socket/s] The connected socket
-        \item[buffer/buf] Message to be transmitted
-        \item[length/len] Length of the message
+        \item[socket] Socket to send from
+        \item[buffer] Pointer to the message to be transmitted
+        \item[length] Length of the message
         \item[flags] Type of transmission
-        \item[dest\_addr/to] Optional target socket
-        \item[dest\_len/tolen] size of the sockadr structure pointed to by \texttt{dest\_addr/to}
-        \item[return value] number of bytes sent or -1 on error
+        \item[dest\_addr] Optional target socket
+        \item[dest\_len] Size of \texttt{*dest\_addr} in memory
+        \item[return value] Number of bytes sent or -1 on error
     \end{description}
 \end{frame}
 
 % recv()
 \begin{frame}[fragile]{\texttt{recv[from]()}}
-    Recieve a message from a socket.
-    \begin{lstlisting}[numbers=none,morekeywords={*,SOCKET,sockaddr,socklen_t}]
+    Recieve a message on a socket.
+    \begin{lstlisting}[numbers=none,basicstyle=\scriptsize,morekeywords={*,SOCKET,sockaddr,socklen_t}]
 // Unix
-int send[from](int socket, const void *buffer,
-	   		   size_t length, int flags[,
-			   struct sockaddr *restrict address,
+int recv[from](int socket, const void *buffer, size_t length,
+               int flags[, struct sockaddr *restrict address,
 		 	   socklen_t *restrict address_len]);
 // Windows
-int send[from](SOCKET s, const char *buf, int len,
-		  int flags[, struct sockaddr *from, int *fromlen]);
+int recv[from](SOCKET socket, const char *buffer, int length,
+		       int flags[, struct sockaddr *address,
+               int *address_len]);
 \end{lstlisting}
     \begin{description}
-        \item[socket/s] The connected socket
-        \item[buffer/buf] Pointer where to put the recieved Message
-        \item[length/len] Length of the Message
+        \item[socket] The connected socket
+        \item[buffer] Pointer where to put the recieved message
+        \item[length] Length of the message buffer
         \item[flags] Type of transmission
-        \item[adress/from] Optional sending address
-        \item[adress\_len/fromlen] Optional pointer to the size, of the buffer pointed to by \texttt{adress/from}
-        \item[return value] number of bytes recieved, 0 on closed connection or -1
+        \item[adress] Optional sending socket
+        \item[adress\_len] Size of \texttt{*adress} in memory
+        \item[return value] \verb+#+bytes recieved, 0 (connection closed), or
+            -1 (failure)
     \end{description}
     \bigskip
     
