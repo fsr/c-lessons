@@ -70,6 +70,26 @@ int a, b = 23;
 $\rightarrow$ Avoid multiple variable definitions at one line!
 \end{frame}
 
+\begin{frame}{Valid identifiers}
+	\begin{itemize}
+		\item Consist of English letters (no \textit{ß}, \textit{ä}, \textit{ö}, \textit{ü}), numbers and underscore (\_)
+		\item Start with a letter or underscore
+		\item Are case sensitive (\textit{number} differs from \textit{Number})
+		\item Must not be reserved words:
+	\end{itemize}
+    {\scriptsize\tt\begin{tabular}{cccccccc}
+        auto	& else	& long	& switch & break	& enum	& register	& typedef\\
+        case	& extern	& return	& union & char	& float	& short	& unsigned\\
+        const	& for	& signed	& void & continue	& goto	& sizeof	& volatile\\
+        default	& if	& static	& while & do	& int	& struct &   double
+    \end{tabular}}
+    \\\bigskip
+	\textbf{Style}:\\
+	\begin{itemize}
+		\item Stay in one language (English recommended)
+		\item Decide whether to use \textit{camelCaseIdentifiers} or \textit{snake\_case\_identifiers}.\\
+	\end{itemize}
+\end{frame}
 
 
 \section{Data types}
@@ -118,83 +138,7 @@ char a = 65;
 char b = 'A';	/* use single quotation marks */
 \end{lstlisting}
 \end{frame}
-\section{Identifiers}
-\subsection{}
 
-\begin{frame}[fragile]{Scopes}
-	You begin a block with a '\{' and end it with a '\}':
-	\begin{lstlisting}
-int i = 4;
-{
-	i = 3;		/* valid */
-	int j = 5;
-}
-j = 2;			/* invalid, j is not in scope */
-\end{lstlisting}
-	\begin{itemize}
-		\item Program area in which an identifier may be used
-		\item Referring to it anywhere else causes compilation errors
-		\item Starts at the line of declaration
-		\item Ends at the end of the block, in which the variable was declared
-	\end{itemize}
-	
-\end{frame}
-
-\begin{frame}[fragile]{Shadowing identifiers}
-	When redeclaring identifiers inside a block, they refer to a new variable:
-	\begin{lstlisting}
-int i = 3;		/* Defining i with value 3 */
-{
-	i = 2;		/* "Outside" i is now 2 */
-	int i = 4;	/* New "inside" i */
-	i = 7;		/* Changes "inside" i only */
-}
-				/* "Outside" i is still 2 */
-\end{lstlisting}\ \\
-	
-\end{frame}
-
-\begin{frame}{Valid identifiers}
-	\begin{itemize}
-		\item Consist of English letters (no \textit{ß}, \textit{ä}, \textit{ö}, \textit{ü}), numbers and underscore (\_)
-		\item Start with a letter or underscore
-		\item Are case sensitive (\textit{number} differs from \textit{Number})
-		\item Must not be reserved words (e.g \textit{int}, \textit{return})
-	\end{itemize}\ \\\ \\
-	\textbf{Style}:\\
-	\begin{itemize}
-		\item Stay in one language (English recommended)
-		\item Decide whether to use \textit{camelCaseIdentifiers} or \textit{snake\_case\_identifiers}.\\
-		\item When nesting blocks, indent every inner block by one additional tab!
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Speaking identifiers}
-	\begin{lstlisting}
-/* calculate volume of square pyramid */
-int a, b, c;
-a = 3;
-b = 2;
-c = (1 / 3) * a * a * b;
-\end{lstlisting}
-\centering
-$\Downarrow$
-	\begin{lstlisting}
-/* calculate volume of square pyramid */
-int length, height, volume;
-length = 3;
-height = 2;
-volume = (1 / 3) * length * length * height;
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}{Use speaking identifiers.}
-	\LARGE
-	\centering
-	Please, use speaking identifiers.\footnotemark
-	
-	\footnotetext[1]{Seriously, use speaking identifiers.}
-\end{frame}
 
 \section{Variable I/O}
 \subsection{}
@@ -256,6 +200,72 @@ scanf("%d", &i);
 		\item If you use \%c, the first character of the user input is interpreted (this may be a ' ' as well!)
 	\end{itemize}
 	Never trust the user: they may enter a blank line while you expect a number, which means your input variable is still undefined!
+\end{frame}
+
+\section{Identifiers}
+\subsection{}
+
+\begin{frame}[fragile]{Speaking identifiers}
+	\begin{lstlisting}
+/* calculate volume of square pyramid */
+int a, b, c;
+a = 3;
+b = 2;
+c = (1 / 3) * a * a * b;
+\end{lstlisting}
+\centering
+$\Downarrow$
+	\begin{lstlisting}
+/* calculate volume of square pyramid */
+int length, height, volume;
+length = 3;
+height = 2;
+volume = (1 / 3) * length * length * height;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Use speaking identifiers.}
+	\LARGE
+	\centering
+	Please, use speaking identifiers.\footnotemark
+	
+	\footnotetext[1]{Seriously, use speaking identifiers.}
+\end{frame}
+
+\begin{frame}[fragile]{Scopes}
+	You begin a block with a '\{' and end it with a '\}':
+	\begin{lstlisting}
+int i = 4;
+{
+	i = 3;		/* valid */
+	int j = 5;
+}
+j = 2;			/* invalid, j is not in scope */
+\end{lstlisting}
+	\begin{itemize}
+		\item Program area in which an identifier may be used
+		\item Referring to it anywhere else causes compilation errors
+		\item Starts at the line of declaration
+		\item Ends at the end of the block, in which the variable was declared
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Shadowing identifiers}
+	When redeclaring identifiers inside a block, they refer to a new variable:
+	\begin{lstlisting}
+int i = 3;		/* Defining i with value 3 */
+{
+	i = 2;		/* "Outside" i is now 2 */
+	int i = 4;	/* New "inside" i */
+	i = 7;		/* Changes "inside" i only */
+}
+				/* "Outside" i is still 2 */
+\end{lstlisting}\ \\
+    \medskip
+    \begin{itemize}
+        \item[Style:] When nesting blocks, indent every inner block by
+            one additional tab!
+    \end{itemize}
 \end{frame}
 
 \section{Arithmetic operators}
