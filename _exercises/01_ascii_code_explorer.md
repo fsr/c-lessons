@@ -1,6 +1,6 @@
 ---
 title: ASCII code explorer
-number: 2
+number: 1
 status: reviewed
 difficulty: easy
 requirements: variables, input/output
