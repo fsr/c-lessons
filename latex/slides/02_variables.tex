@@ -91,6 +91,32 @@ $\rightarrow$ Avoid multiple variable definitions at one line!
 	\end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Speaking identifiers}
+	\begin{lstlisting}
+/* calculate volume of square pyramid */
+int a, b, c;
+a = 3;
+b = 2;
+c = (1 / 3) * a * a * b;
+\end{lstlisting}
+\centering
+$\Downarrow$
+	\begin{lstlisting}
+/* calculate volume of square pyramid */
+int length, height, volume;
+length = 3;
+height = 2;
+volume = (1 / 3) * length * length * height;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Use speaking identifiers.}
+	\LARGE
+	\centering
+	Please, use speaking identifiers.\footnotemark
+	
+	\footnotetext[1]{Seriously, use speaking identifiers.}
+\end{frame}
 
 \section{Data types}
 \subsection{}
@@ -200,130 +226,6 @@ scanf("%d", &i);
 		\item If you use \%c, the first character of the user input is interpreted (this may be a ' ' as well!)
 	\end{itemize}
 	Never trust the user: they may enter a blank line while you expect a number, which means your input variable is still undefined!
-\end{frame}
-
-\section{Identifiers}
-\subsection{}
-
-\begin{frame}[fragile]{Speaking identifiers}
-	\begin{lstlisting}
-/* calculate volume of square pyramid */
-int a, b, c;
-a = 3;
-b = 2;
-c = (1 / 3) * a * a * b;
-\end{lstlisting}
-\centering
-$\Downarrow$
-	\begin{lstlisting}
-/* calculate volume of square pyramid */
-int length, height, volume;
-length = 3;
-height = 2;
-volume = (1 / 3) * length * length * height;
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}{Use speaking identifiers.}
-	\LARGE
-	\centering
-	Please, use speaking identifiers.\footnotemark
-	
-	\footnotetext[1]{Seriously, use speaking identifiers.}
-\end{frame}
-
-\begin{frame}[fragile]{Scopes}
-	You begin a block with a '\{' and end it with a '\}':
-	\begin{lstlisting}
-int i = 4;
-{
-	i = 3;		/* valid */
-	int j = 5;
-}
-j = 2;			/* invalid, j is not in scope */
-\end{lstlisting}
-	\begin{itemize}
-		\item Program area in which an identifier may be used
-		\item Referring to it anywhere else causes compilation errors
-		\item Starts at the line of declaration
-		\item Ends at the end of the block, in which the variable was declared
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Shadowing identifiers}
-	When redeclaring identifiers inside a block, they refer to a new variable:
-	\begin{lstlisting}
-int i = 3;		/* Defining i with value 3 */
-{
-	i = 2;		/* "Outside" i is now 2 */
-	int i = 4;	/* New "inside" i */
-	i = 7;		/* Changes "inside" i only */
-}
-				/* "Outside" i is still 2 */
-\end{lstlisting}\ \\
-    \medskip
-    \begin{itemize}
-        \item[Style:] When nesting blocks, indent every inner block by
-            one additional tab!
-    \end{itemize}
-\end{frame}
-
-\section{Arithmetic operators}
-\subsection{}
-\begin{frame}[fragile]{Let's calc}
-	Each expression (variables or values) you type in gets evaluated.\\
-	You can use operators to combine existing expressions to new ones.
-\ \\
-	\begin{itemize}
-		\item +, -, *, / as all of you should know
-		\item \% is the modulo (remainder) operator
-		\item *, /, \% get evaluated before +, -
-		\item Operations in (  ) are of higher precedence
-	\end{itemize}\ \\\ \\
-	\begin{lstlisting}
-int a = 5; 		/* value 5 */
-int b = a + 3;	/* value 8 */
-char c = 120;	/* 120 */
-char d = 2 * c;	/* why is that not 240? */
-\end{lstlisting}
-\end{frame}
-\begin{frame}[fragile]{You see, it's not that easy}
-	\begin{itemize}
-		\item Variables may overflow
-		\item You shall not divide by zero
-		\item Integer division differs from floating point division
-		\item You can use operators between different data types
-		\begin{itemize}
-			\item[--] mixing different sizes
-			\item[--] mixing integer and floating point variables
-		\end{itemize}
-	\end{itemize}
-	\ \\\ \\
-	\begin{lstlisting}[numbers=none]
-int i1 = 42, i2 = 23;
-short s = 13;
-float f = 3.14;
-
-i1 / i2;	/* results in 1, not a real division */
-i1 + s;		/* int and short, result is int */
-i1 / f;		/* result is float, actual division */
-\end{lstlisting}
-\end{frame}
-\begin{frame}[fragile]{Syntactic sugar}
-	As you have seen, you can use any expression on the right side of the assignment operator.\\
-	This expression often contains the variable it is assigned to.\\\ \\
-	To avoid redundancy, C offers the following short forms:\\
-	\begin{lstlisting}[numbers=none]
-a += 4;		/* a = a + 4; */
-a -= 4;		/* a = a - 4; */
-a *= b;		/* a = a * b; */
-b /= 42;	/* b = b / 42; */
-b %= 2;		/* b = b % 2; */
-c++;		/* c = c + 1; */
-++c;		/* c = c + 1; */
-c--;		/* c = c - 1; */
---c;		/* c = c - 1; */
-\end{lstlisting}
 \end{frame}
 
 % nothing to do from here on
