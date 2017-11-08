@@ -56,7 +56,7 @@ for (initialization; condition; statement)
 	\begin{lstlisting}
 int i = 2;
 while (i > 0)
-	--i;
+	- -i;
 printf("done\n");
 \end{lstlisting}
 	\begin{enumerate}[<+(1)->]
@@ -76,7 +76,7 @@ printf("done\n");
 	\begin{lstlisting}[numbers=none]
 int i = 3;
 do
-	--i;
+	- -i;
 while (i < 1);
 \end{lstlisting}
 	\bigskip
@@ -190,7 +190,7 @@ $ gcc -std=c99 -o main main.c
 
 \begin{frame}[fragile]{A few words on style}
 	\begin{itemize}
-		\item Again, only use braces when there's more than one statement
+        \item Stay consistent after deciding whether to use or not to use braces on a single statement
 		\item If you skip the loop body
 		\begin{itemize}
 			\item Leave a comment in your code
