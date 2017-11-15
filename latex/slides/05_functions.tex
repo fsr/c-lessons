@@ -187,6 +187,29 @@ void f(int i) {
 /* g() definition, similar to f() */
 \end{lstlisting}
 \end{frame}
+
+\begin{frame}[fragile]{Good documentation style}
+    Add a documentation comment to each function prototype:
+    \begin{lstlisting}
+/*
+ * Get the sum of two numbers.
+ * num:    input number
+ */
+int factorial(int num);
+\end{lstlisting}
+    There are frameworks such as \emph{doxygen} that parse your comments and
+    create a fancy HTML documentation:
+    \begin{lstlisting}[escapeinside={}]
+/**
+ * @brief Get the sum of two numbers.
+ * @param num1  first number
+ * @param num2  second number
+ * @return      sum of num1 and num2
+ */
+int add(int num1, int num2);
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}{Functions in functions}
 	You \textbf{could} define functions in functions.\footnotemark
 	
