@@ -22,7 +22,7 @@ You can pass any expression as a parameter.
 
 ##Solution##
 
-
+<!--
 {% highlight C %}
 #include <stdio.h>
 
@@ -96,3 +96,4 @@ void printRemainder(int a, int b) {
     printf("%d\n", a % b);
 }
 {% endhighlight %}
+-->
