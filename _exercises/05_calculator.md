@@ -67,7 +67,7 @@ int main(void) {
             if (b == 0)
                 printf("Error: Division by zero.\n");
             else
-                printf("%f %% %f = %f\n", a, b, (int)a % (int)b);
+                printf("%f %% %f = %d\n", a, b, (int)a % (int)b);
 
             break;
         default:
