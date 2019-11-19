@@ -16,7 +16,7 @@ Write a Program, that takes two numbers and an operator (+, -, /, *, %) as input
 
 **Experts:** How many letters do you have to check?
 
-
+<!--
 ###Solution###
 
 {% highlight C %}
@@ -77,3 +77,4 @@ int main(void) {
     return 0;
 }
 {% endhighlight %}
+-->
