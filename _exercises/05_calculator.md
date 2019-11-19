@@ -11,7 +11,8 @@ Write a Program, that takes two numbers and an operator (+, -, /, *, %) as input
 
 **Experts:** The program should also accept the words *add, substract, multiply, divide* and *remainder* as operators.
 
-###Hints###
+===Hints===
+
 **Experts:** Look at the difference between the words.
 
 **Experts:** How many letters do you have to check?
